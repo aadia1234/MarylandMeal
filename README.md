@@ -1,2 +1,2 @@
-# TerpTracker
-TerpTracker GitHub Repository
+# TerpMeal
+TerpMeal GitHub Repository
