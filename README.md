@@ -1,2 +1,2 @@
-# TerpMeal
-TerpMeal GitHub Repository
+# MarylandMeal
+MarylandMeal GitHub Repository
