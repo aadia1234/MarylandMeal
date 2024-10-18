@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "TerpTracker",
-    "slug": "TerpTracker",
+    "name": "MarylandMeal",
+    "slug": "MarylandMeal",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/MarylandMeal.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/MarylandMeal.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -24,7 +24,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/MarylandMeal.png"
     },
     "plugins": [
       "expo-router"
