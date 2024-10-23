@@ -17,6 +17,7 @@ export const Theme = {
     text: "#E11932",
     border: "#F2B705",
     notification: "#E11932",
+    inactive: "#999999"
   },
   // light: {
   //   primary: "#E11932",
