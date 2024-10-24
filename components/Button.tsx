@@ -23,7 +23,7 @@ const styles = (animated?: any) => StyleSheet.create({
 });
 
 
-export default function Button(props: {text: string, onPress: () => void}) {
+export default function NavButton(props: {text: string, onPress: () => void}) {
     const animated = useRef(new Animated.Value(1)).current
 
     const fadeIn = () => {
