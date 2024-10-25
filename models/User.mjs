@@ -1,13 +1,13 @@
 import mongoose, { Schema, model } from 'mongoose';
 
-export interface UserDocument {
-    _id: string,
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string
-}
-const UserSchema = new Schema<UserDocument>(
+// export interface UserDocument {
+//     _id: string,
+//     firstName: string,
+//     lastName: string,
+//     email: string,
+//     password: string
+// }
+const UserSchema = new Schema(
     {
         firstName: {
             type: String,
@@ -36,5 +36,5 @@ const UserSchema = new Schema<UserDocument>(
     }
 );
 
-const User = mongoose.models?.User || model<UserDocument>('User', UserSchema);
+const User = mongoose.models?.User || model('User', UserSchema);
 export default User;

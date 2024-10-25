@@ -2,7 +2,7 @@
 import { FormEvent, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import register from "../scripts/registerUser";
+import register from "../scripts/createUser.mjs";
 
 
 export default function Signup() {

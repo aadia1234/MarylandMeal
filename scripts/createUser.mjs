@@ -1,9 +1,8 @@
-"use server"
-import connectDB from "@/lib/mongodb";
-import User from "../models/User";
+import connectDB from "@/";
+import User from "../models/User.mjs";
 import bcrypt from "bcryptjs";
 
-export default async function registerUser(values: any) {
+export default async function registerUser(values) {
     const { firstName, lastName, email, password } = values;
 
     try {
