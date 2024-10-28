@@ -5,8 +5,8 @@
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint"
@@ -21,8 +21,11 @@
     "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "dotenv-expand": "^11.0.6",
     "expo": "~51.0.28",
     "expo-auth-session": "^5.5.2",
+    "expo-blur": "~13.0.2",
     "expo-constants": "~16.0.2",
     "expo-crypto": "~13.0.2",
     "expo-font": "~12.0.9",
@@ -35,7 +38,9 @@
     "expo-system-ui": "~3.0.7",
     "expo-web-browser": "~13.0.3",
     "express": "^4.21.1",
+    "fetchival": "^0.3.3",
     "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
     "mongodb": "^6.9.0",
     "mongoose": "^8.7.2",
     "next": "^14.2.15",
@@ -50,8 +55,7 @@
     "react-native-web": "~0.19.10",
     "react-native-webview": "13.8.6",
     "stream": "^0.0.3",
-    "ts-node": "^10.9.2",
-    "expo-blur": "~13.0.2"
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

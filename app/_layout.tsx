@@ -18,6 +18,7 @@ export default function Layout() {
 		<ThemeProvider value={Theme}>
 			<Stack>
 				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+				<Stack.Screen name="welcome"></Stack.Screen>
 			</Stack>
 		</ThemeProvider>
 	);

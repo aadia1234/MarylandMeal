@@ -4,7 +4,7 @@ import { SetStateAction, useLayoutEffect, useRef, useState } from "react";
 import NavButton from "../../components/Button";
 // import type { NavigationProps } from "./_layout";
 import { Link, router, useNavigation } from "expo-router";
-import registerUser from "../../scripts/registerUser";
+import registerUser from "../../scripts/createUser.mjs";
 import axios from "axios";
 import { Button, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native";
