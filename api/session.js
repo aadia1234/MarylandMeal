@@ -1,6 +1,4 @@
-import { store } from "expo-router/build/global-state/router-store";
-import { fetchAPI } from ".";
-import * as actionCreators from './actions';
+import axios from "axios";
 
 const SESSION_TIMEOUT_THRESHOLD = 300; // 5 min refresh
 let sessionTimeout = null;
@@ -24,10 +22,20 @@ function onRequestSuccess(response) {
     setSessionTimeout(tokens.access.expiresIn);
 }
 
+export function register(firstName, lastName, email, password) {
+    axios.post("http://localhost:3000/users/", {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password
+    }).then(() => { console.log("worked!"); });
+}
+
 export function authenticate(email, password) {
-    fetchAPI(endPoints.authenticate, {}, "post", {
-        Authorization: `Basic ${new Buffer(`${email}:${password}`).toString("base64")}`
-    }).then(onRequestSuccess);
+    axios.get("http://localhost:3000/users/", {
+        email: email,
+        password: password
+    }).then((res) => { console.log("successfully logged in"); return res })
 }
 
 export function refreshToken() {

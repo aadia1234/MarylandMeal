@@ -4,7 +4,6 @@ import { useLayoutEffect, useRef } from "react";
 import NavButton from "../components/Button";
 // import type { NavigationProps } from "./_layout";
 import { Link, router, useNavigation } from "expo-router";
-import registerUser from "../scripts/createUser.mjs";
 import axios from "axios";
 
 const styles = StyleSheet.create({
@@ -51,18 +50,11 @@ export default function Welcome() {
     }, [navigation]);
 
 	function login() {
-		router.replace("/login")
+		router.push("/login")
 	}
 	
 	function signup() {
-		// router.push("/signup");
-
-		axios.post("http://localhost:3000/users/", {
-			firstName: "node",
-			lastName: "js",
-			email: "12345678@gmail.com",
-			password: "abcdefg"
-		}).then(() => { console.log("worked!"); });
+		router.push("/signup");
 	}
 
 	return (

@@ -3,29 +3,28 @@ import { FormEvent, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import register from "../scripts/createUser.mjs";
+import axios from "axios";
+import { TextInput, View } from "react-native";
+import NavButton from "@/components/Button";
+import * as api from "@/api/session";
 
 
 export default function Signup() {
     const [error, setError] = useState<string>();
-    const router = useRouter();
-    const ref = useRef<HTMLFormElement>(null);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-    async function submit(formData: FormData) {
-        const response = await register({
-            firstName: formData.get("firstName"),
-            lastName: formData.get("lastName"),
-            email: formData.get("email"),
-            password: formData.get("password"),
-        });
-    
-        ref?.current?.reset();
-        
-        if (response?.error) {
-            setError(response.error);
-        } else {
-            console.log("Successfully registered new user!");
-            return router.push("/login");
-        }
+    function submit() {
+        api.register("test", "test2", email, password);
     }
+
+
+    return (
+        <View>
+            <TextInput onChangeText={(text) => setEmail(text)}>email</TextInput>
+            <TextInput onChangeText={(text) => setPassword(text)}>pwd</TextInput>
+            <NavButton text="Register" onPress={submit}></NavButton>
+        </View>
+    );
 }
 

@@ -12,18 +12,3 @@ export default async function connectDB() {
 		return Promise.reject(error);
 	}
 };
-
-/* 
-
-export default async function connectDB() {
-	try {
-        const db = process.env.PUBLIC_EXPO_MONGODB_URI as string;
-        const client = new MongoClient(db);
-		await client.connect();
-	} catch (error) {
-		console.error(error);
-		return Promise.reject(error);
-	}
-};
-
-*/

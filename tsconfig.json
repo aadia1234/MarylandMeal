@@ -15,5 +15,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-, "lib/server.mjs", "lib/routes/users.mjs", "models/User.mjs", "scripts/createUser.mjs", "lib/mongodb.js"  ]
+, "server/server.mjs", "lib/routes/users.mjs", "models/User.mjs", "scripts/createUser.mjs", "server/mongodb.js", "lib/auth.js"  ]
 }
