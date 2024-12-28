@@ -5,7 +5,7 @@ import Link from "next/link";
 import register from "../scripts/createUser.mjs";
 import axios from "axios";
 import { TextInput, View } from "react-native";
-import NavButton from "@/components/Button";
+import NavButton from "@/components/NavButton";
 import * as api from "@/api/session";
 
 

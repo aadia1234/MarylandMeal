@@ -1,7 +1,8 @@
-import { Button, ScrollView, View, StyleSheet } from "react-native";
+import { Button, ScrollView, View, StyleSheet, Text } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { useLayoutEffect } from "react";
 import FoodCard from "@/components/FoodCard";
+import { flightRouterStateSchema } from "next/dist/server/app-render/types";
 
 
 const styles = StyleSheet.create({
@@ -21,8 +22,14 @@ export default function Food() {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            title: "Food",
+            title: "TEST",
             headerLargeTitle: true,
+            headerShadowVisible: false,
+            headerLargeTitleShadowVisible: false,
+            headerSearchBarOptions: {
+                placeHolder: "Search food",
+                hideWhenScrolling: false,
+            },
             headerRight: () => (
                 <Button title="Settings" onPress={() => { /* Handle save action */ }} />
             ),
@@ -31,7 +38,7 @@ export default function Food() {
 
     return (
         <View style={styles.view}>
-            <ScrollView>
+            <ScrollView contentInsetAdjustmentBehavior="automatic" keyboardDismissMode="on-drag">
                 <FoodCard />
                 <FoodCard />
                 <FoodCard />

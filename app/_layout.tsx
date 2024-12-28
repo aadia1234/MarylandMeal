@@ -13,12 +13,12 @@ import { Button } from "react-native";
   
 // export type NavigationProps = NativeStackScreenProps<RootStackParamList, 'Profile'>;
 
-export default function Layout() {
+export default function AppLayout() {
 	return (
 		<ThemeProvider value={Theme}>
 			<Stack>
 				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-				<Stack.Screen name="welcome"></Stack.Screen>
+				{/* <Stack.Screen name="foodItem"></Stack.Screen> */}
 			</Stack>
 		</ThemeProvider>
 	);

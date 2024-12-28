@@ -2,7 +2,7 @@ import { FormEvent, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { View, Text, TextInput } from "react-native";
-import NavButton from "@/components/Button";
+import NavButton from "@/components/NavButton";
 import * as api from "@/api/session";
 // import type { NavigationProps } from "./_layout";
 

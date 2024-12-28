@@ -1,7 +1,6 @@
 import { Theme } from '@/constants/Colors';
-import { Link } from 'expo-router';
 import { useRef } from 'react';
-import { View, Pressable, Animated, StyleSheet, Text } from "react-native";
+import { Pressable, Animated, StyleSheet, Text } from "react-native";
 
 
 const styles = (animated?: any) => StyleSheet.create({

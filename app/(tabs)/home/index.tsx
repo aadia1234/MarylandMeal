@@ -1,10 +1,10 @@
 import { Theme } from "@/constants/Colors";
 import { Text, View, Image, StyleSheet, TextInput, ImageSourcePropType, Dimensions } from "react-native";
 import { SetStateAction, useLayoutEffect, useRef, useState } from "react";
-import NavButton from "../../components/Button";
+import NavButton from "../../../components/NavButton";
 // import type { NavigationProps } from "./_layout";
 import { Link, router, useNavigation } from "expo-router";
-import registerUser from "../../scripts/createUser.mjs";
+import registerUser from "../../../scripts/createUser.mjs";
 import axios from "axios";
 import { Button, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native";
@@ -86,45 +86,50 @@ export default function Home() {
 
     // make padding between title and text the same
     // need to add animation to navigation bar
+    // useLayoutEffect(() => {
+    //     navigation.setOptions({
+    //         headerTitle: () => (
+    //             <View style={styles.headerView}>
+    //                 <View style={styles.titleHeader}>
+    //                     <Text style={styles.title}>{date.toLocaleDateString(undefined, options)}</Text>
+    //                     <IconButton icon="chevron-down" background={false} onPress={() => { pickDate(new Date()) }} />
+    //                 </View>
+    //                 <View style={styles.icon}>
+    //                     <IconButton icon="plus" background={true} onPress={() => { pickDate(new Date()) }} />
+    //                 </View>
+    //             </View>
+    //         ),
+    //         headerShown: true,
+    //         headerShadowVisible: false,
+    //         headerBackTitleVisible: true, 
+    //         automaticallyAdjustContentInsets: false,
+    //         headerStyle: styles.header
+    //     });
+    // }, [navigation]);
+
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerTitle: () => (
-                <View style={styles.headerView}>
-                    <View style={styles.titleHeader}>
-                        <Text style={styles.title}>{date.toLocaleDateString(undefined, options)}</Text>
-                        <IconButton icon="chevron-down" background={false} onPress={() => { pickDate(new Date()) }} />
-                    </View>
-                    <View style={styles.icon}>
-                        <IconButton icon="plus" background={true} onPress={() => { pickDate(new Date()) }} />
-                    </View>
+            title: date.toLocaleDateString(undefined, options),
+            headerLargeTitle: true,
+            headerShadowVisible: false,
+            headerLargeTitleShadowVisible: false,
+            headerSearchBarOptions: {
+                placeHolder: "Search food",
+                hideWhenScrolling: false,
+            },
+            headerRight: () => (
+                <View>
+                    <IconButton icon="chevron-down" background={false} onPress={() => { pickDate(new Date()) }} />
+                    {/* <IconButton icon="plus" background={true} onPress={() => { pickDate(new Date()) }} /> */}
                 </View>
             ),
-            headerShown: true,
-            headerShadowVisible: false,
-            headerBackTitleVisible: true, 
-            automaticallyAdjustContentInsets: false,
-            headerStyle: styles.header
         });
     }, [navigation]);
+
 
     function pickDate(newDate: Date) {
         setDate(newDate)
     }
-
-	function login() {
-		router.replace("/food");
-	}
-	
-	function signup() {
-		// router.push("/signup");
-
-		axios.post("http://localhost:3000/users/signup/", {
-			firstName: "axios",
-			lastName: "works",
-			email: "1234@gmail.com",
-			password: "abcdefg"
-		}).then(() => { console.log("worked!"); });
-	}
 
 	return (
 		<SafeAreaView style={styles.view}>

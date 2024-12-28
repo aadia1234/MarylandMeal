@@ -1,7 +1,7 @@
 import { Theme } from "@/constants/Colors";
 import { Text, View, Image, StyleSheet } from "react-native";
 import { useLayoutEffect, useRef } from "react";
-import NavButton from "../components/Button";
+import NavButton from "../components/NavButton";
 // import type { NavigationProps } from "./_layout";
 import { Link, router, useNavigation } from "expo-router";
 import axios from "axios";
