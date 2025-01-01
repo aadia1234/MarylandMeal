@@ -6,11 +6,11 @@ import NavButton from "../components/NavButton";
 import { Link, Redirect, router, useNavigation } from "expo-router";
 import registerUser from "../scripts/createUser.mjs";
 import axios from "axios";
-import Welcome from "./welcome";
-
+import Welcome from "./auth/welcome";
+import "global.css";
+import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
+import { Button, ButtonGroup, ButtonText } from "@/components/ui/button";
 
 export default function Index() {
-	return (
-		<Redirect href="/home"></Redirect>
-	);
+  return <Redirect href="/auth/welcome"></Redirect>;
 }
