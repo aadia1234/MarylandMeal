@@ -7,6 +7,9 @@
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "tailwind.config": [
+        "./tailwind.config.js"
       ]
     }
   },
@@ -14,6 +17,13 @@
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-, "server/server.mjs", "lib/routes/users.mjs", "models/User.mjs", "scripts/createUser.mjs", "server/mongodb.js", "lib/auth.js"  ]
+    "expo-env.d.ts",
+    "server/server.mjs",
+    "lib/routes/users.mjs",
+    "models/User.mjs",
+    "scripts/createUser.mjs",
+    "server/mongodb.js",
+    "lib/auth.js",
+    "nativewind-env.d.ts"
+  ]
 }
