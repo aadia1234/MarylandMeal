@@ -12,5 +12,5 @@ import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import { Button, ButtonGroup, ButtonText } from "@/components/ui/button";
 
 export default function Index() {
-  return <Redirect href="/auth/welcome"></Redirect>;
+  return <Redirect href="/(tabs)/profile"></Redirect>;
 }
