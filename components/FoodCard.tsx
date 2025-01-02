@@ -1,7 +1,13 @@
 import { Theme } from "@/constants/Colors";
 import { router } from "expo-router";
 import { useRef } from "react";
-import { View, Text, StyleSheet, Image, Pressable, Animated } from "react-native";
+import { View, StyleSheet, Image, Pressable, Animated } from "react-native";
+import { Card } from "./ui/card";
+import { Center } from "./ui/center";
+import { VStack } from "./ui/vstack";
+import { Text } from "./ui/text";
+import { HStack } from "./ui/hstack";
+import { Button, ButtonText } from "./ui/button";
 
 
 // fix border problems
@@ -76,25 +82,48 @@ export default function FoodCard() {
         router.navigate({pathname: "/food/foodItem", params: {id}})
     }
 
+    // <Animated.View style={animatedStyle(animated).button}>
+    //   <Pressable onPressIn={fadeIn} onPressOut={fadeOut} onPress={onPress}>
+    //     <View style={styles.border}>
+    //       <View style={styles.view}>
+    //         <Image
+    //           style={styles.image}
+    //           source={require("../assets/images/MarylandMeal.png")}
+    //         />
+    //         <View style={styles.textContent}>
+    //           <Text style={styles.textTitle}>Grilled Chicken</Text>
+    //           <Text style={styles.textBody}>160 Cal</Text>
+    //           <Text style={styles.textBody}>100g 100g 100g</Text>
+    //         </View>
+    //       </View>
+    //     </View>
+    //   </Pressable>
+    // </Animated.View>;
+
     
     return (
-        <Animated.View style={animatedStyle(animated).button}>
-            <Pressable onPressIn={fadeIn} onPressOut={fadeOut} onPress={onPress}>
-                <View style={styles.border}>
-                    <View style={styles.view}>
-                        <Image
-                            style={styles.image}
-                            source={require("../assets/images/MarylandMeal.png")}
-                        />
-                        <View style={styles.textContent}>
-                            <Text style={styles.textTitle}>Grilled Chicken</Text>
-                            <Text style={styles.textBody}>160 Cal</Text>
-                            <Text style={styles.textBody}>100g 100g 100g</Text>
-                        </View>
-                    </View>
-                </View>
-            </Pressable>
-        </Animated.View>
+      <Button
+        variant="outline"
+        onPress={onPress}
+        className="w-fit h-36 my-2 justify-center p-2 border border-outline-200 bg-white"
+      >
+        <HStack space="2xl" className="w-full h-fit">
+          <Image
+            source={require("@/assets/images/MarylandMeal.png")}
+            className="w-32 h-32 rounded-sm"
+            alt="image"
+          />
+          <VStack space="md" className="mt-2">
+            <Text bold size="2xl">
+              Grilled Chicken
+            </Text>
+            <VStack>
+              <Text bold>999 Cal</Text>
+              <Text bold>100g 100g 100g</Text>
+            </VStack>
+          </VStack>
+        </HStack>
+      </Button>
     );
 
 }
