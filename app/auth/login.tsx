@@ -97,7 +97,8 @@ const LoginWithLeftBackground = () => {
           },
         });
         // reset();
-        router.replace("/(tabs)/home/")
+        api.authenticate(data.email, data.password);
+        router.replace("/(tabs)/home");
       }
     } else {
       setValidated({ emailValid: false, passwordValid: true });

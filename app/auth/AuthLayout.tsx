@@ -50,11 +50,11 @@ export default function AuthLayout(props: any) {
         contentContainerStyle={{ flexGrow: 1 }}
       >
         <HStack className="w-full h-full bg-current flex-grow justify-center">
-          <VStack className="md:items-center md:justify-center flex-1 w-full  p-9 md:gap-10 gap-16 md:m-auto md:w-1/2 h-full">
+          <VStack className="md:items-center md:justify-center flex-1 w-full p-9 md:gap-10 gap-16 md:m-auto md:w-1/2 h-full">
             {props.children}
           </VStack>
           <VStack
-            className="relative hidden md:flex h-full w-full flex-1  items-center  justify-center"
+            className="relative hidden md:flex h-full w-full flex-1 items-center justify-center"
             space="md"
           >
             <Image

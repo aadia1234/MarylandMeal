@@ -25,5 +25,5 @@
     "server/mongodb.js",
     "lib/auth.js",
     "nativewind-env.d.ts"
-  ]
+, "react-native.config.js"  ]
 }

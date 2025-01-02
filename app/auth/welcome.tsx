@@ -15,6 +15,7 @@ import { Icon } from "@/components/ui/icon";
 import { Image } from "@/components/ui/image";
 import { HStack } from "@/components/ui/hstack";
 import { Text } from "@/components/ui/text";
+import { Heading } from "@/components/ui/heading";
 
 const styles = StyleSheet.create({
   view: {
@@ -70,19 +71,16 @@ const SplashScreen = () => {
       className="w-full max-w-[440px] items-center h-full justify-center"
       space="4xl"
     >
-      <HStack className="w-full" space="2xl">
+      <HStack className="w-fit" space="md">
         <Image
           size="md"
-          // className="w-[219px] h-10"
           source={require("../../assets/images/MarylandMeal.png")}
           alt="MarylandMeals"
-          className="rounded-xl"
+          className="rounded-xl w-11 h-11"
         />
-        <Center>
-          <Text bold size="4xl">
-            MarylandMeals
-          </Text>
-        </Center>
+        <Heading bold size="3xl">
+          MarylandMeals
+        </Heading>
       </HStack>
       <VStack className="w-full" space="lg">
         <Button className="w-full" onPress={login}>

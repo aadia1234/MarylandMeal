@@ -42,6 +42,7 @@ import { AlertTriangle } from "lucide-react-native";
 import { Pressable } from "@/components/ui/pressable";
 import AuthLayout from "./AuthLayout";
 // import useRouter from "@unitools/router";
+import * as api from "@/api/session";
 
 const signUpSchema = z.object({
   email: z.string().min(1, "Email is required").email(),
@@ -92,6 +93,7 @@ const SignUpWithLeftBackground = () => {
           );
         },
       });
+      api.register("firstName", "lastName", data.email, data.password);
       reset();
     } else {
       toast.show({
