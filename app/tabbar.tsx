@@ -10,6 +10,7 @@ import Food from "./(tabs)/food";
 import { Box } from "@/components/ui/box";
 import { ScrollView } from "@/components/ui/scroll-view";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Profile from "./(tabs)/profile";
 
 const bottomTabs = [
   {
@@ -31,6 +32,8 @@ const Content = (props: any) => {
     return <Home />;
   } else if (props.activeTab === "Food") {
     return <Food />;
+  } else {
+    return <Profile />;
   }
 };
 
