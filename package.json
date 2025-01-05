@@ -76,6 +76,7 @@
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "lucide-react-native": "^0.469.0",
+    "metro": "^0.81.0",
     "mongodb": "^6.9.0",
     "mongoose": "^8.7.2",
     "nativewind": "^4.1.23",

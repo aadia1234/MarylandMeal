@@ -1,5 +1,5 @@
 import { Theme } from "@/constants/Colors";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { SetStateAction, useLayoutEffect, useRef, useState } from "react";
 // import NavButton from "../../../components/NavButton";
 // import type { NavigationProps } from "./_layout";
@@ -22,73 +22,39 @@ import { HStack } from "@/components/ui/hstack";
 import { Heading } from "@/components/ui/heading";
 import { isWeb } from "@gluestack-ui/nativewind-utils/IsWeb";
 import { Grid, GridItem } from "@/components/ui/grid";
-import { CalendarClock, CalendarClockIcon, MinusIcon, PlusIcon } from "lucide-react-native";
+import {
+  CalendarClock,
+  CalendarClockIcon,
+  MessageCircle,
+  MinusIcon,
+  Plus,
+  PlusIcon,
+  SlidersHorizontal,
+  User,
+} from "lucide-react-native";
 import { Card } from "@/components/ui/card";
 import { Image } from "@/components/ui/image";
 import { Center } from "@/components/ui/center";
-import { Accordion, AccordionContent, AccordionContentText, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionContentText,
+  AccordionHeader,
+  AccordionIcon,
+  AccordionItem,
+  AccordionTitleText,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Divider } from "@/components/ui/divider";
 import { ChevronDownIcon, ChevronUpIcon } from "@/components/ui/icon";
 import React from "react";
+import Tabbar from "../tabbar";
 
 // import dayjs from 'dayjs';
 
-const styles = StyleSheet.create({
-  view: {
-    flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
-    width: "100%",
-  },
-  scrollView: {
-    // height: "auto",
-    // backgroundColor: "green"
-    padding: 15,
-  },
-  text: {
-    color: Theme.colors.text,
-    fontWeight: "bold",
-    fontSize: 20,
-  },
-  macros: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "stretch",
-    margin: "auto",
-    columnGap: 20,
-    width: "100%",
-  },
-  header: {
-    height: 150,
-  },
-  headerView: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-  },
-  title: {
-    fontSize: 35,
-    color: Theme.colors.primary,
-    textAlign: "left",
-    fontWeight: "bold",
-    margin: "auto",
-  },
-  titleHeader: {
-    flexDirection: "row",
-    gap: 10,
-  },
-  icon: {},
-});
-
 const DashboardLayout = (props: any) => {
-  const [isSidebarVisible, setIsSidebarVisible] = useState(
-    props.isSidebarVisible
-  );
-  function toggleSidebar() {
-    setIsSidebarVisible(!isSidebarVisible);
-  }
   return (
-    <VStack className="h-full w-full bg-current">
+    <VStack className="h-fit w-full bg-current">
       <VStack className="h-full w-full">
         <HStack className="h-full w-full">
           <Box className="hidden md:flex h-full"></Box>
@@ -117,7 +83,7 @@ const MacroCard = (props: any) => {
       </Card>
     </Center>
   );
-}
+};
 
 const Dashboard = () => {
   const navigation = useNavigation();
@@ -135,106 +101,74 @@ const Dashboard = () => {
   }
 
   return (
-    // <SafeAreaView style={styles.view}>
-    //   <ScrollView contentContainerStyle={styles.scrollView}>
-    //     {/* <Calendar date={date} onChange={pickDate}></Calendar> */}
-    //     <MacroCard text="Calories" num={3000}></MacroCard>
-    //     <View style={styles.macros}>
-    //       <MacroCard text="Protein" num={100}></MacroCard>
-    //       <MacroCard text="Carbs" num={100}></MacroCard>
-    //       <MacroCard text="Fat" num={100}></MacroCard>
-    //     </View>
-    //     <View>
-    //       <Text style={styles.text}>Meals Logged</Text>
-    //       <FoodCard></FoodCard>
-    //     </View>
-    //   </ScrollView>
-    // </SafeAreaView>
-    <Box className="flex-1 h-full">
-      <ScrollView
-        className="mb-20 md:mb-2 h-full"
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          paddingBottom: isWeb ? 0 : 100,
-          flexGrow: 1,
-        }}
-      >
-        <VStack className="p-4 pb-0 md:px-10 md:pt-6 w-full" space="2xl">
-          {/* font-roboto not working with ios */}
-          <HStack className="w-full items-center justify-between">
-            <Heading size="3xl" className="font-roboto">
-              Jan 1st, 1970
-            </Heading>
-            <Button size="lg" className="rounded-full p-3.5">
-              <ButtonIcon as={CalendarClock} />
-            </Button>
-          </HStack>
-          <VStack>
-            <MacroCard text="Calories" num={0} />
-            <HStack space="2xl" className="w-full justify-between">
-              <MacroCard text="Calories" num={0} />
-              <MacroCard text="Calories" num={0} />
-              <MacroCard text="Calories" num={0} />
-            </HStack>
+    <VStack className="md:px-10 md:pt-6 w-full" space="2xl">
+      {/* font-roboto not working with ios */}
+      <HStack className="w-full items-center justify-between">
+        <Heading size="3xl" className="font-roboto">
+          Jan 1st, 1970
+        </Heading>
+        <Button size="lg" className="rounded-full p-3.5">
+          <ButtonIcon as={CalendarClock} />
+        </Button>
+      </HStack>
+      <VStack>
+        <MacroCard text="Calories" num={0} />
+        <HStack space="2xl" className="w-full justify-between">
+          <MacroCard text="Calories" num={0} />
+          <MacroCard text="Calories" num={0} />
+          <MacroCard text="Calories" num={0} />
+        </HStack>
 
-            <Center>
-              <Accordion
-                size="md"
-                variant="unfilled"
-                type="single"
-                defaultValue={["a"]}
-                className="m-5 w-full border border-outline-200"
-              >
-                <AccordionItem value="a">
-                  <AccordionHeader>
-                    <AccordionTrigger>
-                      {({ isExpanded }) => {
-                        return (
-                          <>
-                            <AccordionTitleText>
-                              Meals Logged
-                            </AccordionTitleText>
-                            {isExpanded ? (
-                              <AccordionIcon
-                                as={ChevronUpIcon}
-                                className="ml-3"
-                              />
-                            ) : (
-                              <AccordionIcon
-                                as={ChevronDownIcon}
-                                className="ml-3"
-                              />
-                            )}
-                          </>
-                        );
-                      }}
-                    </AccordionTrigger>
-                  </AccordionHeader>
-                  <AccordionContent>
-                    {/* <AccordionContentText>
-                      To place an order, simply select the products you want,
-                      proceed to checkout, provide shipping and payment
-                      information, and finalize your purchase.
-                    </AccordionContentText> */}
-                    <FoodCard />
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </Center>
-          </VStack>
-        </VStack>
-      </ScrollView>
-    </Box>
+        <Center>
+          <Accordion
+            size="md"
+            variant="unfilled"
+            type="single"
+            defaultValue={["a"]}
+            className="m-5 w-full border border-outline-200"
+          >
+            <AccordionItem value="a">
+              <AccordionHeader>
+                <AccordionTrigger>
+                  {({ isExpanded }) => {
+                    return (
+                      <>
+                        <AccordionTitleText>Meals Logged</AccordionTitleText>
+                        {isExpanded ? (
+                          <AccordionIcon as={ChevronUpIcon} className="ml-3" />
+                        ) : (
+                          <AccordionIcon
+                            as={ChevronDownIcon}
+                            className="ml-3"
+                          />
+                        )}
+                      </>
+                    );
+                  }}
+                </AccordionTrigger>
+              </AccordionHeader>
+              <AccordionContent>
+                <FoodCard
+                  name={"Test"}
+                  description={"test"}
+                  image={require("@/assets/images/MarylandMeal.png")}
+                  calories={0}
+                  fat={0}
+                  carbs={0}
+                  protein={0}
+                />
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </Center>
+      </VStack>
+    </VStack>
   );
 };
 
+
+
 export default function Home() {
-  return (
-    <SafeAreaView className="bg-white">
-      <DashboardLayout title="Dashboard" isSidebarVisible={true}>
-        <Dashboard />
-      </DashboardLayout>
-      {/* <MobileFooter footerIcons={bottomTabsList} /> */}
-    </SafeAreaView>
-  );
+
+  return <Dashboard />;
 }

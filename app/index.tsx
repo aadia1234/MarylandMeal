@@ -10,7 +10,11 @@ import Welcome from "./auth/welcome";
 import "global.css";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import { Button, ButtonGroup, ButtonText } from "@/components/ui/button";
+import Tabbar from "./tabbar";
+import React from "react";
+import Home from "./(tabs)/home";
+import { Box } from "lucide-react-native";
 
 export default function Index() {
-  return <Redirect href="/home"></Redirect>;
+  return <Redirect href="/tabbar"></Redirect>;
 }

@@ -5,12 +5,8 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "tailwind.config": [
-        "./tailwind.config.js"
-      ]
+      "@/*": ["./*"],
+      "tailwind.config": ["./tailwind.config.js"]
     }
   },
   "include": [
@@ -24,6 +20,7 @@
     "scripts/createUser.mjs",
     "server/mongodb.js",
     "lib/auth.js",
-    "nativewind-env.d.ts"
-, "react-native.config.js"  ]
+    "nativewind-env.d.ts",
+    "react-native.config.js"
+  ]
 }

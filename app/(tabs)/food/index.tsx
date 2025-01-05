@@ -1,67 +1,60 @@
 import { Button, ScrollView, View, StyleSheet, Text } from "react-native";
-import { useNavigation } from '@react-navigation/native';
-import { useLayoutEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { useLayoutEffect, useState } from "react";
 import FoodCard from "@/components/FoodCard";
 import { flightRouterStateSchema } from "next/dist/server/app-render/types";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-
-const styles = StyleSheet.create({
-	view: {
-        margin: "auto",
-        width: "100%",
-        height: "100%",
-		justifyContent: "center",
-		alignItems: "stretch",
-        // backgroundColor: "white"
-		// backgroundColor: "white"
-	}
-});
-
+import { Input, InputField, InputIcon, InputSlot } from "@/components/ui/input";
+import { SearchIcon } from "lucide-react-native";
+import { VStack } from "@/components/ui/vstack";
+import { Heading } from "@/components/ui/heading";
 
 export default function Food() {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
+  const [searchText, setSearchText] = useState("");
+  const [menu, setMenu] = useState([
+    {
+      name: "Grilled Chicken",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel ligula non ante auctor cursus at sed erat. Cras gravida neque libero, viverra auctor nunc condimentum vel. Mauris odio nisi, bibendum eu efficitur ut, vulputate in velit. Aenean vehicula cursus magna. Ut vestibulum ornare augue, a lobortis dui finibus non. Cras commodo ipsum eget nisl consequat, ut accumsan erat dapibus. Duis at suscipit leo. Nulla odio ipsum, tempus at maximus sit amet, egestas id turpis.",
+      image: require("@/assets/images/MarylandMeal.png"),
+      calories: 1000,
+      carbs: 60,
+      protein: 45,
+      fat: 30,
+    },
+    {
+      name: "Rice Chicken",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel ligula non ante auctor cursus at sed erat. Cras gravida neque libero, viverra auctor nunc condimentum vel. Mauris odio nisi, bibendum eu efficitur ut, vulputate in velit. Aenean vehicula cursus magna. Ut vestibulum ornare augue, a lobortis dui finibus non. Cras commodo ipsum eget nisl consequat, ut accumsan erat dapibus. Duis at suscipit leo. Nulla odio ipsum, tempus at maximus sit amet, egestas id turpis.",
+      image: require("@/assets/images/MarylandMeal.png"),
+      calories: 1000,
+      carbs: 60,
+      protein: 45,
+      fat: 30,
+    },
+  ]);
 
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            title: "TEST",
-            headerLargeTitle: true,
-            headerShadowVisible: false,
-            headerLargeTitleShadowVisible: false,
-            headerSearchBarOptions: {
-                placeHolder: "Search food",
-                hideWhenScrolling: false,
-            },
-            headerRight: () => (
-                <Button title="Settings" onPress={() => { /* Handle save action */ }} />
-            ),
-        });
-    }, [navigation]);
+  return (
+    <View>
+      <VStack space="md">
+        <Heading size="3xl" className="font-roboto">
+          Jan 1st, 1970
+        </Heading>
+        <Input>
+          <InputSlot className="pl-3">
+            <InputIcon as={SearchIcon} />
+          </InputSlot>
+          <InputField
+            onChangeText={(text) => setSearchText(text)}
+            placeholder="Search..."
+          />
+        </Input>
+      </VStack>
 
-    return (
-      <SafeAreaView style={styles.view}>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          keyboardDismissMode="on-drag"
-          className="p-4"
-        >
-          <FoodCard />
-          <FoodCard />
-          <FoodCard />
-          <FoodCard />
-          <FoodCard />
-          <FoodCard />
-          <FoodCard />
-          <FoodCard />
-          <FoodCard />
-          <FoodCard />
-          <FoodCard />
-          <FoodCard />
-          <FoodCard />
-          <FoodCard />
-          <FoodCard />
-        </ScrollView>
-      </SafeAreaView>
-    );
-
+      <VStack className="mt-5">
+        {menu.map((food: FoodProps, i) => <FoodCard key={i} {...food} />)}
+      </VStack>
+    </View>
+  );
 }
