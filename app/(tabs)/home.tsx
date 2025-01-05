@@ -54,14 +54,14 @@ import Tabbar from "../tabbar";
 
 const DashboardLayout = (props: any) => {
   return (
-    <VStack className="h-fit w-full bg-current">
+    <ScrollView showsVerticalScrollIndicator={false} className="h-fit w-full bg-current">
       <VStack className="h-full w-full">
         <HStack className="h-full w-full">
           <Box className="hidden md:flex h-full"></Box>
           <VStack className="w-full">{props.children}</VStack>
         </HStack>
       </VStack>
-    </VStack>
+    </ScrollView>
   );
 };
 
@@ -149,6 +149,7 @@ const Dashboard = () => {
               </AccordionHeader>
               <AccordionContent>
                 <FoodCard
+                  id={1}
                   name={"Test"}
                   description={"test"}
                   image={require("@/assets/images/MarylandMeal.png")}
@@ -166,9 +167,10 @@ const Dashboard = () => {
   );
 };
 
-
-
 export default function Home() {
-
-  return <Dashboard />;
+  return (
+    <DashboardLayout>
+      <Dashboard />
+    </DashboardLayout>
+  );
 }

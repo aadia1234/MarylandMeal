@@ -12,8 +12,7 @@ import { Button, ButtonText } from "./ui/button";
 export default function FoodCard(props: FoodProps) {
 
   const onPress = () => {
-    const id: number = 54;
-    router.push({ pathname: "/(tabs)/food/foodItem" });
+    router.push({ pathname: "/(tabs)/food/[id]", params: { id: props.id } });
   };
 
   return (
