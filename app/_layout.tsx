@@ -9,7 +9,7 @@ import { Stack } from "expo-router";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button, View } from "react-native";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
-import Tabbar from "./tabbar";
+import Tabbar from "./(tabs)/tabbar";
 
 // type RootStackParamList = {
 // 	Login: {userId: string};

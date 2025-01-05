@@ -5,12 +5,12 @@ import { Pressable } from "@/components/ui/pressable";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { FlatList, View } from "react-native";
-import Home from "./(tabs)/home";
-import Food from "./(tabs)/food";
+import Home from "./home";
+import Food from "./food";
 import { Box } from "@/components/ui/box";
 import { ScrollView } from "@/components/ui/scroll-view";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Profile from "./(tabs)/profile";
+import Profile from "./profile";
 
 const bottomTabs = [
   {

@@ -37,19 +37,19 @@ import {
   AvatarFallbackText,
   AvatarImage,
 } from "@/components/ui/avatar";
-import { ProfileIcon } from "./assets/icons/profile";
+import { ProfileIcon } from "../assets/icons/profile";
 import { SafeAreaView } from "@/components/ui/safe-area-view";
 import { Center } from "@/components/ui/center";
 import { cn } from "@gluestack-ui/nativewind-utils/cn";
 import { Keyboard, Platform } from "react-native";
-import { SubscriptionIcon } from "./assets/icons/subscription";
-import { DownloadIcon } from "./assets/icons/download";
-import { FaqIcon } from "./assets/icons/faq";
-import { NewsBlogIcon } from "./assets/icons/news-blog";
-import { HomeIcon } from "./assets/icons/home";
-import { GlobeIcon } from "./assets/icons/globe";
-import { InboxIcon } from "./assets/icons/inbox";
-import { HeartIcon } from "./assets/icons/heart";
+import { SubscriptionIcon } from "../assets/icons/subscription";
+import { DownloadIcon } from "../assets/icons/download";
+import { FaqIcon } from "../assets/icons/faq";
+import { NewsBlogIcon } from "../assets/icons/news-blog";
+import { HomeIcon } from "../assets/icons/home";
+import { GlobeIcon } from "../assets/icons/globe";
+import { InboxIcon } from "../assets/icons/inbox";
+import { HeartIcon } from "../assets/icons/heart";
 import { Divider } from "@/components/ui/divider";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -74,8 +74,8 @@ import {
   SelectPortal,
   SelectTrigger,
 } from "@/components/ui/select";
-import { CameraSparklesIcon } from "./assets/icons/camera-sparkles";
-import { EditPhotoIcon } from "./assets/icons/edit-photo";
+import { CameraSparklesIcon } from "../assets/icons/camera-sparkles";
+import { EditPhotoIcon } from "../assets/icons/edit-photo";
 import { isWeb } from "@gluestack-ui/nativewind-utils/IsWeb";
 
 type MobileHeaderProps = {

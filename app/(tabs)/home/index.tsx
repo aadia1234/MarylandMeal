@@ -54,7 +54,10 @@ import Tabbar from "../tabbar";
 
 const DashboardLayout = (props: any) => {
   return (
-    <ScrollView showsVerticalScrollIndicator={false} className="h-fit w-full bg-current">
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      className="h-fit w-full bg-current"
+    >
       <VStack className="h-full w-full">
         <HStack className="h-full w-full">
           <Box className="hidden md:flex h-full"></Box>
