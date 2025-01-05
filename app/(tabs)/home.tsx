@@ -113,7 +113,7 @@ const Dashboard = () => {
       </HStack>
       <VStack>
         <MacroCard text="Calories" num={0} />
-        <HStack space="2xl" className="w-full justify-between">
+        <HStack space="xl" className="w-full justify-between">
           <MacroCard text="Calories" num={0} />
           <MacroCard text="Calories" num={0} />
           <MacroCard text="Calories" num={0} />
