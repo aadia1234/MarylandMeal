@@ -9,7 +9,7 @@ import axios from "axios";
 import { SafeAreaView } from "react-native";
 import FoodCard from "@/components/FoodCard";
 // import MacroCard from "@/components/MacroCard";
-import DateTimePicker from "react-native-ui-datepicker";
+import DateTimePicker, { DateType } from "react-native-ui-datepicker";
 import Calendar from "@/components/Calendar";
 import { BlurView } from "expo-blur";
 import IconButton from "@/components/IconButton";
@@ -49,8 +49,8 @@ import { Divider } from "@/components/ui/divider";
 import { ChevronDownIcon, ChevronUpIcon } from "@/components/ui/icon";
 import React from "react";
 import Tabbar from "../tabbar";
+import { Popover, PopoverArrow, PopoverBackdrop, PopoverBody, PopoverContent } from "@/components/ui/popover";
 
-// import dayjs from 'dayjs';
 
 const DashboardLayout = (props: any) => {
   return (
@@ -93,33 +93,27 @@ const Dashboard = () => {
   const [date, setDate] = useState(new Date());
 
   const options: Intl.DateTimeFormatOptions = {
-    year: undefined,
+    year: "numeric",
     month: "short",
     day: "numeric",
-    weekday: "short",
+    weekday: undefined,
   };
-
-  function pickDate(newDate: Date) {
-    setDate(newDate);
-  }
 
   return (
     <VStack className="md:px-10 md:pt-6 w-full" space="2xl">
       {/* font-roboto not working with ios */}
       <HStack className="w-full items-center justify-between">
         <Heading size="3xl" className="font-roboto">
-          Jan 1st, 1970
+          {date.toLocaleDateString("en-us", options)}
         </Heading>
-        <Button size="lg" className="rounded-full p-3.5">
-          <ButtonIcon as={CalendarClock} />
-        </Button>
+        <Calendar date={date} setDate={setDate} placement="bottom" />
       </HStack>
       <VStack>
         <MacroCard text="Calories" num={0} />
         <HStack space="xl" className="w-full justify-between">
-          <MacroCard text="Calories" num={0} />
-          <MacroCard text="Calories" num={0} />
-          <MacroCard text="Calories" num={0} />
+          <MacroCard text="Carbs" num={0} />
+          <MacroCard text="Protein" num={0} />
+          <MacroCard text="Fat" num={0} />
         </HStack>
 
         <Center>

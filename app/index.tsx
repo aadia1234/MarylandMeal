@@ -12,7 +12,7 @@ import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import { Button, ButtonGroup, ButtonText } from "@/components/ui/button";
 import Tabbar from "./(tabs)/tabbar";
 import React from "react";
-import Home from "./(tabs)/home";
+import Home from "./(tabs)/home/home";
 import { Box } from "lucide-react-native";
 
 export default function Index() {
