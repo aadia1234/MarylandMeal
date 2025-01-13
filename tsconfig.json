@@ -16,11 +16,12 @@
     "expo-env.d.ts",
     "server/server.mjs",
     "lib/routes/users.mjs",
-    "models/User.mjs",
+    "models/UserModel.mjs",
     "scripts/createUser.mjs",
-    "server/mongodb.js",
+    "server/mongodb.mjs",
     "lib/auth.js",
     "nativewind-env.d.ts",
-    "react-native.config.js"
+    "react-native.config.js",
+    "server/auth.ts"
   ]
 }

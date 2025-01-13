@@ -39,22 +39,8 @@ import { Pressable } from "@/components/ui/pressable";
 // import useRouter from "@unitools/router";
 import { router } from "expo-router";
 import AuthLayout from "./AuthLayout";
-import * as api from "@/api/session";
-
-const USERS = [
-  {
-    email: "gabrial@gmail.com",
-    password: "Gabrial@123",
-  },
-  {
-    email: "tom@gmail.com",
-    password: "Tom@123",
-  },
-  {
-    email: "thomas@gmail.com",
-    password: "Thomas@1234",
-  },
-];
+import * as api from "@/api/userSession";
+import { UserDocument } from "@/models/UserDocument";
 
 const loginSchema = z.object({
   email: z.string().min(1, "Email is required").email(),
@@ -64,7 +50,14 @@ const loginSchema = z.object({
 
 type LoginSchemaType = z.infer<typeof loginSchema>;
 
-const LoginWithLeftBackground = () => {
+const LoginView = () => {
+  const toast = useToast();
+  const [showPassword, setShowPassword] = useState(false);
+  const [validated, setValidated] = useState({
+    emailValid: true,
+    passwordValid: true,
+  });
+
   const {
     control,
     handleSubmit,
@@ -73,38 +66,6 @@ const LoginWithLeftBackground = () => {
   } = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
   });
-  const toast = useToast();
-  const [validated, setValidated] = useState({
-    emailValid: true,
-    passwordValid: true,
-  });
-
-  const onSubmit = (data: LoginSchemaType) => {
-    const user = USERS.find((element) => element.email === data.email);
-    if (user) {
-      if (user.password !== data.password)
-        setValidated({ emailValid: true, passwordValid: false });
-      else {
-        setValidated({ emailValid: true, passwordValid: true });
-        toast.show({
-          placement: "bottom right",
-          render: ({ id }) => {
-            return (
-              <Toast nativeID={id} variant="solid" action="success">
-                <ToastTitle>Logged in successfully!</ToastTitle>
-              </Toast>
-            );
-          },
-        });
-        // reset();
-        api.authenticate(data.email, data.password);
-        router.replace("/(tabs)/home");
-      }
-    } else {
-      setValidated({ emailValid: false, passwordValid: true });
-    }
-  };
-  const [showPassword, setShowPassword] = useState(false);
 
   const handleState = () => {
     setShowPassword((showState) => {
@@ -115,6 +76,30 @@ const LoginWithLeftBackground = () => {
     Keyboard.dismiss();
     handleSubmit(onSubmit)();
   };
+
+  const onSubmit = async (data: LoginSchemaType) => {
+    const user: UserDocument = await api.authenticate(data.email, data.password);
+
+    if (user) {
+      setValidated({ emailValid: true, passwordValid: true });
+      // toast.show({
+      //   placement: "bottom right",
+      //   render: ({ id }) => {
+      //     return (
+      //       <Toast nativeID={id} variant="solid" action="success">
+      //         <ToastTitle>Logged in successfully!</ToastTitle>
+      //       </Toast>
+      //     );
+      //   },
+      // });
+      router.replace("/tabbar");
+    } else {
+      setValidated({ emailValid: false, passwordValid: false });
+    }
+  };
+
+
+
 
   return (
     <VStack className="max-w-[440px] w-full" space="md">
@@ -263,7 +248,7 @@ const LoginWithLeftBackground = () => {
             variant="outline"
             action="secondary"
             className="w-full gap-1"
-            onPress={() => {}}
+            onPress={() => { }}
           >
             <ButtonText className="font-medium">
               Continue with Google
@@ -290,7 +275,7 @@ const LoginWithLeftBackground = () => {
 export default function Login() {
   return (
     <AuthLayout>
-      <LoginWithLeftBackground />
+      <LoginView />
     </AuthLayout>
   );
-};
+}

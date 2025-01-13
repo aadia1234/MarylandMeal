@@ -1,61 +1,27 @@
-import { Theme } from "@/constants/Colors";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { VStack } from "@/components/ui/vstack";
+import { Text } from "@/components/ui/text";
+import { Card } from "@/components/ui/card";
+import { Image } from "@/components/ui/image";
+import { Center } from "@/components/ui/center";
+import React from "react";
 
-const styles = StyleSheet.create({
-    border: {
-        marginVertical: 10,
-        borderRadius: 10,
-        borderColor: "rgba(242, 183, 5, 0.3)",
-        borderWidth: 2,
-        borderCurve: "continuous",
-        overflow: "hidden",
-        width: "auto",
-        flex: 1
-    },
-    view: {
-        height: 170,
-        flexDirection: "column",
-        borderCurve: "continuous",
-    },
-    image: {
-        marginHorizontal: "auto",
-        marginVertical: 25,
-        width: 35,
-        height: 35,
-    },
-    textContent: {
-        // padding: 30,
-        // margin: "auto",
-        justifyContent: "center",
-        alignContent: "center",
-        textAlign: "center"
-    },
-    textTitle: {
-        fontWeight: "bold",
-        fontSize: 24,
-        marginBottom: 5,
-        textAlign: "center"
-    },
-    textBody: {
-        fontSize: 16,
-        textAlign: "center",
-    }
-});
 
-export default function MacroCard(props: {text: string, num: number}) {
+export default function MacroCard(props: any) {
     return (
-        <View style={styles.border}>
-            <View style={styles.view}>
-                <Image
-                    style={styles.image}
-                    source={require("../assets/images/clock.png")}
-                />
-                <View style={styles.textContent}>
-                    <Text style={styles.textTitle}>{props.num}</Text>
-                    <Text style={styles.textBody}>{props.text}</Text>
-                </View>
-            </View>
-        </View>
+        <Center>
+            <Card variant="outline" className="rounded-lg m-3 w-full">
+                <VStack className="">
+                    <Center>
+                        <Image
+                            source={require("@/assets/images/clock.png")}
+                            className="mb-6 w-10 h-10 rounded-md"
+                            alt="image"
+                        />
+                        <Text bold>{props.num}</Text>
+                        <Text bold>{props.text}</Text>
+                    </Center>
+                </VStack>
+            </Card>
+        </Center>
     );
-
-}
+};

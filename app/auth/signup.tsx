@@ -6,10 +6,7 @@ import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { LinkText } from "@/components/ui/link";
 import Link from "@unitools/link";
-import { SafeAreaView } from "@/components/ui/safe-area-view";
-import { ScrollView } from "@/components/ui/scroll-view";
-import { Image } from "@/components/ui/image";
-import { router, useNavigation } from "expo-router";
+import { router } from "expo-router";
 import {
   FormControl,
   FormControlError,
@@ -38,11 +35,9 @@ import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertTriangle } from "lucide-react-native";
-// import { GoogleIcon } from "./assets/icons/google";
 import { Pressable } from "@/components/ui/pressable";
 import AuthLayout from "./AuthLayout";
-// import useRouter from "@unitools/router";
-import * as api from "@/api/session";
+import * as api from "@/api/userSession";
 
 const signUpSchema = z.object({
   email: z.string().min(1, "Email is required").email(),
@@ -70,7 +65,11 @@ const signUpSchema = z.object({
 });
 type SignUpSchemaType = z.infer<typeof signUpSchema>;
 
-const SignUpWithLeftBackground = () => {
+const SignUpView = () => {
+  const toast = useToast();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const {
     control,
     handleSubmit,
@@ -79,7 +78,23 @@ const SignUpWithLeftBackground = () => {
   } = useForm<SignUpSchemaType>({
     resolver: zodResolver(signUpSchema),
   });
-  const toast = useToast();
+
+  const handleState = () => {
+    setShowPassword((showState) => {
+      return !showState;
+    });
+  };
+
+  const handleConfirmPwState = () => {
+    setShowConfirmPassword((showState) => {
+      return !showState;
+    });
+  };
+
+  const handleKeyPress = () => {
+    Keyboard.dismiss();
+    handleSubmit(onSubmit)();
+  };
 
   const onSubmit = (data: SignUpSchemaType) => {
     if (data.password === data.confirmpassword) {
@@ -93,7 +108,7 @@ const SignUpWithLeftBackground = () => {
           );
         },
       });
-      api.register("firstName", "lastName", data.email, data.password);
+      api.register("first last", data.email, data.password);
       reset();
     } else {
       toast.show({
@@ -108,24 +123,7 @@ const SignUpWithLeftBackground = () => {
       });
     }
   };
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleState = () => {
-    setShowPassword((showState) => {
-      return !showState;
-    });
-  };
-  const handleConfirmPwState = () => {
-    setShowConfirmPassword((showState) => {
-      return !showState;
-    });
-  };
-  const handleKeyPress = () => {
-    Keyboard.dismiss();
-    handleSubmit(onSubmit)();
-  };
-  //   const router = useRouter();
 
   return (
     <VStack className="max-w-[440px] w-full" space="md">
@@ -315,7 +313,7 @@ const SignUpWithLeftBackground = () => {
             variant="outline"
             action="secondary"
             className="w-full gap-1"
-            onPress={() => {}}
+            onPress={() => { }}
           >
             <ButtonText className="font-medium">
               Continue with Google
@@ -342,7 +340,7 @@ const SignUpWithLeftBackground = () => {
 export default function Signup() {
   return (
     <AuthLayout>
-      <SignUpWithLeftBackground />
+      <SignUpView />
     </AuthLayout>
   );
 }

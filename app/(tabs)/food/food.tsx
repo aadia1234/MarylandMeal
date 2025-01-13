@@ -18,166 +18,12 @@ import { Heading } from "@/components/ui/heading";
 import React from "react";
 import { Center } from "@/components/ui/center";
 import { Box } from "@/components/ui/box";
+import { FoodDocument } from "@/models/FoodDocument";
 
-export default function Food() {
+export default function Food(props: { menu: FoodDocument[] }) {
   const navigation = useNavigation();
   const [searchText, setSearchText] = useState("");
-  const [menu, setMenu] = useState([
-    {
-      id: 1,
-      name: "Grilled Chicken",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel ligula non ante auctor cursus at sed erat. Cras gravida neque libero, viverra auctor nunc condimentum vel. Mauris odio nisi, bibendum eu efficitur ut, vulputate in velit. Aenean vehicula cursus magna. Ut vestibulum ornare augue, a lobortis dui finibus non. Cras commodo ipsum eget nisl consequat, ut accumsan erat dapibus. Duis at suscipit leo. Nulla odio ipsum, tempus at maximus sit amet, egestas id turpis.",
-      image: require("@/assets/images/MarylandMeal.png"),
-      calories: 1000,
-      carbs: 60,
-      protein: 45,
-      fat: 30,
-    },
-    {
-      id: 2,
-      name: "Rice Chicken",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel ligula non ante auctor cursus at sed erat. Cras gravida neque libero, viverra auctor nunc condimentum vel. Mauris odio nisi, bibendum eu efficitur ut, vulputate in velit. Aenean vehicula cursus magna. Ut vestibulum ornare augue, a lobortis dui finibus non. Cras commodo ipsum eget nisl consequat, ut accumsan erat dapibus. Duis at suscipit leo. Nulla odio ipsum, tempus at maximus sit amet, egestas id turpis.",
-      image: require("@/assets/images/MarylandMeal.png"),
-      calories: 1000,
-      carbs: 60,
-      protein: 45,
-      fat: 30,
-    },
-    {
-      id: 3,
-      name: "Grilled Chicken",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel ligula non ante auctor cursus at sed erat. Cras gravida neque libero, viverra auctor nunc condimentum vel. Mauris odio nisi, bibendum eu efficitur ut, vulputate in velit. Aenean vehicula cursus magna. Ut vestibulum ornare augue, a lobortis dui finibus non. Cras commodo ipsum eget nisl consequat, ut accumsan erat dapibus. Duis at suscipit leo. Nulla odio ipsum, tempus at maximus sit amet, egestas id turpis.",
-      image: require("@/assets/images/MarylandMeal.png"),
-      calories: 1000,
-      carbs: 60,
-      protein: 45,
-      fat: 30,
-    },
-    {
-      id: 4,
-      name: "Rice Chicken",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel ligula non ante auctor cursus at sed erat. Cras gravida neque libero, viverra auctor nunc condimentum vel. Mauris odio nisi, bibendum eu efficitur ut, vulputate in velit. Aenean vehicula cursus magna. Ut vestibulum ornare augue, a lobortis dui finibus non. Cras commodo ipsum eget nisl consequat, ut accumsan erat dapibus. Duis at suscipit leo. Nulla odio ipsum, tempus at maximus sit amet, egestas id turpis.",
-      image: require("@/assets/images/MarylandMeal.png"),
-      calories: 1000,
-      carbs: 60,
-      protein: 45,
-      fat: 30,
-    },
-    {
-      id: 5,
-      name: "Grilled Chicken",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel ligula non ante auctor cursus at sed erat. Cras gravida neque libero, viverra auctor nunc condimentum vel. Mauris odio nisi, bibendum eu efficitur ut, vulputate in velit. Aenean vehicula cursus magna. Ut vestibulum ornare augue, a lobortis dui finibus non. Cras commodo ipsum eget nisl consequat, ut accumsan erat dapibus. Duis at suscipit leo. Nulla odio ipsum, tempus at maximus sit amet, egestas id turpis.",
-      image: require("@/assets/images/MarylandMeal.png"),
-      calories: 1000,
-      carbs: 60,
-      protein: 45,
-      fat: 30,
-    },
-    {
-      id: 6,
-      name: "Rice Chicken",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel ligula non ante auctor cursus at sed erat. Cras gravida neque libero, viverra auctor nunc condimentum vel. Mauris odio nisi, bibendum eu efficitur ut, vulputate in velit. Aenean vehicula cursus magna. Ut vestibulum ornare augue, a lobortis dui finibus non. Cras commodo ipsum eget nisl consequat, ut accumsan erat dapibus. Duis at suscipit leo. Nulla odio ipsum, tempus at maximus sit amet, egestas id turpis.",
-      image: require("@/assets/images/MarylandMeal.png"),
-      calories: 1000,
-      carbs: 60,
-      protein: 45,
-      fat: 30,
-    },
-    {
-      id: 7,
-      name: "Grilled Chicken",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel ligula non ante auctor cursus at sed erat. Cras gravida neque libero, viverra auctor nunc condimentum vel. Mauris odio nisi, bibendum eu efficitur ut, vulputate in velit. Aenean vehicula cursus magna. Ut vestibulum ornare augue, a lobortis dui finibus non. Cras commodo ipsum eget nisl consequat, ut accumsan erat dapibus. Duis at suscipit leo. Nulla odio ipsum, tempus at maximus sit amet, egestas id turpis.",
-      image: require("@/assets/images/MarylandMeal.png"),
-      calories: 1000,
-      carbs: 60,
-      protein: 45,
-      fat: 30,
-    },
-    {
-      id: 8,
-      name: "Rice Chicken",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel ligula non ante auctor cursus at sed erat. Cras gravida neque libero, viverra auctor nunc condimentum vel. Mauris odio nisi, bibendum eu efficitur ut, vulputate in velit. Aenean vehicula cursus magna. Ut vestibulum ornare augue, a lobortis dui finibus non. Cras commodo ipsum eget nisl consequat, ut accumsan erat dapibus. Duis at suscipit leo. Nulla odio ipsum, tempus at maximus sit amet, egestas id turpis.",
-      image: require("@/assets/images/MarylandMeal.png"),
-      calories: 1000,
-      carbs: 60,
-      protein: 45,
-      fat: 30,
-    },
-    {
-      id: 9,
-      name: "Grilled Chicken",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel ligula non ante auctor cursus at sed erat. Cras gravida neque libero, viverra auctor nunc condimentum vel. Mauris odio nisi, bibendum eu efficitur ut, vulputate in velit. Aenean vehicula cursus magna. Ut vestibulum ornare augue, a lobortis dui finibus non. Cras commodo ipsum eget nisl consequat, ut accumsan erat dapibus. Duis at suscipit leo. Nulla odio ipsum, tempus at maximus sit amet, egestas id turpis.",
-      image: require("@/assets/images/MarylandMeal.png"),
-      calories: 1000,
-      carbs: 60,
-      protein: 45,
-      fat: 30,
-    },
-    {
-      id: 10,
-      name: "Rice Chicken",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel ligula non ante auctor cursus at sed erat. Cras gravida neque libero, viverra auctor nunc condimentum vel. Mauris odio nisi, bibendum eu efficitur ut, vulputate in velit. Aenean vehicula cursus magna. Ut vestibulum ornare augue, a lobortis dui finibus non. Cras commodo ipsum eget nisl consequat, ut accumsan erat dapibus. Duis at suscipit leo. Nulla odio ipsum, tempus at maximus sit amet, egestas id turpis.",
-      image: require("@/assets/images/MarylandMeal.png"),
-      calories: 1000,
-      carbs: 60,
-      protein: 45,
-      fat: 30,
-    },
-    {
-      id: 11,
-      name: "Grilled Chicken",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel ligula non ante auctor cursus at sed erat. Cras gravida neque libero, viverra auctor nunc condimentum vel. Mauris odio nisi, bibendum eu efficitur ut, vulputate in velit. Aenean vehicula cursus magna. Ut vestibulum ornare augue, a lobortis dui finibus non. Cras commodo ipsum eget nisl consequat, ut accumsan erat dapibus. Duis at suscipit leo. Nulla odio ipsum, tempus at maximus sit amet, egestas id turpis.",
-      image: require("@/assets/images/MarylandMeal.png"),
-      calories: 1000,
-      carbs: 60,
-      protein: 45,
-      fat: 30,
-    },
-    {
-      id: 12,
-      name: "Rice Chicken",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel ligula non ante auctor cursus at sed erat. Cras gravida neque libero, viverra auctor nunc condimentum vel. Mauris odio nisi, bibendum eu efficitur ut, vulputate in velit. Aenean vehicula cursus magna. Ut vestibulum ornare augue, a lobortis dui finibus non. Cras commodo ipsum eget nisl consequat, ut accumsan erat dapibus. Duis at suscipit leo. Nulla odio ipsum, tempus at maximus sit amet, egestas id turpis.",
-      image: require("@/assets/images/MarylandMeal.png"),
-      calories: 1000,
-      carbs: 60,
-      protein: 45,
-      fat: 30,
-    },
-    {
-      id: 13,
-      name: "Grilled Chicken",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel ligula non ante auctor cursus at sed erat. Cras gravida neque libero, viverra auctor nunc condimentum vel. Mauris odio nisi, bibendum eu efficitur ut, vulputate in velit. Aenean vehicula cursus magna. Ut vestibulum ornare augue, a lobortis dui finibus non. Cras commodo ipsum eget nisl consequat, ut accumsan erat dapibus. Duis at suscipit leo. Nulla odio ipsum, tempus at maximus sit amet, egestas id turpis.",
-      image: require("@/assets/images/MarylandMeal.png"),
-      calories: 1000,
-      carbs: 60,
-      protein: 45,
-      fat: 30,
-    },
-    {
-      id: 14,
-      name: "Rice Chicken",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel ligula non ante auctor cursus at sed erat. Cras gravida neque libero, viverra auctor nunc condimentum vel. Mauris odio nisi, bibendum eu efficitur ut, vulputate in velit. Aenean vehicula cursus magna. Ut vestibulum ornare augue, a lobortis dui finibus non. Cras commodo ipsum eget nisl consequat, ut accumsan erat dapibus. Duis at suscipit leo. Nulla odio ipsum, tempus at maximus sit amet, egestas id turpis.",
-      image: require("@/assets/images/MarylandMeal.png"),
-      calories: 1000,
-      carbs: 60,
-      protein: 45,
-      fat: 30,
-    },
-  ]);
+  const menu = props.menu;
 
   const HeaderView = () => {
     return (
@@ -205,11 +51,12 @@ export default function Food() {
         <Heading size="lg">No results found</Heading>
       </Center>
     );
+
   };
 
   return (
     <FlatList
-      data={menu.filter((food) => food.name.toLowerCase().includes(searchText))}
+      data={menu.filter((food) => food.menu_item.name.toLowerCase().includes(searchText.toLowerCase()))}
       renderItem={(elem) => <FoodCard {...elem.item} />}
       keyExtractor={(food) => food.id.toString()}
       contentContainerStyle={{ flexGrow: 1 }}
