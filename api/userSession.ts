@@ -61,7 +61,6 @@ export async function getFoodLog(date: Date) {
   try {
     const res = await session.get(process.env.EXPO_PUBLIC_LOG_FOOD_URL!);
     const menu = await getMenu();
-
     const foodLog = res.data as FoodLogDocument[];
     const log = foodLog.find(
       (log) => new Date(log.date).getDate() === date.getDate()

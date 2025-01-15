@@ -4,17 +4,14 @@ import { GlobeIcon, Icon } from "@/components/ui/icon";
 import { Pressable } from "@/components/ui/pressable";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
-import { FlatList, View } from "react-native";
-import Home from "./home/home";
-import Food from "./food/food";
-import { Box } from "@/components/ui/box";
-import { ScrollView } from "@/components/ui/scroll-view";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Profile from "./profile/profile";
+import { View } from "react-native";
 import { UserDocument } from "@/models/UserDocument";
 import { getUser } from "@/api/userSession";
 import { getMenu } from "@/api/menuSession";
 import { FoodDocument } from "@/models/FoodDocument";
+import Home from "./home/Home";
+import Food from "./food/Food";
+import Profile from "./profile/Profile";
 
 
 

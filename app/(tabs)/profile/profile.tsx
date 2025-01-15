@@ -17,8 +17,6 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar";
 import { Center } from "@/components/ui/center";
-import { GlobeIcon } from "../assets/icons/globe";
-import { InboxIcon } from "../assets/icons/inbox";
 import { Divider } from "@/components/ui/divider";
 import { isWeb } from "@gluestack-ui/nativewind-utils/IsWeb";
 import EditProfile from "@/components/EditProfile";

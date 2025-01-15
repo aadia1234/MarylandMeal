@@ -17,7 +17,7 @@ app.use(
     secret: process.env.EXPO_SECRET_KEY,
     resave: false,
     saveUninitialized: false,
-    name: "app-cookie",
+    name: process.env.COOKIE_NAME,
     cookie: { secure: process.env.NODE_ENV === "production" },
   })
 );
@@ -26,38 +26,26 @@ app.use(express.json());
 
 app.post("/authenticate", async (req, res) => {
   const { email, password } = req.body;
+  const user = await UserModel.findOne({ email });
 
-  try {
-    const user = await UserModel.findOne({ email });
-    console.log(user);
-    if (user && bcrypt.compareSync(password, user.password)) {
-      req.session.userId = user.id;
-      res.send({ message: user.id });
-    } else {
-      res.status(401).send({ message: "Invalid credentials!" });
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(401).send({ message: "error" });
+  if (user && bcrypt.compareSync(password, user.password)) {
+    req.session.userId = user.id;
+    res.send({ message: "Successfully logged in!" });
+  } else {
+    res.status(401).send({ message: "Invalid credentials!" });
   }
 });
 
 app.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
-
-  try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new UserModel({
-      name,
-      email,
-      password: hashedPassword,
-    });
-    await user.save();
-    res.send({ message: "User registered!" });
-  } catch (error) {
-    console.log(error);
-    res.status(401).send({ message: "error" });
-  }
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const user = new UserModel({
+    name,
+    email,
+    password: hashedPassword,
+  });
+  await user.save();
+  res.send({ message: "User registered!" });
 });
 
 app.use(

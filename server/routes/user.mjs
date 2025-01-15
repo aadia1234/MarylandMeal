@@ -5,56 +5,44 @@ const router = express.Router();
 
 const requireAuth = (req, res, next) => {
   if (req.session.userId) {
-    next(); // User is authenticated, continue to next middleware
+    next();
   } else {
-    console.log("User not authenticated");
-    res.status(401).send({ message: "User not authenticated" }); // User is not authenticated, redirect to login page
+    res.status(401).send({ message: "User not authenticated" });
   }
 };
 
+router.use(async (req, res, next) => {
+  const userId = req.session.userId;
+  const user = await UserModel.findById(userId);
+  res.locals.user = user;
+  next();
+});
+
 router.get("", requireAuth, async (req, res) => {
-  try {
-    const userId = req.session.userId;
-    const user = await UserModel.findById(userId);
-    res.send(user);
-  } catch (error) {
-    console.log(error);
-    res.status(401).send({ message: "error" });
-  }
+  const user = res.locals.user;
+  res.send(user);
 });
 
 router.post("/log", requireAuth, async (req, res) => {
-  try {
-    const userId = req.session.userId;
-    const { date, meal } = req.body;
-    const user = await UserModel.findById(userId);
-    if (user.foodLog && user.foodLog.length > 0) {
-      console.log(user.foodLog[0].date);
-      user.foodLog
-        .find((elem) => elem.date.getDate() === new Date(date).getDate())
-        .ids.push(meal.menu_item.id);
-    } else {
-      user.foodLog = [{ date, ids: [meal.menu_item.id] }];
-    }
-    user.save();
-    console.log(user);
-    res.send({ message: "success" });
-  } catch (error) {
-    console.log(error);
-    res.status(401).send({ message: "error" });
+  const user = res.locals.user;
+  const { date, meal } = req.body;
+  
+  if (user.foodLog && user.foodLog.length > 0) {
+    user.foodLog
+      .find((elem) => elem.date.getDate() === new Date(date).getDate())
+      .ids.push(meal.menu_item.id);
+  } else {
+    user.foodLog = [{ date, ids: [meal.menu_item.id] }];
   }
+
+  user.save();
+  res.send({ message: "success" });
 });
 
 router.get("/log", requireAuth, async (req, res) => {
-  try {
-    const userId = req.session.userId;
-    const user = await UserModel.findById(userId);
-    const foodLog = user.foodLog;
-    res.send(foodLog);
-  } catch (error) {
-    console.log(error);
-    res.status(401).send({ message: "error" });
-  }
+  const user = res.locals.user;
+  const foodLog = user.foodLog;
+  res.send(foodLog);
 });
 
 router.post("/logout", requireAuth, async (req, res) => {
@@ -66,12 +54,6 @@ router.post("/logout", requireAuth, async (req, res) => {
       res.send({ message: "logged out" });
     }
   });
-  try {
-    res.send("logged out");
-  } catch (error) {
-    console.log(error);
-    res.status(401).send({ message: "error" });
-  }
 });
 
 export default router;
