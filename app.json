@@ -7,6 +7,7 @@
     "icon": "./assets/images/MarylandMeal.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
     "splash": {
       "image": "./assets/images/MarylandMeal.png",
       "resizeMode": "contain",
@@ -28,9 +29,7 @@
       "output": "static",
       "favicon": "./assets/images/MarylandMeal.png"
     },
-    "plugins": [
-      "expo-router"
-    ],
+    "plugins": ["expo-router", "expo-font"],
     "experiments": {
       "typedRoutes": true
     }

@@ -29,7 +29,7 @@ app.post("/authenticate", async (req, res) => {
 
   try {
     const user = await UserModel.findOne({ email });
-
+    console.log(user);
     if (user && bcrypt.compareSync(password, user.password)) {
       req.session.userId = user.id;
       res.send({ message: user.id });

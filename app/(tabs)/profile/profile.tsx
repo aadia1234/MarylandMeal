@@ -21,7 +21,6 @@ import { GlobeIcon } from "../assets/icons/globe";
 import { InboxIcon } from "../assets/icons/inbox";
 import { Divider } from "@/components/ui/divider";
 import { isWeb } from "@gluestack-ui/nativewind-utils/IsWeb";
-import { AccountCardType, UserStats } from "./AccountCardType";
 import EditProfile from "@/components/EditProfile";
 import SettingsCard from "@/components/SettingsCard";
 import { UserDocument } from "@/models/UserDocument";
@@ -35,23 +34,6 @@ const userData = [
   { macro: "Fat", amount: 4000 }
 ];
 
-const accountData: AccountCardType[] = [
-  {
-    iconName: InboxIcon,
-    subText: "Settings",
-    endIcon: InboxIcon,
-  },
-  {
-    iconName: GlobeIcon,
-    subText: "Notifications",
-    endIcon: GlobeIcon,
-  },
-  {
-    iconName: PhoneIcon,
-    subText: "Rewards",
-    endIcon: PhoneIcon,
-  },
-];
 
 const ProfileView = (user: UserDocument) => {
   const [showModal, setShowModal] = useState(false);
@@ -132,7 +114,7 @@ export default function Profile(props: UserDocument) {
               Account
             </Heading>
             <VStack className="py-2 px-4 border rounded-xl border-border-300 justify-between items-center">
-              {accountData.map((item, index) => <SettingsCard key={index} {...item} />)}
+              {/* {accountData.map((item, index) => <SettingsCard key={index} {...item} />)} */}
             </VStack>
           </VStack>
         </VStack>

@@ -24,7 +24,6 @@ export function register(name: string, email: string, password: string) {
 export async function authenticate(email: string, password: string) {
   try {
     // simplify function
-    console.log(process.env.EXPO_PUBLIC_AUTHENTICATE_USER_URL);
     const res = await session.post(
       process.env.EXPO_PUBLIC_AUTHENTICATE_USER_URL!,
       {
@@ -34,6 +33,7 @@ export async function authenticate(email: string, password: string) {
     );
     return res.data;
   } catch (error) {
+    console.log(error);
     return null;
   }
 }
