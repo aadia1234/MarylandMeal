@@ -97,7 +97,7 @@ const Food = () => {
       </VStack>
       <Box className="flex-col sm:flex-row">
         <Button
-          onPress={() => console.log("clicked")}
+          onPress={() => log(item)}
           className="mt-5 px-4 py-2 mr-0 sm:mr-3 sm:mb-0 sm:flex-1"
         >
           <ButtonText size="sm">Log meal</ButtonText>

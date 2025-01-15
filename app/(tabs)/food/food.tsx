@@ -25,6 +25,11 @@ export default function Food(props: { menu: FoodDocument[] }) {
   const [searchText, setSearchText] = useState("");
   const menu = props.menu;
 
+  // VirtualizedList: You have a large list that is slow to update -
+  // make sure your renderItem function renders components that follow React performance 
+  // best practices like PureComponent, shouldComponentUpdate,
+  // etc. { "contentLength": 9748.3330078125, "dt": 3067, "prevDt": 871 }
+
   const HeaderView = () => {
     return (
       <VStack space="md" className="sticky top-0 pb-3 bg-white">

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
 
 export async function connectDB(dbName) {
   try {
@@ -15,10 +14,3 @@ export async function connectDB(dbName) {
     return Promise.reject(error);
   }
 }
-
-// export async function findUserById(id) {
-//   try {
-//     connectDB();
-    
-//   }
-// }

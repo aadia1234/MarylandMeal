@@ -21,9 +21,14 @@ const UserSchema = new Schema(
       required: true,
     },
     foodLog: {
-      type: [Number],
+      type: [
+        {
+          date: Date,
+          ids: [Number],
+        },
+      ],
       required: false,
-    }
+    },
   },
   {
     timestamps: true,

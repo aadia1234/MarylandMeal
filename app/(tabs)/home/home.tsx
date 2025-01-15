@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigation } from "expo-router";
 import Calendar from "@/components/Calendar";
 import { ScrollView } from "@/components/ui/scroll-view";
@@ -19,18 +19,28 @@ import React from "react";
 import MacroCard from "@/components/MacroCard";
 import { VStack } from "@/components/ui/vstack";
 import FoodCard from "@/components/FoodCard";
+import { getFoodLog } from "@/api/userSession";
+import FoodLogDocument from "@/models/FoodLogDocument";
+import { FoodDocument } from "@/models/FoodDocument";
+import { Grid, GridItem } from "@/components/ui/grid";
 
 
 export default function Dashboard() {
   const navigation = useNavigation();
   const [date, setDate] = useState(new Date());
-
+  const [log, setLog] = useState<(FoodDocument | undefined)[]>([]);
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "short",
     day: "numeric",
     weekday: undefined,
   };
+
+  useEffect(() => { getFoodLog(date).then((log) => setLog(log)) }, [date]);
+
+  const FoodLogContent = () => {
+    return log?.map((item) => <FoodCard {...item!} />);
+  }
 
   return (
     <ScrollView
@@ -46,12 +56,31 @@ export default function Dashboard() {
           <Calendar date={date} setDate={setDate} placement="bottom" />
         </HStack>
         <VStack>
-          <MacroCard text="Calories" num={0} />
-          <HStack space="md" className="w-full justify-between">
-            <MacroCard text="Carbs" num={0} />
-            <MacroCard text="Protein" num={0} />
-            <MacroCard text="Fat" num={0} />
-          </HStack>
+          <Grid className="gap-y-2 gap-x-2" _extra={{
+            className: "grid-cols-2",
+          }}>
+            <GridItem _extra={{
+              className: "col-span-1"
+            }}>
+              <MacroCard text="Calories" num={50} />
+            </GridItem>
+            <GridItem _extra={{
+              className: "col-span-1"
+            }}>
+              <MacroCard text="Protein" num={25} />
+            </GridItem>
+            <GridItem _extra={{
+              className: "col-span-1"
+            }}>
+              <MacroCard text="Carbs" num={75} />
+            </GridItem>
+            <GridItem _extra={{
+              className: "col-span-1"
+            }}>
+              <MacroCard text="Fats" num={100} />
+            </GridItem>
+
+          </Grid>
 
           <Center>
             <Accordion
@@ -82,18 +111,7 @@ export default function Dashboard() {
                   </AccordionTrigger>
                 </AccordionHeader>
                 <AccordionContent>
-                  <FoodCard id={0} menu_item={{
-                    id: 0,
-                    name: "Test",
-                    description: "",
-                    image: undefined,
-                    calories: 0,
-                    carbs: 0,
-                    protein: 0,
-                    fats: 0,
-                    allergens: undefined,
-                    serving_size: undefined
-                  }} date={""} dh_y={false} dh_south={false} dh_251={false}                  />
+                  {FoodLogContent()}
                 </AccordionContent>
               </AccordionItem>
             </Accordion>

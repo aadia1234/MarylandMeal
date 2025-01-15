@@ -57,15 +57,14 @@ export default function Tabbar() {
         <View className="">
           <VStack className="h-fit w-full bg-current">
             <VStack className="h-full w-full">
-              <HStack className="h-[90%] w-full">
-                <Box className="hidden md:flex h-full"></Box>
+              <HStack className="h-[100%] w-full">
                 <View className="px-4 pt-20 w-full h-full bg-white">
                   {
                     user ? <Content activeTab={activeTab} className="" /> : <Text size="5xl">ERROR</Text>
                   }
                 </View>
               </HStack>
-              <HStack className="flex justify-between py-4 md:hidden h-full bg-gray-200">
+              <HStack className="flex justify-between pb-10 pt-4 h-fit absolute bottom-0 border-t border-outline-200 bg-slate-100">
                 {bottomTabs.map((tab: any) => {
                   return (
                     <Pressable
@@ -83,14 +82,14 @@ export default function Tabbar() {
                           as={GlobeIcon}
                           size={"md"}
                           className={`${activeTab === tab.label
-                            ? "text-typography-900"
+                            ? "text-primary-500"
                             : "text-typography-400"
                             }`}
                         />
                         <Text
                           size="xs"
                           className={`${activeTab === tab.label
-                            ? "text-typography-900"
+                            ? "text-primary-500"
                             : "text-typography-400"
                             }`}
                         >

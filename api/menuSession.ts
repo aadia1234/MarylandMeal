@@ -20,6 +20,7 @@ export async function getMenu() {
   }
 }
 
+
 export function getMenuItem(id: string) {
   return menu.find((item) => item.menu_item.id === Number(id))!;
 }

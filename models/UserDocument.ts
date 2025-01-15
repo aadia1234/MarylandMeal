@@ -1,4 +1,4 @@
-import { FoodDocument } from "./FoodDocument";
+import FoodLogDocument from "./FoodLogDocument";
 
 export interface UserDocument {
   _id: string;
@@ -7,9 +7,6 @@ export interface UserDocument {
   password: string;
   createdAt: string;
   updatedAt: string;
-  foodLog: {
-    date: Date;
-    foodId: number;
-  };
   __v: number;
+  foodLog: FoodLogDocument[];
 }
