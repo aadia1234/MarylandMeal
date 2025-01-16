@@ -3,7 +3,7 @@ import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import React from "react";
 import { Divider } from "@/components/ui/divider";
-import { AccountCardType } from "@/app/(tabs)/profile/AccountCardType";
+import { AccountCardType } from "@/app/profile/AccountCardType";
 
 export default function SettingsCard(props: AccountCardType) {
     return (

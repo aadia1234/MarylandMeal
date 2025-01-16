@@ -24,6 +24,7 @@ import SettingsCard from "@/components/SettingsCard";
 import { UserDocument } from "@/models/UserDocument";
 import { router } from "expo-router";
 import { logout } from "@/api/userSession";
+import ContentLayout from "../contentLayout";
 
 const userData = [
   { macro: "Calories", amount: 1000 },
@@ -100,24 +101,26 @@ const ProfileView = (user: UserDocument) => {
 export default function Profile(props: UserDocument) {
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      className="h-fit w-full bg-current"
-    >
-      <VStack className="h-full w-full mb-16 md:mb-0">
-        <VStack className="h-full w-full" space="2xl">
-          <ProfileView {...props} />
-          <VStack className="mx-6" space="2xl">
-            <Heading className="font-roboto" size="xl">
-              Account
-            </Heading>
-            <VStack className="py-2 px-4 border rounded-xl border-border-300 justify-between items-center">
-              {/* {accountData.map((item, index) => <SettingsCard key={index} {...item} />)} */}
+    <ContentLayout>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        className="h-fit w-full bg-current"
+      >
+        <VStack className="h-full w-full mb-16 md:mb-0">
+          <VStack className="h-full w-full" space="2xl">
+            <ProfileView {...props} />
+            <VStack className="mx-6" space="2xl">
+              <Heading className="font-roboto" size="xl">
+                Account
+              </Heading>
+              <VStack className="py-2 px-4 border rounded-xl border-border-300 justify-between items-center">
+                {/* {accountData.map((item, index) => <SettingsCard key={index} {...item} />)} */}
+              </VStack>
             </VStack>
           </VStack>
         </VStack>
-      </VStack>
-    </ScrollView>
+      </ScrollView>
+    </ContentLayout>
   );
 };
 

@@ -53,9 +53,9 @@ import {
     SelectPortal,
     SelectTrigger,
 } from "@/components/ui/select";
-import { userSchema, userSchemaDetails } from "@/app/(tabs)/profile/AccountCardType";
+import { userSchema, userSchemaDetails } from "@/app/profile/AccountCardType";
 
-export default function EditProfile({showModal, setShowModal}: { showModal: boolean; setShowModal: any; }) {
+export default function EditProfile({ showModal, setShowModal }: { showModal: boolean; setShowModal: any; }) {
     const ref = useRef(null);
     const {
         control,

@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { useRef } from "react";
+import { memo, useRef } from "react";
 import { View, StyleSheet, Image, Pressable, Animated } from "react-native";
 import { Card } from "./ui/card";
 import { Center } from "./ui/center";
@@ -9,11 +9,11 @@ import { HStack } from "./ui/hstack";
 import { Button, ButtonText } from "./ui/button";
 import { FoodDocument } from "@/models/FoodDocument";
 
-export default function FoodCard(item: FoodDocument) {
+function FoodCard(item: FoodDocument) {
   const food = item.menu_item;
 
   const onPress = () => {
-    router.push({ pathname: "/(tabs)/food/[id]", params: { id: food.id } });
+    router.push({ pathname: "/[id]", params: { id: food.id } });
   };
 
   return (
@@ -41,3 +41,5 @@ export default function FoodCard(item: FoodDocument) {
     </Button>
   );
 }
+
+export default memo(FoodCard, (prevProps, nextProps) => { return prevProps.id === nextProps.id; });
