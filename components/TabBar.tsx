@@ -12,7 +12,7 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
     const { buildHref } = useLinkBuilder();
 
     return (
-        <View className="w-fit h-24 flex-row px-4 bg-slate-100 border-t border-outline-200">
+        <View className="w-full h-24 flex-row px-4 bg-slate-100 border-t border-outline-200">
             {state.routes.map((route, index) => {
                 const { options } = descriptors[route.key];
                 const label =

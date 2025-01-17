@@ -7,13 +7,13 @@ import CircularProgress from 'react-native-circular-progress-indicator';
 import React from "react";
 import { View } from "./ui/view";
 
-export default function MacroCard(props: any) {
+export default function MacroCard(props: { macro: string, amount: number }) {
     return (
-        <Card variant="outline" className="rounded-lg w-fit h-fit grow p-2">
-            <Center className="aspect-video ">
-                <Center className="">
+        <Card variant="outline" className="rounded-lg w-full h-fit grow p-2 m-auto">
+            <Center className="aspect-video m-auto">
+                <Center className="w-fit">
                     <CircularProgress
-                        value={props.num}
+                        value={props.amount}
                         radius={35}
                         duration={2000}
                         progressValueColor={'black'}
@@ -22,7 +22,7 @@ export default function MacroCard(props: any) {
                         inActiveStrokeWidth={7.5}
                         maxValue={200}
                         valueSuffix="g"
-                        title={props.text}
+                        title={props.macro}
                         titleColor={'black'}
                         titleStyle={{ fontWeight: 'bold' }}
                     />

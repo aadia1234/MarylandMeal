@@ -18,6 +18,7 @@ import React from "react";
 import { getUser, log } from "@/api/userSession";
 import { FoodDocument } from "@/models/FoodDocument";
 import { getMenuItem } from "@/api/menuSession";
+import HorizontalMacroView from "@/components/HorizontalMacroView";
 
 const FoodItemLayout = (props: any) => {
   return (
@@ -71,25 +72,9 @@ const Food = () => {
         alt="image"
       />
       <VStack className="">
-        {/* make everything equal width! */}
-        <HStack className="mb-6 flex-row w-full justify-evenly items-center">
-          {list.map(({ macro, amount }, index) => {
-            return (
-              <>
-                <VStack className="items-center">
-                  <Heading size="xs">{amount}g</Heading>
-                  <Text size="xs">{macro}</Text>
-                </VStack>
-                {index !== list.length - 1 &&
-                  <Divider
-                    orientation="vertical"
-                    className="self-center bg-background-300 flex sm:hidden"
-                  />
-                }
-              </>
-            );
-          })}
-        </HStack>
+        <View className="mb-6">
+          <HorizontalMacroView data={list}/>
+        </View>
         <Heading size="md" className="mb-2">
           {food.name}
         </Heading>

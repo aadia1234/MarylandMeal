@@ -92,7 +92,7 @@ const LoginView = () => {
       //     );
       //   },
       // });
-      router.replace("/(tabs)/Tabbar");
+      router.replace("/(tabs)/home");
     } else {
       setValidated({ emailValid: false, passwordValid: false });
     }

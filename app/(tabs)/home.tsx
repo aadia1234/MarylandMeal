@@ -24,8 +24,17 @@ import FoodLogDocument from "@/models/FoodLogDocument";
 import { FoodDocument } from "@/models/FoodDocument";
 import { Grid, GridItem } from "@/components/ui/grid";
 import { SafeAreaView } from "react-native";
+import { View } from "@/components/ui/view";
+import { Text } from "@/components/ui/text";
 import ContentLayout from "../contentLayout";
 
+
+const userData = [
+  { macro: "Calories", amount: 25 },
+  { macro: "Carbs", amount: 50 },
+  { macro: "Protein", amount: 75 },
+  { macro: "Fat", amount: 100 }
+];
 
 export default function Dashboard() {
   const navigation = useNavigation();
@@ -40,31 +49,18 @@ export default function Dashboard() {
 
   useEffect(() => { getFoodLog(date).then((log) => setLog(log)) }, [date]);
 
-  const MacroView = () => {
+  const MacroProgressView = () => {
     return (
-      <Grid className="gap-y-2 gap-x-2" _extra={{
-        className: "grid-cols-2",
-      }}>
-        <GridItem _extra={{
-          className: "col-span-1"
-        }}>
-          <MacroCard text="Calories" num={50} />
-        </GridItem>
-        <GridItem _extra={{
-          className: "col-span-1"
-        }}>
-          <MacroCard text="Protein" num={25} />
-        </GridItem>
-        <GridItem _extra={{
-          className: "col-span-1"
-        }}>
-          <MacroCard text="Carbs" num={75} />
-        </GridItem>
-        <GridItem _extra={{
-          className: "col-span-1"
-        }}>
-          <MacroCard text="Fats" num={100} />
-        </GridItem>
+      <Grid className="gap-y-2 gap-x-2" _extra={{ className: "grid-cols-2"}}>
+        {
+          userData.map((entry, index) => {
+            return (
+              <GridItem _extra={{ className: "col-span-1" }} key={index}>
+                <MacroCard {...entry} />
+              </GridItem>
+            );
+          })
+        }
       </Grid>
     );
   }
@@ -147,7 +143,7 @@ export default function Dashboard() {
       <ScrollView
         showsVerticalScrollIndicator={false}
       >
-        <VStack className="md:px-10 md:pt-6 w-full px-4" space="2xl">
+        <VStack className="md:px-10 md:pt-6 w-full px-5" space="2xl">
           {/* font-roboto not working with ios */}
           <HStack className="w-full items-center justify-between">
             <Heading size="3xl" className="font-roboto">
@@ -156,7 +152,7 @@ export default function Dashboard() {
             <Calendar date={date} setDate={setDate} placement="bottom" />
           </HStack>
           <VStack>
-            <MacroView />
+            <MacroProgressView />
             <Center>
               <LogView />
               <PlanView />

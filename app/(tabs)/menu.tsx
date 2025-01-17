@@ -62,7 +62,7 @@ export default function Food() {
   // etc. { "contentLength": 9748.3330078125, "dt": 3067, "prevDt": 871 }
 
 
-  
+
 
   const ListEmptyView = () => {
     return (
@@ -81,7 +81,7 @@ export default function Food() {
     );
   };
 
-  const FoodLogMemoView = useCallback(({ item }: { item: FoodDocument }) => <FoodCard {...item}/>, []);
+  const FoodLogMemoView = useCallback(({ item }: { item: FoodDocument }) => (<FoodCard {...item} />), []);
 
   // if scrolled too fast it can bug out
 
@@ -92,9 +92,9 @@ export default function Food() {
       {
         menu.length > 0 ?
           <FlatList
-            className="px-4"
+            className="px-5"
             data={menu.filter((food) => food.menu_item.name.toLowerCase().includes(searchText.toLowerCase()))}
-            renderItem={FoodLogMemoView} // use callback to optimize
+            renderItem={FoodLogMemoView}
             keyExtractor={(food) => food.id.toString()}
             contentContainerStyle={{ flexGrow: 1 }}
             showsVerticalScrollIndicator={false}
@@ -109,9 +109,9 @@ export default function Food() {
             initialNumToRender={4}
             // getItemLayout={}
             removeClippedSubviews
-            // windowSize={}
-            // viewabilityConfig
-            // debug
+          // windowSize={}
+          // viewabilityConfig
+          // debug
           /> :
           <LoadingView />
       }
