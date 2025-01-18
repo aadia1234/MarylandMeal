@@ -18,8 +18,8 @@ export default function MacroCard(props: { macro: string, amount: number }) {
                         duration={2000}
                         progressValueColor={'black'}
                         activeStrokeColor={'#f15164'}
-                        activeStrokeWidth={7.5}
-                        inActiveStrokeWidth={7.5}
+                        activeStrokeWidth={5}
+                        inActiveStrokeWidth={5}
                         maxValue={200}
                         valueSuffix="g"
                         title={props.macro}

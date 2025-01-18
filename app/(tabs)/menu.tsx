@@ -11,6 +11,7 @@ import { FoodDocument } from "@/models/FoodDocument";
 import { Spinner } from "@/components/ui/spinner";
 import ContentLayout from "../contentLayout";
 import { getMenu, resetMenu } from "@/api/menuSession";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 
 const HeaderView = (props: { setSearchText: any }) => {
@@ -73,48 +74,38 @@ export default function Food() {
 
   };
 
-  const LoadingView = () => {
-    return (
-      <Center className="w-full h-full">
-        <Spinner size="small" className="text-primary-500" />
-      </Center>
-    );
-  };
+  
 
   const FoodLogMemoView = useCallback(({ item }: { item: FoodDocument }) => (<FoodCard {...item} />), []);
 
   // if scrolled too fast it can bug out
 
-
-
   return (
-    <ContentLayout>
-      {
-        menu.length > 0 ?
-          <FlatList
-            className="px-5"
-            data={menu.filter((food) => food.menu_item.name.toLowerCase().includes(searchText.toLowerCase()))}
-            renderItem={FoodLogMemoView}
-            keyExtractor={(food) => food.id.toString()}
-            contentContainerStyle={{ flexGrow: 1 }}
-            showsVerticalScrollIndicator={false}
-            stickyHeaderIndices={[0]}
-            onEndReached={fetchItems}
-            onEndReachedThreshold={5}
-            refreshing={loading}
-            onRefresh={onRefresh}
-            ListHeaderComponent={<HeaderView setSearchText={setSearchText} />}
-            ListEmptyComponent={<ListEmptyView />}
-            ListFooterComponent={() => loading && <Spinner size="small" className="text-primary-500" />}
-            initialNumToRender={4}
-            // getItemLayout={}
-            removeClippedSubviews
-          // windowSize={}
-          // viewabilityConfig
-          // debug
-          /> :
-          <LoadingView />
-      }
+    <ContentLayout data={menu.length}>
+      <FlatList
+        className="px-5"
+        data={menu.filter((food) => food.menu_item.name.toLowerCase().includes(searchText.toLowerCase()))}
+        renderItem={FoodLogMemoView}
+        keyExtractor={(food) => food.id.toString()}
+        contentContainerStyle={{ flexGrow: 1 }}
+        showsVerticalScrollIndicator={false}
+        stickyHeaderIndices={[0]}
+        onEndReached={fetchItems}
+        onEndReachedThreshold={5}
+        refreshing={loading}
+        onRefresh={onRefresh}
+        ListHeaderComponent={<HeaderView setSearchText={setSearchText} />}
+        ListEmptyComponent={<ListEmptyView />}
+        ListFooterComponent={() => loading && <Spinner size="small" className="text-primary-500" />}
+        initialNumToRender={4}
+        // getItemLayout={}
+        removeClippedSubviews
+      // windowSize={}
+      // viewabilityConfig
+      // debug
+      />
     </ContentLayout>
   );
+
+  
 }

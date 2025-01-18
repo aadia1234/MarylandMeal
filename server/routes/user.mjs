@@ -26,17 +26,29 @@ router.get("", requireAuth, async (req, res) => {
 router.post("/log", requireAuth, async (req, res) => {
   const user = res.locals.user;
   const { date, meal } = req.body;
-  
-  if (user.foodLog && user.foodLog.length > 0) {
-    user.foodLog
-      .find((elem) => elem.date.getDate() === new Date(date).getDate())
-      .ids.push(meal.menu_item.id);
-  } else {
-    user.foodLog = [{ date, ids: [meal.menu_item.id] }];
-  }
 
-  user.save();
-  res.send({ message: "success" });
+  try {
+    if (user.foodLog && user.foodLog.length > 0) {
+      let currLog = user.foodLog.find(
+        (elem) => elem.date.getDate() === new Date(date).getDate()
+      );
+
+      if (currLog) {
+        currLog.ids.push(meal.menu_item.id);
+      } else {
+        currLog = { date, ids: [meal.menu_item.id] };
+        user.foodLog.push(currLog);
+      }
+    } else {
+      user.foodLog = [{ date, ids: [meal.menu_item.id] }];
+    }
+
+    user.save();
+    res.send({ message: "success" });
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(401);
+  }
 });
 
 router.get("/log", requireAuth, async (req, res) => {

@@ -78,7 +78,7 @@ const LoginView = () => {
   };
 
   const onSubmit = async (data: LoginSchemaType) => {
-    const user: UserDocument = await api.authenticate(data.email, data.password);
+    const user = await api.authenticate(data.email, data.password);
 
     if (user) {
       setValidated({ emailValid: true, passwordValid: true });

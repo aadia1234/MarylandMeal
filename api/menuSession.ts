@@ -29,3 +29,16 @@ export function resetMenu() {
 export function getMenuItem(id: string) {
   return menu.find((item) => item.menu_item.id === Number(id))!;
 }
+
+export async function getFood(name: string) {
+  try {
+    const res = await session.get(
+      process.env.EXPO_PUBLIC_DAILYITEMS_URL! + "&match_name=" + name
+    );
+
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}

@@ -27,19 +27,33 @@ import { SafeAreaView } from "react-native";
 import { View } from "@/components/ui/view";
 import { Text } from "@/components/ui/text";
 import ContentLayout from "../contentLayout";
+import { useIsFocused } from "@react-navigation/native";
+import MealLog from "@/components/MealLog";
 
 
-const userData = [
-  { macro: "Calories", amount: 25 },
-  { macro: "Carbs", amount: 50 },
-  { macro: "Protein", amount: 75 },
-  { macro: "Fat", amount: 100 }
-];
+const MacroProgressView = ({ data }: { data: { macro: string, amount: number }[] }) => {
+  return (
+    <Grid className="gap-y-2 gap-x-2" _extra={{ className: "grid-cols-2" }}>
+      {
+        data.map((entry, index) => {
+          return (
+            <GridItem _extra={{ className: "col-span-1" }} key={index}>
+              <MacroCard {...entry} />
+            </GridItem>
+          );
+        })
+      }
+    </Grid>
+  );
+}
+
+
 
 export default function Dashboard() {
-  const navigation = useNavigation();
   const [date, setDate] = useState(new Date());
-  const [log, setLog] = useState<(FoodDocument | undefined)[]>([]);
+  const [log, setLog] = useState<(FoodDocument)[]>();
+  const isFocused = useIsFocused();
+
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "short",
@@ -47,99 +61,18 @@ export default function Dashboard() {
     weekday: undefined,
   };
 
-  useEffect(() => { getFoodLog(date).then((log) => setLog(log)) }, [date]);
+  const userData = [
+    { macro: "Calories", amount: 25 },
+    { macro: "Carbs", amount: 50 },
+    { macro: "Protein", amount: 75 },
+    { macro: "Fat", amount: 100 }
+  ];
 
-  const MacroProgressView = () => {
-    return (
-      <Grid className="gap-y-2 gap-x-2" _extra={{ className: "grid-cols-2"}}>
-        {
-          userData.map((entry, index) => {
-            return (
-              <GridItem _extra={{ className: "col-span-1" }} key={index}>
-                <MacroCard {...entry} />
-              </GridItem>
-            );
-          })
-        }
-      </Grid>
-    );
-  }
-
-  const LogView = () => {
-    return (
-      <Accordion
-        size="md"
-        variant="unfilled"
-        type="single"
-        defaultValue={["a"]}
-        className="m-5 w-full border border-outline-200"
-      >
-        <AccordionItem value="a">
-          <AccordionHeader>
-            <AccordionTrigger>
-              {({ isExpanded }) => {
-                return (
-                  <>
-                    <AccordionTitleText>Meals Logged</AccordionTitleText>
-                    {isExpanded ? (
-                      <AccordionIcon as={ChevronUpIcon} className="ml-3" />
-                    ) : (
-                      <AccordionIcon
-                        as={ChevronDownIcon}
-                        className="ml-3"
-                      />
-                    )}
-                  </>
-                );
-              }}
-            </AccordionTrigger>
-          </AccordionHeader>
-          <AccordionContent>
-            {log?.map((item) => <FoodCard {...item!} />)}
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    );
-  }
-
-  const PlanView = () => {
-    return (
-      <Accordion
-        size="md"
-        variant="unfilled"
-        type="single"
-        defaultValue={["a"]}
-        className="m-5 w-full border border-outline-200"
-      >
-        <AccordionItem value="a">
-          <AccordionHeader>
-            <AccordionTrigger>
-              {({ isExpanded }) => {
-                return (
-                  <>
-                    <AccordionTitleText>Meal Plan</AccordionTitleText>
-                    {isExpanded ? (
-                      <AccordionIcon as={ChevronUpIcon} className="ml-3" />
-                    ) : (
-                      <AccordionIcon
-                        as={ChevronDownIcon}
-                        className="ml-3"
-                      />
-                    )}
-                  </>
-                );
-              }}
-            </AccordionTrigger>
-          </AccordionHeader>
-          <AccordionContent>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    );
-  }
+  useEffect(() => { getFoodLog(date).then((log) => setLog(log)) }, [date, isFocused]);
 
   return (
-    <ContentLayout>
+    // need to change data placeholder!
+    <ContentLayout data={log?.length}>
       <ScrollView
         showsVerticalScrollIndicator={false}
       >
@@ -152,10 +85,10 @@ export default function Dashboard() {
             <Calendar date={date} setDate={setDate} placement="bottom" />
           </HStack>
           <VStack>
-            <MacroProgressView />
+            <MacroProgressView data={userData}/>
             <Center>
-              <LogView />
-              <PlanView />
+              <MealLog title={"Meals logged"} log={log}/>
+              <MealLog title={"Meal Plan"} log={[]} />
             </Center>
           </VStack>
         </VStack>

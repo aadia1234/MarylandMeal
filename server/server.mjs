@@ -32,7 +32,7 @@ app.post("/authenticate", async (req, res) => {
     req.session.userId = user.id;
     res.send({ message: "Successfully logged in!" });
   } else {
-    res.status(401).send({ message: "Invalid credentials!" });
+    res.sendStatus(401);
   }
 });
 

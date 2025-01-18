@@ -23,10 +23,11 @@ import EditProfile from "@/components/EditProfile";
 import SettingsCard from "@/components/SettingsCard";
 import { UserDocument } from "@/models/UserDocument";
 import { router } from "expo-router";
-import { logout } from "@/api/userSession";
+import { getUser, logout } from "@/api/userSession";
 import ContentLayout from "../contentLayout";
 import { View } from "@/components/ui/view";
 import HorizontalMacroView from "@/components/HorizontalMacroView";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const userData = [
   { macro: "Calories", amount: 1000 },
@@ -38,14 +39,15 @@ const userData = [
 
 
 
-const ProfileView = (user: UserDocument) => {
+const ProfileView = ({ user }: { user: UserDocument }) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
     <Center className="md:mt-14 mt-6 w-full md:px-10 md:pt-6 pb-4">
       <EditProfile showModal={showModal} setShowModal={setShowModal} />
       <VStack space="lg" className="items-center">
-        <Button onPress={() => { logout(); router.replace("/auth/welcome"); }}>
+        <Button onPress={() => { console.log(user) }}>
+        {/* <Button onPress={() => { logout(); router.replace("/auth/welcome"); }}> */}
           <ButtonText>Logout</ButtonText>
         </Button>
         <Avatar size="2xl" className="bg-primary-600">
@@ -83,30 +85,38 @@ const ProfileView = (user: UserDocument) => {
   );
 }
 
-export default function Profile(props: UserDocument) {
+const AccountSettingsView = () => {
+  return (
+    <VStack className="mx-6" space="2xl">
+      <Heading className="font-roboto" size="xl">
+        Account
+      </Heading>
+      <VStack className="py-2 px-4 border rounded-xl border-border-300 justify-between items-center">
+        {/* {accountData.map((item, index) => <SettingsCard key={index} {...item} />)} */}
+      </VStack>
+    </VStack>
+  );
+}
+
+export default function Profile() {
+  const [user, setUser] = useState<UserDocument>();
+  useEffect(() => { getUser().then((user) => setUser(user)) }, []);
 
   return (
-    <ContentLayout>
+    <ContentLayout data={user?._id}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         className="h-fit w-full"
       >
-        <VStack className="h-full w-full mb-16 md:mb-0">
-          <VStack className="h-full w-full" space="2xl">
-            <ProfileView {...props} />
-            <VStack className="mx-6" space="2xl">
-              <Heading className="font-roboto" size="xl">
-                Account
-              </Heading>
-              <VStack className="py-2 px-4 border rounded-xl border-border-300 justify-between items-center">
-                {/* {accountData.map((item, index) => <SettingsCard key={index} {...item} />)} */}
-              </VStack>
-            </VStack>
-          </VStack>
+        <VStack className="h-full w-full mb-16 md:mb-0" space="2xl">
+          <ProfileView user={user!} />
+          <AccountSettingsView />
         </VStack>
       </ScrollView>
     </ContentLayout>
   );
+
+
 };
 
 

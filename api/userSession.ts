@@ -1,7 +1,8 @@
 import { FoodDocument } from "@/models/FoodDocument";
 import FoodLogDocument from "@/models/FoodLogDocument";
 import axios from "axios";
-import { getMenu } from "./menuSession";
+// import { getMenu } from "./menuSession";
+import { getFood } from "./menuSession";
 
 const session = axios.create({
   baseURL: process.env.EXPO_PUBLIC_BASE_URL,
@@ -31,10 +32,11 @@ export async function authenticate(email: string, password: string) {
         password: password,
       }
     );
-    return res.data;
+    console.log(res.data);
+    return true;
   } catch (error) {
     console.log(error);
-    return null;
+    return false;
   }
 }
 
@@ -57,20 +59,23 @@ export async function getUser() {
   }
 }
 
+// fix async
 export async function getFoodLog(date: Date) {
   try {
     const res = await session.get(process.env.EXPO_PUBLIC_LOG_FOOD_URL!);
-    const menu = await getMenu();
     const foodLog = res.data as FoodLogDocument[];
     const log = foodLog.find(
       (log) => new Date(log.date).getDate() === date.getDate()
     )!;
-    const logData = log?.ids.map((id) =>
-      menu!.find((item) => item.menu_item.id === id)
-    );
 
-    console.log(logData);
-    return logData;
+    const logData = await log.ids.map(async (id) => {
+      const food = await getFood("Apple");
+      return food.results[0];
+    });
+    // const test = await getFood("American Cheese Sliced");
+    // const logData = test.results;
+
+    return Promise.all(logData);
   } catch (error) {
     console.log(error);
     return [];
