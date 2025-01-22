@@ -1,4 +1,10 @@
+import MacroDocument from "./MacroDocument";
+
 export default interface FoodLogDocument {
     date: Date;
-    ids: number[];
+    macros: {
+        target: MacroDocument,
+        consumed: MacroDocument
+    }
+    ids: { id: number, quantity: number }[];
 }

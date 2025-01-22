@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/MarylandMeal.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.anonymous.MarylandMeal"
@@ -32,6 +32,14 @@
     "plugins": ["expo-router", "expo-font"],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "554a437c-4b17-4bd8-bf8a-c4422348c036"
+      }
     }
   }
 }

@@ -4,7 +4,7 @@ import { ChevronDownIcon, ChevronUpIcon } from "lucide-react-native";
 import FoodCard from "./FoodCard";
 import React from "react";
 
-export default function MealLog({ title, log }: { title: string, log?: FoodDocument[] }) {
+export default function MealLog({ title, log }: { title: string, log?: { item: FoodDocument, quantity: number }[] }) {
     return (
         <Accordion
             size="md"
@@ -19,7 +19,7 @@ export default function MealLog({ title, log }: { title: string, log?: FoodDocum
                         {({ isExpanded }) => {
                             return (
                                 <>
-                                    <AccordionTitleText>{title}</AccordionTitleText>
+                                    <AccordionTitleText className="font-primary">{title}</AccordionTitleText>
                                     {isExpanded ? (
                                         <AccordionIcon as={ChevronUpIcon} className="ml-3" />
                                     ) : (
@@ -34,7 +34,7 @@ export default function MealLog({ title, log }: { title: string, log?: FoodDocum
                     </AccordionTrigger>
                 </AccordionHeader>
                 <AccordionContent>
-                    {log?.map((item, index) => <FoodCard {...item!} key={index} />)}
+                    {log?.map((entry, index) => <FoodCard {...entry} key={index} />)}
                 </AccordionContent>
             </AccordionItem>
         </Accordion>

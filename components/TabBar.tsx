@@ -6,13 +6,14 @@ import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { VStack } from './ui/vstack';
 import { GlobeIcon, Icon } from './ui/icon';
 import { Center } from './ui/center';
+import { CirclePlusIcon, HomeIcon, PlusIcon, UserIcon } from 'lucide-react-native';
 
 export default function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
     const { colors } = useTheme();
     const { buildHref } = useLinkBuilder();
 
     return (
-        <View className="w-full h-24 flex-row px-4 bg-slate-100 border-t border-outline-200">
+        <View className="w-full h-[88px] flex-row px-4 bg-slate-100 border-t border-outline-200">
             {state.routes.map((route, index) => {
                 const { options } = descriptors[route.key];
                 const label =
@@ -23,6 +24,8 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
                             : route.name;
 
                 const isFocused = state.index === index;
+
+                const icon = options.title === "Profile" ? UserIcon : options.title === "Home" ? HomeIcon : CirclePlusIcon;
 
                 const onPress = () => {
                     const event = navigation.emit({
@@ -54,16 +57,17 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
                         onLongPress={onLongPress}
                         style={{ flex: 1 }}
                     >
-                        <VStack className="m-auto mb-10">
-                            <Center>
+                        <VStack className="m-auto h-full">
+                            <Center className="h-full pb-5">
                                 <Icon
-                                    as={GlobeIcon}
-                                    size={"md"}
-                                    className={`${isFocused
+                                    as={icon}
+                                    size="xl"
+                                    className={`h-7 aspect-square ${isFocused
                                         ? "text-primary-500"
                                         : "text-typography-400"
                                         }`}
                                 />
+                                {/* { options.title !== "Menu" && 
                                 <Text
                                     size="xs"
                                     className={`${isFocused
@@ -73,9 +77,10 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
                                 >
                                     {route.name[0].toUpperCase() + route.name.substring(1)}
                                 </Text>
+                                } */}
                             </Center>
                         </VStack>
-                        
+
                     </Pressable>
                 );
             })}

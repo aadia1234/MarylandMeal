@@ -24,7 +24,28 @@ const UserSchema = new Schema(
       type: [
         {
           date: Date,
-          ids: [Number],
+          macros: [
+            {
+              target: {
+                calories: Number,
+                fats: Number,
+                protein: Number,
+                carbs: Number,
+              },
+              consumed: {
+                calories: Number,
+                fats: Number,
+                protein: Number,
+                carbs: Number,
+              },
+            },
+          ],
+          ids: [
+            {
+              id: Number,
+              quantity: Number,
+            },
+          ],
         },
       ],
       required: false,

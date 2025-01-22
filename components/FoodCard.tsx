@@ -8,8 +8,9 @@ import { Text } from "./ui/text";
 import { HStack } from "./ui/hstack";
 import { Button, ButtonText } from "./ui/button";
 import { FoodDocument } from "@/models/FoodDocument";
+import { Box } from "./ui/box";
 
-function FoodCard(item: FoodDocument) {
+function FoodCard({item, quantity}: {item: FoodDocument, quantity?: number}) {
   const food = item.menu_item;
 
   const onPress = () => {
@@ -28,18 +29,23 @@ function FoodCard(item: FoodDocument) {
           className="w-1/3 aspect-square rounded-sm grow-0 my-auto"
           alt="image"
         />
-        <VStack space="sm" className="grow shrink px-2">
-          <Text bold size="2xl" numberOfLines={1}>{food.name}</Text>
+        <VStack space="sm" className={`grow shrink pl-2 pr-${quantity ? 0 : 2}`}>
+          <Text bold size="2xl" className="font-primary" numberOfLines={1}>{food.name}</Text>
           <VStack>
-            <Text bold size="sm">Calories: {food.calories} kcal</Text>
-            <Text bold size="sm">Carbs: {food.carbs}g</Text>
-            <Text bold size="sm">Protein: {food.protein}g</Text>
-            <Text bold size="sm">Fats: {food.fats}g</Text>
+            <Text bold size="sm" className="font-primary">Calories: {food.calories} kcal</Text>
+            <Text bold size="sm" className="font-primary">Carbs: {food.carbs}g</Text>
+            <Text bold size="sm" className="font-primary">Protein: {food.protein}g</Text>
+            <Text bold size="sm" className="font-primary">Fats: {food.fats}g</Text>
           </VStack>
         </VStack>
+        {quantity && 
+        <Center className="aspect-square h-7">
+          <Text>x{quantity}</Text>
+        </Center>
+        }
       </HStack>
     </Button>
   );
 }
 
-export default memo(FoodCard, (prevProps, nextProps) => { return prevProps.id === nextProps.id; });
+export default memo(FoodCard, (prevProps, nextProps) => { return prevProps.item.id === nextProps.item.id; });

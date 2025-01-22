@@ -14,11 +14,12 @@ import { ScrollView } from "@/components/ui/scroll-view";
 import { HStack } from "@/components/ui/hstack";
 import { Divider } from "@/components/ui/divider";
 import { View } from "@/components/ui/view";
-import React from "react";
+import React, { useState } from "react";
 import { getUser, log } from "@/api/userSession";
 import { FoodDocument } from "@/models/FoodDocument";
 import { getMenuItem } from "@/api/menuSession";
 import HorizontalMacroView from "@/components/HorizontalMacroView";
+import NumberSpinner from "@/components/NumberSpinner";
 
 const FoodItemLayout = (props: any) => {
   return (
@@ -56,6 +57,7 @@ const Food = () => {
   const { id } = useLocalSearchParams();
   const item: FoodDocument = getMenuItem(id as string);
   const food = item.menu_item;
+  const [quantity, setQuantity] = useState(1);
 
   const list = [
     { macro: "Calories", amount: food.calories },
@@ -71,7 +73,7 @@ const Food = () => {
         className="mb-6 h-80 w-full rounded-md"
         alt="image"
       />
-      <VStack className="">
+      <VStack className="" space="md">
         <View className="mb-6">
           <HorizontalMacroView data={list}/>
         </View>
@@ -79,15 +81,14 @@ const Food = () => {
           {food.name}
         </Heading>
         <Text size="sm">{"Lorem ipsum"}</Text>
-      </VStack>
-      <Box className="flex-col sm:flex-row">
+        <NumberSpinner value={quantity} setValue={setQuantity}/>
         <Button
-          onPress={() => log(item)}
+          onPress={() => log(item, quantity)}
           className="mt-5 px-4 py-2 mr-0 sm:mr-3 sm:mb-0 sm:flex-1"
         >
           <ButtonText size="sm">Log meal</ButtonText>
         </Button>
-      </Box>
+      </VStack>
     </Card>
   );
 };

@@ -18,7 +18,7 @@ const HeaderView = (props: { setSearchText: any }) => {
 
   return (
     <VStack space="md" className="sticky top-0 pb-3 bg-white">
-      <Heading size="3xl" className="font-roboto">
+      <Heading size="3xl" className="font-primary">
         Dining Hall Menu
       </Heading>
       <Input className="">
@@ -29,7 +29,7 @@ const HeaderView = (props: { setSearchText: any }) => {
           onChangeText={(text) => props.setSearchText(text.toLowerCase())}
           placeholder="Search..."
           selectionColor="rgb(225, 25, 50)"
-          className="text-md"
+          className="text-md font-primary"
         />
       </Input>
     </VStack>
@@ -68,15 +68,15 @@ export default function Food() {
   const ListEmptyView = () => {
     return (
       <Center className="w-full h-[75%]">
-        <Heading size="lg">No results found</Heading>
+        <Heading size="lg" className="font-primary">No results found</Heading>
       </Center>
     );
 
   };
 
-  
 
-  const FoodLogMemoView = useCallback(({ item }: { item: FoodDocument }) => (<FoodCard {...item} />), []);
+
+  const FoodLogMemoView = useCallback(({ item }: { item: FoodDocument }) => (<FoodCard item={item} />), []);
 
   // if scrolled too fast it can bug out
 
@@ -107,5 +107,5 @@ export default function Food() {
     </ContentLayout>
   );
 
-  
+
 }

@@ -25,23 +25,48 @@ router.get("", requireAuth, async (req, res) => {
 
 router.post("/log", requireAuth, async (req, res) => {
   const user = res.locals.user;
-  const { date, meal } = req.body;
+  const { date, meal, quantity } = req.body;
+
+  
 
   try {
+    const id = meal.menu_item.id;
+    const entry = { id, quantity };
+    
+    const target = {
+      calories: 1000,
+      protein: 200,
+      carbs: 300,
+      fats: 400,
+    };
+
+    const mealMacros = {
+      calories: meal.menu_item.calories * quantity,
+      calories: meal.menu_item.protein * quantity,
+      calories: meal.menu_item.carbs * quantity,
+      calories: meal.menu_item.fats * quantity,
+    };
+
+    let macros = { target, mealMacros };
+
     if (user.foodLog && user.foodLog.length > 0) {
       let currLog = user.foodLog.find(
         (elem) => elem.date.getDate() === new Date(date).getDate()
       );
 
       if (currLog) {
-        currLog.ids.push(meal.menu_item.id);
+        currLog.ids.push(entry);
+        UserModel.findOneAndUpdate()
+
       } else {
-        currLog = { date, ids: [meal.menu_item.id] };
+        currLog = { date, macros, ids: [entry] };
         user.foodLog.push(currLog);
       }
     } else {
-      user.foodLog = [{ date, ids: [meal.menu_item.id] }];
+      user.foodLog = [{ date, macros, ids: [entry] }];
     }
+
+    console.log(entry);
 
     user.save();
     res.send({ message: "success" });

@@ -1,4 +1,5 @@
-import gluestackPlugin from '@gluestack-ui/nativewind-utils/tailwind-plugin';
+import gluestackPlugin from "@gluestack-ui/nativewind-utils/tailwind-plugin";
+import { platformSelect } from "nativewind/theme";
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -6,6 +7,14 @@ module.exports = {
   content: ["app/**/*.{tsx,jsx,ts,js}", "components/**/*.{tsx,jsx,ts,js}"],
   presets: [require("nativewind/preset")],
   theme: {
+    fontFamily: {
+      primary: ["Interstate Regular"],
+      // system: platformSelect({
+      //   ios: "Georgia",
+      //   android: "Roboto",
+      //   default: "ui-sans-serif",
+      // }),
+    },
     extend: {
       colors: {
         primary: {
@@ -163,12 +172,12 @@ module.exports = {
           error: "rgb(var(--color-indicator-error)/<alpha-value>)",
         },
       },
-      fontFamily: {
-        heading: undefined,
-        body: undefined,
-        mono: undefined,
-        roboto: ["Roboto", "sans-serif"],
-      },
+      // fontFamily: {
+      //   heading: undefined,
+      //   body: undefined,
+      //   mono: undefined,
+      //   roboto: ["Roboto", "sans-serif"],
+      // },
       fontWeight: {
         extrablack: "950",
       },

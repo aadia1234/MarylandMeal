@@ -1,4 +1,5 @@
 import FoodLogDocument from "./FoodLogDocument";
+import MacroDocument from "./MacroDocument";
 
 export interface UserDocument {
   _id: string;
@@ -9,4 +10,5 @@ export interface UserDocument {
   updatedAt: string;
   __v: number;
   foodLog: FoodLogDocument[];
+  
 }

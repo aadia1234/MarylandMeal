@@ -68,9 +68,10 @@ export async function getFoodLog(date: Date) {
       (log) => new Date(log.date).getDate() === date.getDate()
     )!;
 
-    const logData = await log.ids.map(async (id) => {
+    const logData = await log.ids.map(async (entry) => {
       const food = await getFood("Apple");
-      return food.results[0];
+      const quantity = entry.quantity;
+      return { item: food.results[0], quantity };
     });
     // const test = await getFood("American Cheese Sliced");
     // const logData = test.results;
@@ -82,9 +83,25 @@ export async function getFoodLog(date: Date) {
   }
 }
 
-export async function log(meal: FoodDocument) {
+// fix async
+export async function getMacros(date: Date) {
   try {
-    const body = { date: new Date(), meal };
+    const res = await session.get(process.env.EXPO_PUBLIC_LOG_FOOD_URL!);
+    const foodLog = res.data as FoodLogDocument[];
+    const log = foodLog.find(
+      (log) => new Date(log.date).getDate() === date.getDate()
+    )!;
+
+    return log.macros;
+  } catch (error) {
+    console.log(error);
+    // return [];
+  }
+}
+
+export async function log(meal: FoodDocument, quantity: number) {
+  try {
+    const body = { date: new Date(), meal, quantity };
     console.log(body);
     const res = await session.post(process.env.EXPO_PUBLIC_LOG_FOOD_URL!, body);
     console.log("Successfully logged: " + meal.menu_item.name);
