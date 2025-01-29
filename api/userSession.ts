@@ -68,13 +68,11 @@ export async function getFoodLog(date: Date) {
       (log) => new Date(log.date).getDate() === date.getDate()
     )!;
 
-    const logData = await log.ids.map(async (entry) => {
-      const food = await getFood("Apple");
-      const quantity = entry.quantity;
+    const logData = await log.ids.map(async ({ id, quantity }) => {
+      const food = await getFood(910);
+      console.log(id);
       return { item: food.results[0], quantity };
     });
-    // const test = await getFood("American Cheese Sliced");
-    // const logData = test.results;
 
     return Promise.all(logData);
   } catch (error) {

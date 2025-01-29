@@ -30,8 +30,6 @@ import ContentLayout from "../contentLayout";
 import { useIsFocused } from "@react-navigation/native";
 import MealLog from "@/components/MealLog";
 import MacroDocument from "@/models/MacroDocument";
-// import * as SplashScreen from 'expo-splash-screen';
-// import { useFonts } from 'expo-font';
 
 
 const MacroProgressView = ({ target, consumed }: { target: MacroDocument, consumed?: MacroDocument }) => {
@@ -58,7 +56,6 @@ const MacroProgressView = ({ target, consumed }: { target: MacroDocument, consum
 }
 
 
-
 export default function Dashboard() {
   const [date, setDate] = useState(new Date());
   const [log, setLog] = useState<{ item: FoodDocument, quantity: number }[]>();
@@ -75,19 +72,7 @@ export default function Dashboard() {
   useEffect(() => { getFoodLog(date).then((log) => setLog(log)) }, [date, isFocused]);
   useEffect(() => { getMacros(date).then((macros) => setMacros(macros)) }, [date, isFocused]);
 
-  // const [loaded, error] = useFonts({
-  //   'Interstate Regular': require('@/assets/fonts/Interstate-Regular.otf'),
-  // });
 
-  // useEffect(() => {
-  //   if (loaded || error) {
-  //     SplashScreen.hideAsync();
-  //   }
-  // }, [loaded, error]);
-
-  // if (!loaded && !error) {
-  //   return null;
-  // }
 
   return (
     // need to change data placeholder!
@@ -104,7 +89,8 @@ export default function Dashboard() {
             <Calendar date={date} setDate={setDate} placement="bottom" />
           </HStack>
           <VStack>
-            {macros && <MacroProgressView target={macros!.target} consumed={macros!.consumed} />}
+            {/* needs to be fixed! */}
+            {/* {macros && <MacroProgressView target={macros!.target} consumed={macros!.consumed} />} */}
             <Center>
               <MealLog title={"Meals logged"} log={log} />
               <MealLog title={"Meal Plan"} log={[]} />

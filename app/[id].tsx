@@ -75,13 +75,13 @@ const Food = () => {
       />
       <VStack className="" space="md">
         <View className="mb-6">
-          <HorizontalMacroView data={list}/>
+          <HorizontalMacroView data={list} />
         </View>
         <Heading size="md" className="mb-2">
           {food.name}
         </Heading>
         <Text size="sm">{"Lorem ipsum"}</Text>
-        <NumberSpinner value={quantity} setValue={setQuantity}/>
+        <NumberSpinner value={quantity} setValue={setQuantity} />
         <Button
           onPress={() => log(item, quantity)}
           className="mt-5 px-4 py-2 mr-0 sm:mr-3 sm:mb-0 sm:flex-1"

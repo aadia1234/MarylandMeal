@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* MUST USE BUILD VERSION TO FIX EXPO GO FONT LOADING ISSUES */
+
+/* 
+
 @font-face {
   font-family: "Interstate Regular";
   font-style: normal;
@@ -13,3 +17,5 @@
 @layer base {
   @apply font-primary;
 }
+
+*/

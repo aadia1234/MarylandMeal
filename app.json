@@ -29,7 +29,15 @@
       "output": "static",
       "favicon": "./assets/images/MarylandMeal.png"
     },
-    "plugins": ["expo-router", "expo-font"],
+    "plugins": [
+      "expo-router",
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/Interstate-Regular.otf"]
+        }
+      ]
+    ],
     "experiments": {
       "typedRoutes": true
     },
