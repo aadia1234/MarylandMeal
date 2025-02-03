@@ -34,22 +34,17 @@ function FoodCard({ item, quantity }: { item: Meal, quantity?: number }) {
       className="w-fit h-fit my-2 p-2 justify-center border border-outline-200"
     >
       <HStack className="w-full h-fit flex">
-        <Image
-          source={require("@/assets/images/MarylandMeal.png")}
-          className="w-1/3 aspect-square rounded-sm grow-0 my-auto"
-          alt="image"
-        />
-        <VStack space="sm" className="grow shrink mx-2 ">
-          <HStack className="justify-between w-full">
-            <Text bold size="xl" className={`w-${quantity? 44 : "full"}`} numberOfLines={1}>{food.name}</Text>
-            {
+        <VStack space="sm" className="grow shrink mx-2 items-center">
+          <HStack className="justify-between items-center">
+            <Text bold size="xl" className="" numberOfLines={1}>{food.name} {quantity && `(x${quantity})`}</Text>
+            {/* {
               quantity &&
               <Center className="aspect-square">
-                  <Text>x{quantity}</Text>
+                <Text>x{quantity}</Text>
               </Center>
-            }
+            } */}
           </HStack>
-          <Grid className={`gap-y-${quantity ? 0 : 2} gap-x-0`} _extra={{ className: "grid-cols-2" }}>
+          <Grid className={`gap-y-${quantity ? 2 : 2} gap-x-2`} _extra={{ className: "grid-cols-2" }}>
             {
               macros.map(({ macro, value }, index) => {
                 return (
