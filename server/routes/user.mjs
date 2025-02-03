@@ -69,7 +69,7 @@ router.get("", requireAuth, async (req, res) => {
 // date needs to be FIXED!!!
 router.post("/log", requireAuth, async (req, res) => {
   const user = res.locals.user;
-  const date = new Date();
+  const date = new Date(req.query.date);
   const { meal, quantity } = req.body;
 
   try {
