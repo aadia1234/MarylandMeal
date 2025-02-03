@@ -23,5 +23,5 @@
     "nativewind-env.d.ts",
     "react-native.config.js",
     "server/auth.ts"
-  ]
+, "models/FoodLogModel.mjs"  ]
 }

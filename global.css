@@ -1,21 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* MUST USE BUILD VERSION TO FIX EXPO GO FONT LOADING ISSUES */
-
-/* 
-
-@font-face {
-  font-family: "Interstate Regular";
-  font-style: normal;
-  font-weight: normal;
-  font-display: swap;
-  src: url("./assets/fonts/Interstate-Regular.otf") format("otf");
-}
-
-@layer base {
-  @apply font-primary;
-}
-
-*/

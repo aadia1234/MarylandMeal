@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FoodDocument } from "@/models/FoodDocument";
+import { Meal } from "@/interfaces/Meal";
 
 const session = axios.create({
   baseURL: process.env.EXPO_PUBLIC_MENU_BASE_URL!,
@@ -7,7 +7,7 @@ const session = axios.create({
   withCredentials: true,
 });
 
-let menu: FoodDocument[] = [];
+let menu: Meal[] = [];
 let page = 0;
 
 export async function getMenu() {

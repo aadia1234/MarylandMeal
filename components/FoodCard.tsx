@@ -7,15 +7,25 @@ import { VStack } from "./ui/vstack";
 import { Text } from "./ui/text";
 import { HStack } from "./ui/hstack";
 import { Button, ButtonText } from "./ui/button";
-import { FoodDocument } from "@/models/FoodDocument";
+import { Meal } from "@/interfaces/Meal";
 import { Box } from "./ui/box";
+import { Grid, GridItem } from "./ui/grid";
+import Macro from "@/interfaces/Macro";
 
-function FoodCard({item, quantity}: {item: FoodDocument, quantity?: number}) {
+function FoodCard({ item, quantity }: { item: Meal, quantity?: number }) {
   const food = item.menu_item;
 
   const onPress = () => {
     router.push({ pathname: "/[id]", params: { id: food.id } });
   };
+
+  const macros = [
+    { macro: "Calories", value: food.calories },
+    { macro: "Protein", value: food.protein },
+    { macro: "Carbs", value: food.carbs },
+    { macro: "Fats", value: food.fats },
+
+  ];
 
   return (
     <Button
@@ -23,26 +33,43 @@ function FoodCard({item, quantity}: {item: FoodDocument, quantity?: number}) {
       onPress={onPress}
       className="w-fit h-fit my-2 p-2 justify-center border border-outline-200"
     >
-      <HStack space="md" className="w-full h-fit flex">
+      <HStack className="w-full h-fit flex">
         <Image
           source={require("@/assets/images/MarylandMeal.png")}
           className="w-1/3 aspect-square rounded-sm grow-0 my-auto"
           alt="image"
         />
-        <VStack space="sm" className={`grow shrink pl-2 pr-${quantity ? 0 : 2}`}>
-          <Text bold size="2xl" className="font-primary" numberOfLines={1}>{food.name}</Text>
-          <VStack>
-            <Text bold size="sm" className="font-primary">Calories: {food.calories} kcal</Text>
-            <Text bold size="sm" className="font-primary">Carbs: {food.carbs}g</Text>
-            <Text bold size="sm" className="font-primary">Protein: {food.protein}g</Text>
-            <Text bold size="sm" className="font-primary">Fats: {food.fats}g</Text>
-          </VStack>
+        <VStack space="sm" className="grow shrink mx-2 ">
+          <HStack className="justify-between w-full">
+            <Text bold size="xl" className={`w-${quantity? 44 : "full"}`} numberOfLines={1}>{food.name}</Text>
+            {
+              quantity &&
+              <Center className="aspect-square">
+                  <Text>x{quantity}</Text>
+              </Center>
+            }
+          </HStack>
+          <Grid className={`gap-y-${quantity ? 0 : 2} gap-x-0`} _extra={{ className: "grid-cols-2" }}>
+            {
+              macros.map(({ macro, value }, index) => {
+                return (
+                  <GridItem _extra={{ className: "col-span-1" }} key={index}>
+                    <VStack>
+                      <Card variant="outline" className="rounded-lg w-full h-fit px-0 py-1 m-auto">
+                        <Center>
+                          <Center>
+                            <Text bold size="xs">{value}g</Text>
+                            <Text bold size="xs">{macro}</Text>
+                          </Center>
+                        </Center>
+                      </Card>
+                    </VStack>
+                  </GridItem>
+                );
+              })
+            }
+          </Grid>
         </VStack>
-        {quantity && 
-        <Center className="aspect-square h-7">
-          <Text>x{quantity}</Text>
-        </Center>
-        }
       </HStack>
     </Button>
   );

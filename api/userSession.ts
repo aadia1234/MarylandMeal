@@ -1,8 +1,8 @@
-import { FoodDocument } from "@/models/FoodDocument";
-import FoodLogDocument from "@/models/FoodLogDocument";
+import FoodLog from "@/interfaces/FoodLog";
 import axios from "axios";
 // import { getMenu } from "./menuSession";
 import { getFood } from "./menuSession";
+import { Meal } from "@/interfaces/Meal";
 
 const session = axios.create({
   baseURL: process.env.EXPO_PUBLIC_BASE_URL,
@@ -27,10 +27,7 @@ export async function authenticate(email: string, password: string) {
     // simplify function
     const res = await session.post(
       process.env.EXPO_PUBLIC_AUTHENTICATE_USER_URL!,
-      {
-        email: email,
-        password: password,
-      }
+      { email, password }
     );
     console.log(res.data);
     return true;
@@ -62,14 +59,13 @@ export async function getUser() {
 // fix async
 export async function getFoodLog(date: Date) {
   try {
-    const res = await session.get(process.env.EXPO_PUBLIC_LOG_FOOD_URL!);
-    const foodLog = res.data as FoodLogDocument[];
-    const log = foodLog.find(
-      (log) => new Date(log.date).getDate() === date.getDate()
-    )!;
-
+    const res = await session.get(process.env.EXPO_PUBLIC_LOG_FOOD_URL!, {
+      params: { date },
+    });
+    const log = res.data as FoodLog;
+    console.log(log.ids);
     const logData = await log.ids.map(async ({ id, quantity }) => {
-      const food = await getFood(910);
+      const food = await getFood(id);
       console.log(id);
       return { item: food.results[0], quantity };
     });
@@ -84,24 +80,29 @@ export async function getFoodLog(date: Date) {
 // fix async
 export async function getMacros(date: Date) {
   try {
-    const res = await session.get(process.env.EXPO_PUBLIC_LOG_FOOD_URL!);
-    const foodLog = res.data as FoodLogDocument[];
-    const log = foodLog.find(
-      (log) => new Date(log.date).getDate() === date.getDate()
-    )!;
-
-    return log.macros;
+    const res = await session.get(process.env.EXPO_PUBLIC_LOG_FOOD_URL!, {
+      params: { date },
+    });
+    const log = res.data as FoodLog;
+    const [target, consumed] = [log.target, log.consumed];
+    console.log({ target, consumed });
+    return { target, consumed };
   } catch (error) {
     console.log(error);
-    // return [];
   }
 }
 
-export async function log(meal: FoodDocument, quantity: number) {
+export async function log(meal: Meal, quantity: number) {
   try {
-    const body = { date: new Date(), meal, quantity };
+    const body = { meal, quantity };
+    const date = Date.now();
+
     console.log(body);
-    const res = await session.post(process.env.EXPO_PUBLIC_LOG_FOOD_URL!, body);
+    const res = await session.post(
+      process.env.EXPO_PUBLIC_LOG_FOOD_URL!,
+      body,
+      { params: { date } }
+    );
     console.log("Successfully logged: " + meal.menu_item.name);
   } catch (error) {
     console.log(error);

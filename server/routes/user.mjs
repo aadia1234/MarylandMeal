@@ -1,5 +1,6 @@
 import express from "express";
 import UserModel from "../../models/UserModel.mjs";
+import FoodLogModel from "../../models/FoodLogModel.mjs";
 
 const router = express.Router();
 
@@ -9,6 +10,48 @@ const requireAuth = (req, res, next) => {
   } else {
     res.status(401).send({ message: "User not authenticated" });
   }
+};
+
+const initNewFoodLog = async (user) => {
+  const log = new FoodLogModel({
+    userId: user.id,
+    target: {
+      calories: 100,
+      fats: 200,
+      protein: 300,
+      carbs: 400,
+    },
+  });
+  await log.save();
+
+  user.foodLogIds.push(log.id);
+  await user.save();
+
+  return log;
+};
+
+const getFoodLog = async (user, date) => {
+  const startOfDay = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate()
+  );
+  const endOfDay = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate() + 1
+  );
+
+  const log =
+    (await FoodLogModel.findOne({
+      _id: { $in: user.foodLogIds },
+      date: {
+        $gte: startOfDay,
+        $lt: endOfDay,
+      },
+    })) ?? (await initNewFoodLog(user));
+
+  return log;
 };
 
 router.use(async (req, res, next) => {
@@ -23,52 +66,27 @@ router.get("", requireAuth, async (req, res) => {
   res.send(user);
 });
 
+// date needs to be FIXED!!!
 router.post("/log", requireAuth, async (req, res) => {
   const user = res.locals.user;
-  const { date, meal, quantity } = req.body;
-
-  
+  const date = new Date();
+  const { meal, quantity } = req.body;
 
   try {
     const id = meal.menu_item.id;
-    const entry = { id, quantity };
-    
-    const target = {
-      calories: 1000,
-      protein: 200,
-      carbs: 300,
-      fats: 400,
+    const foodLog = await getFoodLog(user, date);
+    const consumed = foodLog.consumed;
+    const totalConsumed = {
+      calories: meal.menu_item.calories * quantity + consumed.calories,
+      protein: meal.menu_item.protein * quantity + consumed.protein,
+      carbs: meal.menu_item.carbs * quantity + consumed.carbs,
+      fats: meal.menu_item.fats * quantity + consumed.fats,
     };
 
-    const mealMacros = {
-      calories: meal.menu_item.calories * quantity,
-      calories: meal.menu_item.protein * quantity,
-      calories: meal.menu_item.carbs * quantity,
-      calories: meal.menu_item.fats * quantity,
-    };
+    foodLog.consumed = totalConsumed;
+    foodLog.ids.push({ id, quantity });
+    await foodLog.save();
 
-    let macros = { target, mealMacros };
-
-    if (user.foodLog && user.foodLog.length > 0) {
-      let currLog = user.foodLog.find(
-        (elem) => elem.date.getDate() === new Date(date).getDate()
-      );
-
-      if (currLog) {
-        currLog.ids.push(entry);
-        UserModel.findOneAndUpdate()
-
-      } else {
-        currLog = { date, macros, ids: [entry] };
-        user.foodLog.push(currLog);
-      }
-    } else {
-      user.foodLog = [{ date, macros, ids: [entry] }];
-    }
-
-    console.log(entry);
-
-    user.save();
     res.send({ message: "success" });
   } catch (error) {
     console.log(error);
@@ -78,8 +96,9 @@ router.post("/log", requireAuth, async (req, res) => {
 
 router.get("/log", requireAuth, async (req, res) => {
   const user = res.locals.user;
-  const foodLog = user.foodLog;
-  res.send(foodLog);
+  const date = new Date(req.query.date);
+  const log = await getFoodLog(user, date);
+  res.send(log);
 });
 
 router.post("/logout", requireAuth, async (req, res) => {

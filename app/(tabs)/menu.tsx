@@ -7,7 +7,7 @@ import { VStack } from "@/components/ui/vstack";
 import { Heading } from "@/components/ui/heading";
 import React from "react";
 import { Center } from "@/components/ui/center";
-import { FoodDocument } from "@/models/FoodDocument";
+import { Meal } from "@/interfaces/Meal";
 import { Spinner } from "@/components/ui/spinner";
 import ContentLayout from "../contentLayout";
 import { getMenu, resetMenu } from "@/api/menuSession";
@@ -18,7 +18,7 @@ const HeaderView = (props: { setSearchText: any }) => {
 
   return (
     <VStack space="md" className="sticky top-0 pb-3 bg-white">
-      <Heading size="3xl" className="font-primary">
+      <Heading size="3xl">
         Dining Hall Menu
       </Heading>
       <Input className="">
@@ -29,7 +29,7 @@ const HeaderView = (props: { setSearchText: any }) => {
           onChangeText={(text) => props.setSearchText(text.toLowerCase())}
           placeholder="Search..."
           selectionColor="rgb(225, 25, 50)"
-          className="text-md font-primary"
+          className="text-md"
         />
       </Input>
     </VStack>
@@ -38,14 +38,14 @@ const HeaderView = (props: { setSearchText: any }) => {
 
 export default function Food() {
   const [searchText, setSearchText] = useState("");
-  const [menu, setMenu] = useState<FoodDocument[]>([]);
+  const [menu, setMenu] = useState<Meal[]>([]);
   const [loading, setLoading] = useState(false);
 
   const fetchItems = async () => {
     if (loading || searchText !== "") { return; }
     setLoading(true);
     const data = await getMenu();
-    setMenu(data as FoodDocument[]);
+    setMenu(data as Meal[]);
     setLoading(false);
   };
 
@@ -68,7 +68,7 @@ export default function Food() {
   const ListEmptyView = () => {
     return (
       <Center className="w-full h-[75%]">
-        <Heading size="lg" className="font-primary">No results found</Heading>
+        <Heading size="lg">No results found</Heading>
       </Center>
     );
 
@@ -76,7 +76,7 @@ export default function Food() {
 
 
 
-  const FoodLogMemoView = useCallback(({ item }: { item: FoodDocument }) => (<FoodCard item={item} />), []);
+  const FoodLogMemoView = useCallback(({ item }: { item: Meal }) => (<FoodCard item={item} />), []);
 
   // if scrolled too fast it can bug out
 

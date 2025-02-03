@@ -15,7 +15,8 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.MarylandMeal"
+      "bundleIdentifier": "com.anonymous.MarylandMeal",
+      "appleTeamId": "95P6AMSZ3D"
     },
     "android": {
       "adaptiveIcon": {
@@ -34,7 +35,9 @@
       [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/Interstate-Regular.otf"]
+          "fonts": [
+            "./assets/fonts/Interstate-Regular.otf"
+          ]
         }
       ]
     ],

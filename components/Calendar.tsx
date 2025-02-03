@@ -7,65 +7,7 @@ import { Popover, PopoverArrow, PopoverBackdrop, PopoverBody, PopoverContent } f
 import { Button, ButtonIcon } from "./ui/button";
 import DateTimePicker from "react-native-ui-datepicker";
 import { CalendarClock } from "lucide-react-native";
-import { Text } from "./ui/text";
 import { Center } from "./ui/center";
-
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//       },
-//       datePickerContainer: {
-//         width: '90%',
-//         backgroundColor: '#f0f4f3',
-//         borderRadius: 10,
-//         padding: 10,
-//       },
-//       monthYearHeader: {
-//         fontSize: 18,
-//         fontWeight: '600',
-//         color: '#4CAF50',
-//         textAlign: 'center',
-//         marginVertical: 10,
-//       },
-//       dayContainer: {
-//         borderRadius: 20,
-//         width: "75%",
-//         // padding: 10,
-//         alignItems: 'center',
-//         justifyContent: 'center',
-//       },
-//       selectedDay: {
-//         backgroundColor: '#4CAF50', // Green background for selected date
-//         borderRadius: 50,
-//       },
-//       selectedDayText: {
-//         color: '#fff',
-//         fontWeight: 'bold',
-//       },
-// });
-
-// export default function Calendar(props: {date: number, onChange: (date: number) => void}) {
-//     return (
-//         <View style={styles.container}>
-//             <DateTimePicker
-//                 mode="single"
-//                 date={props.date}
-//                 selectedItemColor={Theme.colors.primary}
-//                 headerButtonColor={Theme.colors.primary}
-//                 // monthYearHeaderStyle={styles.monthYearHeader}
-//                 dayContainerStyle={styles.dayContainer}
-//                 // selectedDayStyle={styles.selectedDay}
-//                 // selectedDayTextStyle={styles.selectedDayText}
-//                 // dayContainerStyle={styles.dayText}                
-//                 height={300}
-//                 onChange={(param) => props.onChange(param.date as number)}
-//             />
-//         </View>
-//     );
-
-// }
 
 export default function Calendar(props: any) {
   const [isOpen, setIsOpen] = useState(false);
@@ -95,7 +37,7 @@ export default function Calendar(props: any) {
         );
       }}
     >
-      <PopoverBackdrop className="bg-primary-500" />
+      <PopoverBackdrop className="bg-black" />
       <PopoverContent>
         <PopoverArrow />
         <Center className="">
@@ -103,6 +45,12 @@ export default function Calendar(props: any) {
             <DateTimePicker
               mode="single"
               date={props.date}
+              maxDate={Date.now()}
+              displayFullDays
+              selectedItemColor="#fa1932" // need to double check!
+              headerButtonColor="#fa1932"
+              headerButtonsPosition="around"
+              dayContainerStyle={{ aspectRatio: 1, margin: "auto", borderRadius: 5 }}
               onChange={(params) =>
                 props.setDate(new Date(params.date as Date))
               }

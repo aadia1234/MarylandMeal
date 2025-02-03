@@ -1,7 +1,7 @@
-import FoodLogDocument from "./FoodLogDocument";
-import MacroDocument from "./MacroDocument";
+import FoodLogDocument from "./FoodLog";
+import Macro from "./Macro";
 
-export interface UserDocument {
+export interface User {
   _id: string;
   name: string;
   email: string;
@@ -10,5 +10,4 @@ export interface UserDocument {
   updatedAt: string;
   __v: number;
   foodLog: FoodLogDocument[];
-  
 }

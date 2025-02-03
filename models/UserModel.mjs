@@ -20,35 +20,9 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
-    foodLog: {
-      type: [
-        {
-          date: Date,
-          macros: [
-            {
-              target: {
-                calories: Number,
-                fats: Number,
-                protein: Number,
-                carbs: Number,
-              },
-              consumed: {
-                calories: Number,
-                fats: Number,
-                protein: Number,
-                carbs: Number,
-              },
-            },
-          ],
-          ids: [
-            {
-              id: Number,
-              quantity: Number,
-            },
-          ],
-        },
-      ],
-      required: false,
+    foodLogIds: {
+      type: [Schema.ObjectId],
+      required: true,
     },
   },
   {

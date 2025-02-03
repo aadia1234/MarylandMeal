@@ -20,8 +20,7 @@ import MacroCard from "@/components/MacroCard";
 import { VStack } from "@/components/ui/vstack";
 import FoodCard from "@/components/FoodCard";
 import { getFoodLog, getMacros } from "@/api/userSession";
-import FoodLogDocument from "@/models/FoodLogDocument";
-import { FoodDocument } from "@/models/FoodDocument";
+import FoodLogDocument from "@/interfaces/FoodLog";
 import { Grid, GridItem } from "@/components/ui/grid";
 import { SafeAreaView, Text } from "react-native";
 import { View } from "@/components/ui/view";
@@ -29,15 +28,17 @@ import { View } from "@/components/ui/view";
 import ContentLayout from "../contentLayout";
 import { useIsFocused } from "@react-navigation/native";
 import MealLog from "@/components/MealLog";
-import MacroDocument from "@/models/MacroDocument";
+import Macro from "@/interfaces/Macro";
+import FoodLog from "@/interfaces/FoodLog";
+import { Meal } from "@/interfaces/Meal";
 
 
-const MacroProgressView = ({ target, consumed }: { target: MacroDocument, consumed?: MacroDocument }) => {
+const MacroProgressView = ({ target, consumed }: { target: Macro, consumed: Macro }) => {
   const macros = [
-    { macro: "calories", target: target.calories, consumed: consumed?.calories ?? 0 },
-    { macro: "protein", target: target.protein, consumed: consumed?.protein ?? 0 },
-    { macro: "carbs", target: target.carbs, consumed: consumed?.carbs ?? 0 },
-    { macro: "fats", target: target.fats, consumed: consumed?.fats ?? 0 }
+    { macro: "calories", target: target.calories, consumed: consumed.calories },
+    { macro: "protein", target: target.protein, consumed: consumed.protein },
+    { macro: "carbs", target: target.carbs, consumed: consumed.carbs },
+    { macro: "fats", target: target.fats, consumed: consumed.fats }
   ];
 
   return (
@@ -58,8 +59,8 @@ const MacroProgressView = ({ target, consumed }: { target: MacroDocument, consum
 
 export default function Dashboard() {
   const [date, setDate] = useState(new Date());
-  const [log, setLog] = useState<{ item: FoodDocument, quantity: number }[]>();
-  const [macros, setMacros] = useState<{ target: MacroDocument; consumed: MacroDocument; } | undefined>();
+  const [log, setLog] = useState<{ item: Meal, quantity: number }[]>();
+  const [macros, setMacros] = useState<{ target: Macro; consumed: Macro; }>();
   const isFocused = useIsFocused();
 
   const options: Intl.DateTimeFormatOptions = {
@@ -70,7 +71,7 @@ export default function Dashboard() {
   };
 
   useEffect(() => { getFoodLog(date).then((log) => setLog(log)) }, [date, isFocused]);
-  useEffect(() => { getMacros(date).then((macros) => setMacros(macros)) }, [date, isFocused]);
+  useEffect(() => { getMacros(date).then((macros) => setMacros(macros)) }, [date, log]);
 
 
 
@@ -81,16 +82,15 @@ export default function Dashboard() {
         showsVerticalScrollIndicator={false}
       >
         <VStack className="md:px-10 md:pt-6 w-full px-5" space="2xl">
-          {/* font-roboto not working with ios */}
           <HStack className="w-full items-center justify-between" >
-            <Heading size="3xl" className="font-primary">
+            <Heading size="3xl">
               {date.toLocaleDateString("en-us", options)}
             </Heading>
             <Calendar date={date} setDate={setDate} placement="bottom" />
           </HStack>
           <VStack>
-            {/* needs to be fixed! */}
-            {/* {macros && <MacroProgressView target={macros!.target} consumed={macros!.consumed} />} */}
+            {/* needs to be fixed! - if macro exceeds the target then it glitches! also animation is glitchy!*/}
+            {macros && <MacroProgressView target={macros.target} consumed={macros.consumed} />}
             <Center>
               <MealLog title={"Meals logged"} log={log} />
               <MealLog title={"Meal Plan"} log={[]} />

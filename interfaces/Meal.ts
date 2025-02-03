@@ -1,4 +1,4 @@
-export interface FoodDocument {
+export interface Meal {
   id: number;
   menu_item: {
     id: number;

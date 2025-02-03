@@ -21,7 +21,7 @@ import { Divider } from "@/components/ui/divider";
 import { isWeb } from "@gluestack-ui/nativewind-utils/IsWeb";
 import EditProfile from "@/components/EditProfile";
 import SettingsCard from "@/components/SettingsCard";
-import { UserDocument } from "@/models/UserDocument";
+import { User } from "@/interfaces/User";
 import { router } from "expo-router";
 import { getUser, logout } from "@/api/userSession";
 import ContentLayout from "../contentLayout";
@@ -39,7 +39,7 @@ const userData = [
 
 
 
-const ProfileView = ({ user }: { user: UserDocument }) => {
+const ProfileView = ({ user }: { user: User }) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -47,7 +47,7 @@ const ProfileView = ({ user }: { user: UserDocument }) => {
       <EditProfile showModal={showModal} setShowModal={setShowModal} />
       <VStack space="lg" className="items-center">
         <Button onPress={() => { console.log(user) }}>
-        {/* <Button onPress={() => { logout(); router.replace("/auth/welcome"); }}> */}
+          {/* <Button onPress={() => { logout(); router.replace("/auth/welcome"); }}> */}
           <ButtonText>Logout</ButtonText>
         </Button>
         <Avatar size="2xl" className="bg-primary-600">
@@ -99,7 +99,7 @@ const AccountSettingsView = () => {
 }
 
 export default function Profile() {
-  const [user, setUser] = useState<UserDocument>();
+  const [user, setUser] = useState<User>();
   useEffect(() => { getUser().then((user) => setUser(user)) }, []);
 
   return (

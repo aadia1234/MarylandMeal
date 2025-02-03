@@ -40,7 +40,7 @@ import { Pressable } from "@/components/ui/pressable";
 import { router } from "expo-router";
 import AuthLayout from "./AuthLayout";
 import * as api from "@/api/userSession";
-import { UserDocument } from "@/models/UserDocument";
+import { User } from "@/interfaces/User";
 
 const loginSchema = z.object({
   email: z.string().min(1, "Email is required").email(),

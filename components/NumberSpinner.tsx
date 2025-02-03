@@ -15,8 +15,8 @@ export default function NumberSpinner({ value, setValue }: { value: number, setV
 
 
     return (
-        <HStack className="w-full">
-            <Input className="flex-1">
+        <HStack className="w-44">
+            <Input className="flex-1 h-fit py-2">
                 <InputSlot className="pl-3">
                     <InputIcon as={MinusIcon} className="text-primary-500" onTouchEnd={() => changeValue(-1)} />
                 </InputSlot>
