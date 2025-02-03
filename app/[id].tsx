@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { VStack } from "@/components/ui/vstack";
 import { Heading } from "@/components/ui/heading";
 import { Box } from "@/components/ui/box";
-import { Button, ButtonText } from "@/components/ui/button";
+import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { Image } from "@/components/ui/image";
 import { Text } from "@/components/ui/text";
 import { Pressable } from "@/components/ui/pressable";
@@ -22,6 +22,8 @@ import HorizontalMacroView from "@/components/HorizontalMacroView";
 import NumberSpinner from "@/components/NumberSpinner";
 import { Center } from "@/components/ui/center";
 import { Accordion, AccordionContent, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from "@/components/ui/accordion";
+import { CheckIcon, GlobeIcon } from "lucide-react-native";
+import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectTrigger } from "@/components/ui/select";
 
 const FoodItemLayout = (props: any) => {
   return (
@@ -31,24 +33,7 @@ const FoodItemLayout = (props: any) => {
         contentContainerStyle={{ flexGrow: 1 }}
       >
         <VStack className="w-full p-4" space="md">
-          <VStack className="md:items-center" space="4xl">
-            <Pressable
-              onPress={() => {
-                router.back();
-              }}
-              className=""
-            >
-              <HStack space="sm" className="items-center">
-                <Icon
-                  as={ArrowLeftIcon}
-                  className="md:hidden stroke-background-800"
-                  size="xl"
-                />
-                <Heading size="xl">Back</Heading>
-              </HStack>
-            </Pressable>
-            {props.children}
-          </VStack>
+          {props.children}
         </VStack>
       </ScrollView>
     </SafeAreaView>
@@ -58,8 +43,8 @@ const FoodItemLayout = (props: any) => {
 const Food = () => {
   const { id } = useLocalSearchParams();
   const item: Meal = getMenuItem(id as string);
-  const food = item.menu_item;
   const [quantity, setQuantity] = useState(1);
+  const food = item.menu_item;
 
   const list = [
     { macro: "Calories", amount: food.calories },
@@ -68,66 +53,104 @@ const Food = () => {
     { macro: "Fat", amount: food.fats }
   ];
 
+  const Header = () => {
+    return (
+      <HStack className="items-center justify-between">
+        <Pressable onPress={() => { router.back(); }} >
+          <Icon
+            as={ArrowLeftIcon}
+            className="md:hidden stroke-background-800"
+            size="xl"
+          />
+        </Pressable>
+        <Heading size="xl" numberOfLines={1} className="max-w-[80%]">{food.name}</Heading>
+        <Pressable onPress={async () => { await log(item, quantity); router.back(); }} >
+          <Icon
+            as={CheckIcon}
+            className="md:hidden stroke-background-800"
+            size="xl"
+          />
+        </Pressable>
+      </HStack>
+    );
+  }
+
   return (
-    <Card variant="outline" className="rounded-md">
-      <Image
-        source={require("@/assets/images/MarylandMeal.png")}
-        className="mb-6 h-80 w-full rounded-md"
-        alt="image"
-      />
-      <VStack className="" space="md">
-        <View className="mb-6">
-          <HorizontalMacroView data={list} />
-        </View>
-        <Heading size="md" className="mb-2">
-          {food.name}
-        </Heading>
-        <HStack className="w-full h-fit justify-between">
-          <Center>
+    <VStack space="4xl">
+      <Header />
+      <Card variant="outline" className="rounded-md">
+        <VStack className="" space="md">
+          <View className="mb-6">
+            <HorizontalMacroView data={list} />
+          </View>
+          <HStack className="w-full h-fit justify-between items-center">
+            <Text size="md">Serving Size:</Text>
+            <Select>
+              <SelectTrigger variant="outline" size="md">
+                <SelectInput placeholder="Select serving size" />
+                <SelectIcon className="mr-3" as={ChevronDownIcon} />
+              </SelectTrigger>
+              <SelectPortal>
+                <SelectBackdrop />
+                <SelectContent>
+                  <SelectDragIndicatorWrapper>
+                    <SelectDragIndicator />
+                  </SelectDragIndicatorWrapper>
+                  <SelectItem label="1 cup" value="cup" />
+                  <SelectItem label="1 tbsp" value="tbsp" />
+                  <SelectItem label="1 oz" value="oz" />
+                  <SelectItem label="1 mg" value="mg" />
+                  <SelectItem label="1 g" value="g" />
+                  <SelectItem label="1 lb(s)" value="lbs" />
+                  <SelectItem label="1 kg" value="kg" />
+                  <SelectItem label="1 fluid oz" value="fluid-oz" />
+                  <SelectItem label="1 ml" value="ml" />
+                  <SelectItem label="1 liter" value="liter" />
+                  <SelectItem label="1 tsp(s)" value="tsps" />
+
+                </SelectContent>
+              </SelectPortal>
+            </Select>
+          </HStack>
+          <HStack className="w-full h-fit justify-between items-center">
             <Text size="md">Quantity:</Text>
-          </Center>
-          <NumberSpinner value={quantity} setValue={setQuantity} />
-        </HStack>
-        <Button
-          onPress={() => log(item, quantity)}
-          className="mt-5 px-4 py-2 mr-0 sm:mr-3 sm:mb-0 sm:flex-1"
-        >
-          <ButtonText size="sm">Log meal</ButtonText>
-        </Button>
-        {/* <Accordion
-          size="md"
-          variant="unfilled"
-          type="single"
-          defaultValue={["a"]}
-          className="m-5 w-full border border-outline-200"
-        >
-          <AccordionItem value="a">
-            <AccordionHeader>
-              <AccordionTrigger>
-                {({ isExpanded }) => {
-                  return (
-                    <>
-                      <AccordionTitleText className="font-primary">View Ingredients</AccordionTitleText>
-                      {isExpanded ? (
-                        <AccordionIcon as={ChevronUpIcon} className="ml-3" />
-                      ) : (
-                        <AccordionIcon
-                          as={ChevronDownIcon}
-                          className="ml-3"
-                        />
-                      )}
-                    </>
-                  );
-                }}
-              </AccordionTrigger>
-            </AccordionHeader>
-            <AccordionContent>
-              Lorem Ipsum
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion> */}
-      </VStack>
-    </Card>
+            <NumberSpinner value={quantity} setValue={setQuantity} />
+          </HStack>
+          <Accordion
+            size="md"
+            variant="unfilled"
+            type="single"
+            defaultValue={["a"]}
+            className="m-auto w-full border border-outline-200"
+          >
+            <AccordionItem value="a">
+              <AccordionHeader>
+                <AccordionTrigger>
+                  {({ isExpanded }) => {
+                    return (
+                      <>
+                        <AccordionTitleText className="font-primary">View Ingredients</AccordionTitleText>
+                        {isExpanded ? (
+                          <AccordionIcon as={ChevronUpIcon} className="ml-3" />
+                        ) : (
+                          <AccordionIcon
+                            as={ChevronDownIcon}
+                            className="ml-3"
+                          />
+                        )}
+                      </>
+                    );
+                  }}
+                </AccordionTrigger>
+              </AccordionHeader>
+              <AccordionContent>
+                <Text>{food.ingredients ?? "Sorry, no ingredients were found."}</Text>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </VStack>
+      </Card>
+    </VStack>
   );
 };
 

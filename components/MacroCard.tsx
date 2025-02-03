@@ -9,7 +9,7 @@ import { View } from "./ui/view";
 
 export default function MacroCard({ macro, target, consumed }: { macro: string, target: number, consumed: number }) {
     return (
-        <Card variant="outline" className="rounded-lg w-full h-fit grow p-2 m-auto">
+        <Card variant="outline" className="rounded-md w-full h-fit grow p-2 m-auto">
             <Center className="aspect-video m-auto">
                 <Center className="w-fit">
                     <CircularProgress

@@ -3,7 +3,7 @@ export interface Meal {
   menu_item: {
     id: number;
     name: string;
-    description: string;
+    ingredients: string;
     image: any;
     calories: number;
     carbs: number;

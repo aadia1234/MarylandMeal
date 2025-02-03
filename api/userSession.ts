@@ -95,7 +95,7 @@ export async function getMacros(date: Date) {
 export async function log(meal: Meal, quantity: number) {
   try {
     const body = { meal, quantity };
-    const date = Date.now();
+    const date = new Date();
 
     console.log(body);
     const res = await session.post(

@@ -70,6 +70,7 @@ router.get("", requireAuth, async (req, res) => {
 router.post("/log", requireAuth, async (req, res) => {
   const user = res.locals.user;
   const date = new Date(req.query.date);
+  console.log(date);
   const { meal, quantity } = req.body;
 
   try {

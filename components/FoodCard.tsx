@@ -55,7 +55,7 @@ function FoodCard({ item, quantity }: { item: Meal, quantity?: number }) {
                 return (
                   <GridItem _extra={{ className: "col-span-1" }} key={index}>
                     <VStack>
-                      <Card variant="outline" className="rounded-lg w-full h-fit px-0 py-1 m-auto">
+                      <Card variant="outline" className="rounded-md w-full h-fit px-0 py-1 m-auto">
                         <Center>
                           <Center>
                             <Text bold size="xs">{value}g</Text>
