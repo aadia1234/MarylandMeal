@@ -13,7 +13,7 @@ export default function Index() {
         setLoggedIn(true);
     });
 
-    if (loggedIn) {
+    if (false) {
         return <Redirect href="/(tabs)/home"></Redirect>
     } else {
         return <Redirect href="/auth/welcome"></Redirect>

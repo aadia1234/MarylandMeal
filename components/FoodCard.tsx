@@ -31,41 +31,31 @@ function FoodCard({ item, quantity }: { item: Meal, quantity?: number }) {
     <Button
       variant="outline"
       onPress={onPress}
-      className="w-fit h-fit my-2 p-2 justify-center border border-outline-200"
+      className="w-fit h-fit m-2 p-2 justify-center border border-outline-200"
     >
-      <HStack className="w-full h-fit flex">
-        <VStack space="sm" className="grow shrink mx-2 items-center">
-          <HStack className="justify-between items-center">
-            <Text bold size="xl" className="" numberOfLines={1}>{food.name} {quantity && `(x${quantity})`}</Text>
-            {/* {
-              quantity &&
-              <Center className="aspect-square">
-                <Text>x{quantity}</Text>
-              </Center>
-            } */}
-          </HStack>
-          <Grid className={`gap-y-${quantity ? 2 : 2} gap-x-2`} _extra={{ className: "grid-cols-2" }}>
-            {
-              macros.map(({ macro, value }, index) => {
-                return (
-                  <GridItem _extra={{ className: "col-span-1" }} key={index}>
-                    <VStack>
-                      <Card variant="outline" className="rounded-md w-full h-fit px-0 py-1 m-auto">
+      <VStack space="sm" className="grow shrink mx-2 items-center">
+        <Text bold size="xl" numberOfLines={1}>{food.name} {quantity && `(x${quantity})`}</Text>
+        <Grid className={`gap-y-${quantity ? 2 : 2} gap-x-2 pb-2`} _extra={{ className: "grid-cols-2" }}>
+          {
+            macros.map(({ macro, value }, index) => {
+              return (
+                <GridItem _extra={{ className: "col-span-1" }} key={index}>
+                  <VStack>
+                    <Card variant="outline" className="rounded-md w-full h-fit px-0 py-1 m-auto">
+                      <Center>
                         <Center>
-                          <Center>
-                            <Text bold size="xs">{value}g</Text>
-                            <Text bold size="xs">{macro}</Text>
-                          </Center>
+                          <Text bold size="xs">{value}g</Text>
+                          <Text bold size="xs">{macro}</Text>
                         </Center>
-                      </Card>
-                    </VStack>
-                  </GridItem>
-                );
-              })
-            }
-          </Grid>
-        </VStack>
-      </HStack>
+                      </Center>
+                    </Card>
+                  </VStack>
+                </GridItem>
+              );
+            })
+          }
+        </Grid>
+      </VStack>
     </Button>
   );
 }
