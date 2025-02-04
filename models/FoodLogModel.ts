@@ -1,8 +1,6 @@
-import { Schema, SchemaType, model } from "mongoose";
-// import Macro from "../interfaces/Macro";
-// import FoodLog from "../interfaces/FoodLog";
-
-// fix this and make it typescript!
+import FoodLog from "@/interfaces/FoodLog";
+import Macro from "@/interfaces/Macro";
+import { Schema, model } from "mongoose";
 
 const emptyMacros = {
   calories: 0,
@@ -11,14 +9,14 @@ const emptyMacros = {
   carbs: 0,
 };
 
-const MacroSchema = new Schema({
+const MacroSchema = new Schema<Macro>({
   calories: Number,
   fats: Number,
   protein: Number,
   carbs: Number,
 });
 
-const FoodLogSchema = new Schema(
+const FoodLogSchema = new Schema<FoodLog>(
   {
     userId: {
       type: Schema.ObjectId,

@@ -1,7 +1,8 @@
+import { User } from "@/interfaces/User";
+import { ObjectId } from "mongodb";
 import { Schema, model } from "mongoose";
 
-// fix this and make it typescript!
-const UserSchema = new Schema(
+const UserSchema = new Schema<User>(
   {
     name: {
       type: String,
@@ -21,7 +22,7 @@ const UserSchema = new Schema(
       required: true,
     },
     foodLogIds: {
-      type: [Schema.ObjectId],
+      type: [ObjectId],
       required: true,
     },
   },

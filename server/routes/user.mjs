@@ -1,6 +1,6 @@
 import express from "express";
-import UserModel from "../../models/UserModel.mjs";
-import FoodLogModel from "../../models/FoodLogModel.mjs";
+import UserModel from "../../models/UserModel.js";
+import FoodLogModel from "../../models/FoodLogModel.js";
 
 const router = express.Router();
 
@@ -66,7 +66,6 @@ router.get("", requireAuth, async (req, res) => {
   res.send(user);
 });
 
-// date needs to be FIXED!!!
 router.post("/log", requireAuth, async (req, res) => {
   const user = res.locals.user;
   const date = new Date(req.query.date);
