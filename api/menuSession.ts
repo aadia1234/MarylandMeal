@@ -19,7 +19,7 @@ export async function getMenu() {
     return menu;
   } catch (error) {
     console.log(error);
-    return [];
+    return null;
   }
 }
 

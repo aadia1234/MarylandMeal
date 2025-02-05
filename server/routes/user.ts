@@ -1,10 +1,24 @@
-import express from "express";
-import UserModel from "../../models/UserModel.js";
-import FoodLogModel from "../../models/FoodLogModel.js";
+import UserModel from "../models/UserModel";
+import FoodLogModel from "../models/FoodLogModel";
+import express, { Request, Response, NextFunction } from "express";
+import { User } from "@/interfaces/User";
+
+interface Locals {
+  user?: User;
+  message?: string;
+}
+
+declare global {
+  namespace Express {
+    interface Response {
+      locals: Locals;
+    }
+  }
+}
 
 const router = express.Router();
 
-const requireAuth = (req, res, next) => {
+const requireAuth = (req: Request, res: Response, next: NextFunction) => {
   if (req.session.userId) {
     next();
   } else {
@@ -12,7 +26,7 @@ const requireAuth = (req, res, next) => {
   }
 };
 
-const initNewFoodLog = async (user) => {
+const initNewFoodLog = async (user: User) => {
   const log = new FoodLogModel({
     userId: user.id,
     target: {
@@ -30,7 +44,7 @@ const initNewFoodLog = async (user) => {
   return log;
 };
 
-const getFoodLog = async (user, date) => {
+const getFoodLog = async (user: User, date: Date) => {
   const startOfDay = new Date(
     date.getFullYear(),
     date.getMonth(),
@@ -57,7 +71,8 @@ const getFoodLog = async (user, date) => {
 router.use(async (req, res, next) => {
   const userId = req.session.userId;
   const user = await UserModel.findById(userId);
-  res.locals.user = user;
+  const t = user as User;
+  res.locals.user = user as User;
   next();
 });
 
@@ -68,8 +83,8 @@ router.get("", requireAuth, async (req, res) => {
 
 router.post("/log", requireAuth, async (req, res) => {
   const user = res.locals.user;
-  const date = new Date(req.query.date);
-  console.log(date);
+  const queryStr = req.query.date as string;
+  const date = new Date(queryStr);
   const { meal, quantity } = req.body;
 
   try {
@@ -89,14 +104,14 @@ router.post("/log", requireAuth, async (req, res) => {
 
     res.send({ message: "success" });
   } catch (error) {
-    console.log(error);
     res.sendStatus(401);
   }
 });
 
 router.get("/log", requireAuth, async (req, res) => {
   const user = res.locals.user;
-  const date = new Date(req.query.date);
+  const queryStr = req.query.date as string;
+  const date = new Date(queryStr);
   const log = await getFoodLog(user, date);
   res.send(log);
 });
@@ -106,7 +121,7 @@ router.post("/logout", requireAuth, async (req, res) => {
     if (error) {
       res.status(401).send({ message: "error" });
     } else {
-      res.clearCookie(process.env.COOKIE_NAME);
+      res.clearCookie(process.env.COOKIE_NAME!);
       res.send({ message: "logged out" });
     }
   });

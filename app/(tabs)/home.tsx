@@ -60,7 +60,7 @@ const MacroProgressView = ({ target, consumed }: { target: Macro, consumed: Macr
 export default function Dashboard() {
   const [date, setDate] = useState(new Date());
   const [log, setLog] = useState<{ item: Meal, quantity: number }[]>();
-  const [macros, setMacros] = useState<{ target: Macro; consumed: Macro; }>();
+  const [macros, setMacros] = useState<{ target: Macro; consumed: Macro; } | null>();
   const isFocused = useIsFocused();
 
   const options: Intl.DateTimeFormatOptions = {

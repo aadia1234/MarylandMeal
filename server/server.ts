@@ -1,20 +1,20 @@
 import express from "express";
 import session from "express-session";
 import dotenv from "dotenv";
-import UserModel from "../models/UserModel.js";
 import bcrypt from "bcryptjs";
 import cors from "cors";
-import user from "./routes/user.mjs";
+import user from "./routes/user";
 import mongoose from "mongoose";
+import UserModel from "./models/UserModel";
+import * as sessionTypes from "./types/session";
 
 dotenv.config();
 
 const app = express();
-const db = await mongoose.connect(process.env.EXPO_PUBLIC_MONGODB_URI);
 
 app.use(
   session({
-    secret: process.env.EXPO_SECRET_KEY,
+    secret: process.env.EXPO_SECRET_KEY!,
     resave: false,
     saveUninitialized: false,
     name: process.env.COOKIE_NAME,
@@ -25,6 +25,7 @@ app.use(
 app.use(express.json());
 
 app.post("/authenticate", async (req, res) => {
+  await mongoose.connect(process.env.EXPO_PUBLIC_MONGODB_URI!);
   const { email, password } = req.body;
   const user = await UserModel.findOne({ email });
 
