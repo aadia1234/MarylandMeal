@@ -25,7 +25,7 @@ import { Grid, GridItem } from "@/components/ui/grid";
 import { SafeAreaView, Text } from "react-native";
 import { View } from "@/components/ui/view";
 // import { Text } from "@/components/ui/text";
-import ContentLayout from "../contentLayout";
+import ContentLayout from "@/components/ContentLayout";
 import { useIsFocused } from "@react-navigation/native";
 import MealLog from "@/components/MealLog";
 import Macro from "@/interfaces/Macro";

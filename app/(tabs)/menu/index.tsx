@@ -9,7 +9,7 @@ import React from "react";
 import { Center } from "@/components/ui/center";
 import { Meal } from "@/interfaces/Meal";
 import { Spinner } from "@/components/ui/spinner";
-import ContentLayout from "../contentLayout";
+import ContentLayout from "@/components/ContentLayout";
 import { getMenu, resetMenu } from "@/api/menuSession";
 import LoadingSpinner from "@/components/LoadingSpinner";
 

@@ -24,7 +24,7 @@ import SettingsCard from "@/components/SettingsCard";
 import { User } from "@/interfaces/User";
 import { router } from "expo-router";
 import { getUser, logout } from "@/api/userSession";
-import ContentLayout from "../contentLayout";
+import ContentLayout from "@/components/ContentLayout";
 import { View } from "@/components/ui/view";
 import HorizontalMacroView from "@/components/HorizontalMacroView";
 import LoadingSpinner from "@/components/LoadingSpinner";

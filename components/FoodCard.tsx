@@ -16,7 +16,7 @@ function FoodCard({ item, quantity }: { item: Meal, quantity?: number }) {
   const food = item.menu_item;
 
   const onPress = () => {
-    router.push({ pathname: "/[id]", params: { id: food.id } });
+    router.push({ pathname: "/menu/[id]", params: { id: food.id } });
   };
 
   const macros = [

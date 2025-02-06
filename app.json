@@ -33,11 +33,11 @@
     "plugins": [
       "expo-router",
       [
-        "expo-font",
+        "expo-splash-screen",
         {
-          "fonts": [
-            "./assets/fonts/Interstate-Regular.otf"
-          ]
+          "backgroundColor": "#E11930",
+          "image": "./assets/images/MarylandMeal.png",
+          "imageWidth": 200
         }
       ]
     ],
@@ -51,6 +51,12 @@
       "eas": {
         "projectId": "554a437c-4b17-4bd8-bf8a-c4422348c036"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/554a437c-4b17-4bd8-bf8a-c4422348c036"
     }
   }
 }
