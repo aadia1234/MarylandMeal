@@ -28,71 +28,72 @@ import ContentLayout from "@/components/ContentLayout";
 import { View } from "@/components/ui/view";
 import HorizontalMacroView from "@/components/HorizontalMacroView";
 import LoadingSpinner from "@/components/LoadingSpinner";
-
-const userData = [
-  { macro: "Calories", amount: 1000 },
-  { macro: "Carbs", amount: 2000 },
-  { macro: "Protein", amount: 3000 },
-  { macro: "Fat", amount: 4000 }
-];
-
-
+import { BellIcon, ChevronRightIcon, GlobeIcon, GoalIcon, HeartIcon, LogOutIcon, StarIcon } from "lucide-react-native";
+import { Card } from "@/components/ui/card";
 
 
 const ProfileView = ({ user }: { user: User }) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <Center className="md:mt-14 mt-6 w-full md:px-10 md:pt-6 pb-4">
-      <EditProfile showModal={showModal} setShowModal={setShowModal} />
-      <VStack space="lg" className="items-center">
-        <Button onPress={() => { console.log(user) }}>
-          {/* <Button onPress={() => { logout(); router.replace("/auth/welcome"); }}> */}
-          <ButtonText>Logout</ButtonText>
-        </Button>
-        <Avatar size="2xl" className="bg-primary-600">
-          <AvatarImage
-            alt="Profile Image"
-            height={100}
-            width={100}
-            source={require("@/assets/images/MarylandMeal.png")}
-          />
-          <AvatarBadge />
-        </Avatar>
-        <VStack className="gap-1 w-full items-center">
-          <Text size="2xl" className="font-roboto text-dark">
-            {user.name}
-          </Text>
-          <Text className="font-roboto text-sm text-typograpphy-700">
-            United States
-          </Text>
-        </VStack>
-        <View className="w-96">
-          <HorizontalMacroView data={userData} />
-        </View>
+    <Center className="w-full">
+      <Card variant="elevated" className="w-full">
+        <EditProfile showModal={showModal} setShowModal={setShowModal} />
+        <VStack space="lg" className="items-center">
+          <Avatar size="2xl" className="bg-primary-600">
+            <AvatarImage
+              alt="Profile Image"
+              height={100}
+              width={100}
+              source={require("@/assets/images/TerrapinLogo.png")}
+              className="p-3"
+            />
+          </Avatar>
+          <VStack className="gap-1 w-full items-center">
+            <Text size="2xl" className="font-roboto text-dark">
+              {user.name}
+            </Text>
+            <Text className="font-roboto text-sm text-typograpphy-700">
+              {user.email}
+            </Text>
+          </VStack>
+          <View className="w-full items-center">
+            <Text className="font-roboto text-sm text-typograpphy-700">
+              Streaks: -1
+            </Text>
+          </View>
 
-        <Button
-          variant="outline"
-          action="secondary"
-          onPress={() => setShowModal(true)}
-          className="gap-3 relative"
-        >
-          <ButtonText className="text-dark">Edit Profile</ButtonText>
-          <ButtonIcon as={EditIcon} />
-        </Button>
-      </VStack>
+          <HStack space="lg" className="w-full justify-center">
+            <Button
+              variant="solid"
+              action="primary"
+              onPress={() => setShowModal(true)}
+              className="gap-3 relative w-32"
+            >
+              <ButtonText>Edit</ButtonText>
+              <ButtonIcon as={EditIcon} />
+            </Button>
+            <Button className="w-32" onPress={async () => { await logout(); router.replace("/auth/welcome"); }}>
+              <ButtonText>Logout</ButtonText>
+              <ButtonIcon as={LogOutIcon} />
+            </Button>
+          </HStack>
+        </VStack>
+      </Card>
     </Center>
   );
 }
 
 const AccountSettingsView = () => {
   return (
-    <VStack className="mx-6" space="2xl">
+    <VStack className="" space="2xl">
       <Heading className="font-roboto" size="xl">
         Account
       </Heading>
-      <VStack className="py-2 px-4 border rounded-xl border-border-300 justify-between items-center">
-        {/* {accountData.map((item, index) => <SettingsCard key={index} {...item} />)} */}
+      <VStack className="py-2 px-4 rounded-xl justify-between items-center bg-white">
+        <SettingsCard key={1} iconName={GoalIcon} subText={"Goals"} endIcon={ChevronRightIcon} />
+        <SettingsCard key={2} iconName={HeartIcon} subText={"Preferences"} endIcon={ChevronRightIcon} />
+        <SettingsCard key={3} iconName={BellIcon} subText={"Notifications"} endIcon={ChevronRightIcon} isLast={true} />
       </VStack>
     </VStack>
   );
@@ -108,7 +109,8 @@ export default function Profile() {
         showsVerticalScrollIndicator={false}
         className="h-fit w-full"
       >
-        <VStack className="h-full w-full mb-16 md:mb-0" space="2xl">
+        <VStack className="h-full w-full mb-16 px-5" space="2xl">
+          <Heading size="3xl">Hi, {user?.name}</Heading>
           <ProfileView user={user!} />
           <AccountSettingsView />
         </VStack>

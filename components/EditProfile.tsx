@@ -54,6 +54,7 @@ import {
     SelectTrigger,
 } from "@/components/ui/select";
 import { userSchema, userSchemaDetails } from "@/app/(tabs)/profile/AccountCardType";
+import { updateUser } from "@/api/userSession";
 
 export default function EditProfile({ showModal, setShowModal }: { showModal: boolean; setShowModal: any; }) {
     const ref = useRef(null);
@@ -71,9 +72,18 @@ export default function EditProfile({ showModal, setShowModal }: { showModal: bo
     };
     const [isEmailFocused, setIsEmailFocused] = useState(false);
     const [isNameFocused, setIsNameFocused] = useState(false);
-    const onSubmit = (_data: userSchemaDetails) => {
-        setShowModal(false);
-        reset();
+    const onSubmit = async (_data: userSchemaDetails) => {
+        // check if async works or not with handleSubmit!
+        const name = _data.firstName + " " + _data.lastName;
+        const didUpdate = await updateUser(name, _data.oldPassword, _data.newPassword);
+        if (didUpdate) {
+            setShowModal(false);
+            reset();
+            // show successful message
+        } else {
+            // show error message
+        }
+
     };
 
     return (
@@ -87,19 +97,8 @@ export default function EditProfile({ showModal, setShowModal }: { showModal: bo
         >
             <ModalBackdrop />
             <ModalContent>
-                <Box className={"w-full h-[215px] "}>
-                    <Image
-                        source={require("@/assets/images/MarylandMeal.png")}
-                        height={100}
-                        width={100}
-                        alt="Banner Image"
-                    />
-                </Box>
-                <Pressable className="absolute bg-background-500 rounded-full items-center justify-center h-8 w-8 right-6 top-44">
-                    <Icon as={GlobeIcon} />
-                </Pressable>
-                <ModalHeader className="absolute w-full">
-                    <Heading size="2xl" className="text-typography-800 pt-4 pl-4">
+                <ModalHeader className="absolute w-full mt-4 ml-6">
+                    <Heading size="2xl" className="text-typography-800">
                         Edit Profile
                     </Heading>
                     <ModalCloseButton>
@@ -110,15 +109,7 @@ export default function EditProfile({ showModal, setShowModal }: { showModal: bo
                         />
                     </ModalCloseButton>
                 </ModalHeader>
-                <Center className="w-full absolute top-16">
-                    <Avatar size="2xl">
-                        <AvatarImage source={require("@/assets/images/MarylandMeal.png")} />
-                        <AvatarBadge className="justify-center items-center bg-background-500">
-                            <Icon as={GlobeIcon} />
-                        </AvatarBadge>
-                    </Avatar>
-                </Center>
-                <ModalBody className="px-10 py-6">
+                <ModalBody className="mt-10">
                     <VStack space="2xl">
                         <HStack className="items-center justify-between">
                             <FormControl
@@ -209,272 +200,22 @@ export default function EditProfile({ showModal, setShowModal }: { showModal: bo
                             </FormControl>
                         </HStack>
                         <HStack className="items-center justify-between">
-                            <FormControl className="w-[47%]" isInvalid={!!errors.gender}>
-                                <FormControlLabel className="mb-2">
-                                    <FormControlLabelText>Gender</FormControlLabelText>
-                                </FormControlLabel>
-                                <Controller
-                                    name="gender"
-                                    control={control}
-                                    rules={{
-                                        validate: async (value) => {
-                                            try {
-                                                await userSchema.parseAsync({ city: value });
-                                                return true;
-                                            } catch (error: any) {
-                                                return error.message;
-                                            }
-                                        },
-                                    }}
-                                    render={({ field: { onChange, value } }) => (
-                                        <Select onValueChange={onChange} selectedValue={value}>
-                                            <SelectTrigger variant="outline" size="md">
-                                                <SelectInput placeholder="Select" />
-                                                <SelectIcon className="mr-3" as={ChevronDownIcon} />
-                                            </SelectTrigger>
-                                            <SelectPortal>
-                                                <SelectBackdrop />
-                                                <SelectContent>
-                                                    <SelectDragIndicatorWrapper>
-                                                        <SelectDragIndicator />
-                                                    </SelectDragIndicatorWrapper>
-                                                    <SelectItem label="Male" value="male" />
-                                                    <SelectItem label="Female" value="female" />
-                                                    <SelectItem label="Others" value="others" />
-                                                </SelectContent>
-                                            </SelectPortal>
-                                        </Select>
-                                    )}
-                                />
-                                <FormControlError>
-                                    <FormControlErrorIcon as={AlertCircle} size="md" />
-                                    <FormControlErrorText>
-                                        {errors?.gender?.message}
-                                    </FormControlErrorText>
-                                </FormControlError>
-                            </FormControl>
-
-                            <FormControl className="w-[47%]" isInvalid={!!errors.phoneNumber}>
-                                <FormControlLabel className="mb-2">
-                                    <FormControlLabelText>Phone number</FormControlLabelText>
-                                </FormControlLabel>
-                                <Controller
-                                    name="phoneNumber"
-                                    control={control}
-                                    rules={{
-                                        validate: async (value) => {
-                                            try {
-                                                await userSchema.parseAsync({ phoneNumber: value });
-                                                return true;
-                                            } catch (error: any) {
-                                                return error.message;
-                                            }
-                                        },
-                                    }}
-                                    render={({ field: { onChange, onBlur, value } }) => (
-                                        <HStack className="gap-1">
-                                            <Select className="w-[28%]">
-                                                <SelectTrigger variant="outline" size="md">
-                                                    <SelectInput placeholder="+91" />
-                                                    <SelectIcon className="mr-1" as={ChevronDownIcon} />
-                                                </SelectTrigger>
-                                                <SelectPortal>
-                                                    <SelectBackdrop />
-                                                    <SelectContent>
-                                                        <SelectDragIndicatorWrapper>
-                                                            <SelectDragIndicator />
-                                                        </SelectDragIndicatorWrapper>
-                                                        <SelectItem label="93" value="93" />
-                                                        <SelectItem label="155" value="155" />
-                                                        <SelectItem label="1-684" value="-1684" />
-                                                    </SelectContent>
-                                                </SelectPortal>
-                                            </Select>
-                                            <Input className="flex-1">
-                                                <InputField
-                                                    placeholder="89867292632"
-                                                    type="text"
-                                                    value={value}
-                                                    onChangeText={onChange}
-                                                    keyboardType="number-pad"
-                                                    onBlur={onBlur}
-                                                    onSubmitEditing={handleKeyPress}
-                                                    returnKeyType="done"
-                                                />
-                                            </Input>
-                                        </HStack>
-                                    )}
-                                />
-                                <FormControlError>
-                                    <FormControlErrorIcon as={AlertCircle} size="md" />
-                                    <FormControlErrorText>
-                                        {errors?.phoneNumber?.message}
-                                    </FormControlErrorText>
-                                </FormControlError>
-                            </FormControl>
-                        </HStack>
-                        <HStack className="items-center justify-between">
                             <FormControl
+                                // fix this
+                                isInvalid={!!errors.oldPassword || isNameFocused}
                                 className="w-[47%]"
-                                isInvalid={(!!errors.city || isEmailFocused) && !!errors.city}
                             >
                                 <FormControlLabel className="mb-2">
-                                    <FormControlLabelText>City</FormControlLabelText>
+                                    <FormControlLabelText>Old Password</FormControlLabelText>
                                 </FormControlLabel>
                                 <Controller
-                                    name="city"
-                                    control={control}
-                                    rules={{
-                                        validate: async (value) => {
-                                            try {
-                                                await userSchema.parseAsync({ city: value });
-                                                return true;
-                                            } catch (error: any) {
-                                                return error.message;
-                                            }
-                                        },
-                                    }}
-                                    render={({ field: { onChange, onBlur, value } }) => (
-                                        <Select onValueChange={onChange} selectedValue={value}>
-                                            <SelectTrigger variant="outline" size="md">
-                                                <SelectInput placeholder="Select" />
-                                                <SelectIcon className="mr-3" as={ChevronDownIcon} />
-                                            </SelectTrigger>
-                                            <SelectPortal>
-                                                <SelectBackdrop />
-                                                <SelectContent>
-                                                    <SelectDragIndicatorWrapper>
-                                                        <SelectDragIndicator />
-                                                    </SelectDragIndicatorWrapper>
-                                                    <SelectItem label="Bengaluru" value="Bengaluru" />
-                                                    <SelectItem label="Udupi" value="Udupi" />
-                                                    <SelectItem label="Others" value="Others" />
-                                                </SelectContent>
-                                            </SelectPortal>
-                                        </Select>
-                                    )}
-                                />
-                                <FormControlError>
-                                    <FormControlErrorIcon as={AlertCircle} size="md" />
-                                    <FormControlErrorText>
-                                        {errors?.city?.message}
-                                    </FormControlErrorText>
-                                </FormControlError>
-                            </FormControl>
-
-                            <FormControl
-                                className="w-[47%]"
-                                isInvalid={(!!errors.state || isEmailFocused) && !!errors.state}
-                            >
-                                <FormControlLabel className="mb-2">
-                                    <FormControlLabelText>State</FormControlLabelText>
-                                </FormControlLabel>
-                                <Controller
-                                    name="state"
-                                    control={control}
-                                    rules={{
-                                        validate: async (value) => {
-                                            try {
-                                                await userSchema.parseAsync({ state: value });
-                                                return true;
-                                            } catch (error: any) {
-                                                return error.message;
-                                            }
-                                        },
-                                    }}
-                                    render={({ field: { onChange, onBlur, value } }) => (
-                                        <Select onValueChange={onChange} selectedValue={value}>
-                                            <SelectTrigger variant="outline" size="md">
-                                                <SelectInput placeholder="Select" />
-                                                <SelectIcon className="mr-3" as={ChevronDownIcon} />
-                                            </SelectTrigger>
-                                            <SelectPortal>
-                                                <SelectBackdrop />
-                                                <SelectContent>
-                                                    <SelectDragIndicatorWrapper>
-                                                        <SelectDragIndicator />
-                                                    </SelectDragIndicatorWrapper>
-                                                    <SelectItem label="Karnataka" value="Karnataka" />
-                                                    <SelectItem label="Haryana" value="Haryana" />
-                                                    <SelectItem label="Others" value="Others" />
-                                                </SelectContent>
-                                            </SelectPortal>
-                                        </Select>
-                                    )}
-                                />
-                                <FormControlError>
-                                    <FormControlErrorIcon as={AlertCircle} size="md" />
-                                    <FormControlErrorText>
-                                        {errors?.state?.message}
-                                    </FormControlErrorText>
-                                </FormControlError>
-                            </FormControl>
-                        </HStack>
-                        <HStack className="items-center justify-between">
-                            <FormControl
-                                className="w-[47%]"
-                                isInvalid={
-                                    (!!errors.country || isEmailFocused) && !!errors.country
-                                }
-                            >
-                                <FormControlLabel className="mb-2">
-                                    <FormControlLabelText>Country</FormControlLabelText>
-                                </FormControlLabel>
-                                <Controller
-                                    name="country"
-                                    control={control}
-                                    rules={{
-                                        validate: async (value) => {
-                                            try {
-                                                await userSchema.parseAsync({ country: value });
-                                                return true;
-                                            } catch (error: any) {
-                                                return error.message;
-                                            }
-                                        },
-                                    }}
-                                    render={({ field: { onChange, onBlur, value } }) => (
-                                        <Select onValueChange={onChange} selectedValue={value}>
-                                            <SelectTrigger variant="outline" size="md">
-                                                <SelectInput placeholder="Select" />
-                                                <SelectIcon className="mr-3" as={ChevronDownIcon} />
-                                            </SelectTrigger>
-                                            <SelectPortal>
-                                                <SelectBackdrop />
-                                                <SelectContent>
-                                                    <SelectDragIndicatorWrapper>
-                                                        <SelectDragIndicator />
-                                                    </SelectDragIndicatorWrapper>
-                                                    <SelectItem label="India" value="India" />
-                                                    <SelectItem label="Sri Lanka" value="Sri Lanka" />
-                                                    <SelectItem label="Others" value="Others" />
-                                                </SelectContent>
-                                            </SelectPortal>
-                                        </Select>
-                                    )}
-                                />
-                                <FormControlError>
-                                    <FormControlErrorIcon as={AlertCircle} size="md" />
-                                    <FormControlErrorText>
-                                        {errors?.country?.message}
-                                    </FormControlErrorText>
-                                </FormControlError>
-                            </FormControl>
-                            <FormControl
-                                className="w-[47%]"
-                                isInvalid={!!errors.zipcode || isEmailFocused}
-                            >
-                                <FormControlLabel className="mb-2">
-                                    <FormControlLabelText>Zipcode</FormControlLabelText>
-                                </FormControlLabel>
-                                <Controller
-                                    name="zipcode"
+                                    name="oldPassword"
                                     control={control}
                                     rules={{
                                         validate: async (value) => {
                                             try {
                                                 await userSchema.parseAsync({
-                                                    zipCode: value,
+                                                    oldPassword: value,
                                                 });
                                                 return true;
                                             } catch (error: any) {
@@ -485,7 +226,7 @@ export default function EditProfile({ showModal, setShowModal }: { showModal: bo
                                     render={({ field: { onChange, onBlur, value } }) => (
                                         <Input>
                                             <InputField
-                                                placeholder="Enter 6 - digit zip code"
+                                                placeholder="Old Password"
                                                 type="text"
                                                 value={value}
                                                 onChangeText={onChange}
@@ -497,9 +238,52 @@ export default function EditProfile({ showModal, setShowModal }: { showModal: bo
                                     )}
                                 />
                                 <FormControlError>
-                                    <FormControlErrorIcon as={AlertCircle} size="md" />
+                                    <FormControlErrorIcon as={AlertCircleIcon} size="md" />
                                     <FormControlErrorText>
-                                        {errors?.zipcode?.message}
+                                        {errors?.firstName?.message}
+                                    </FormControlErrorText>
+                                </FormControlError>
+                            </FormControl>
+                            <FormControl
+                                isInvalid={!!errors.newPassword || isNameFocused}
+                                className="w-[47%]"
+                            >
+                                <FormControlLabel className="mb-2">
+                                    <FormControlLabelText>New Password</FormControlLabelText>
+                                </FormControlLabel>
+                                <Controller
+                                    name="newPassword"
+                                    control={control}
+                                    rules={{
+                                        validate: async (value) => {
+                                            try {
+                                                await userSchema.parseAsync({
+                                                    newPassword: value,
+                                                });
+                                                return true;
+                                            } catch (error: any) {
+                                                return error.message;
+                                            }
+                                        },
+                                    }}
+                                    render={({ field: { onChange, onBlur, value } }) => (
+                                        <Input>
+                                            <InputField
+                                                placeholder="New Password"
+                                                type="text"
+                                                value={value}
+                                                onChangeText={onChange}
+                                                onBlur={onBlur}
+                                                onSubmitEditing={handleKeyPress}
+                                                returnKeyType="done"
+                                            />
+                                        </Input>
+                                    )}
+                                />
+                                <FormControlError>
+                                    <FormControlErrorIcon as={AlertCircleIcon} size="md" />
+                                    <FormControlErrorText>
+                                        {errors?.lastName?.message}
                                     </FormControlErrorText>
                                 </FormControlError>
                             </FormControl>

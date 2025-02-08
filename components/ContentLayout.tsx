@@ -8,7 +8,7 @@ export default function ContentLayout(props: any) {
         return <LoadingSpinner />
     } else {
         return (
-            <SafeAreaView className="w-full h-full bg-white">
+            <SafeAreaView className="w-full h-full bg-zinc-100">
                 <View className="w-full h-full pt-5">
                     {props.children}
                 </View>

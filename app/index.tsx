@@ -8,11 +8,6 @@ import * as api from "@/api/userSession";
 export default function Index() {
     const [loggedIn, setLoggedIn] = useState(false);
 
-    useEffect(() => {
-        api.authenticate("dbREFACTOR@gmail.com", "dbREFACTOR@123");
-        setLoggedIn(true);
-    });
-
     if (false) {
         return <Redirect href="/(tabs)/home"></Redirect>
     } else {

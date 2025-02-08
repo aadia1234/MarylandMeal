@@ -97,3 +97,18 @@ export async function log(meal: Meal, quantity: number) {
     console.log(error);
   }
 }
+
+export async function updateUser(
+  name: string,
+  oldPassword: string,
+  newPassword: string
+) {
+  try {
+    const body = { name, oldPassword, newPassword };
+    const res = await session.patch(process.env.EXPO_PUBLIC_UPDATE_URL!, body);
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}

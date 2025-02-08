@@ -1,8 +1,8 @@
 import { ActivityIndicator, FlatList, SafeAreaView, View } from "react-native";
-import { memo, useCallback, useEffect, useState } from "react";
+import { Dispatch, memo, SetStateAction, useCallback, useEffect, useState } from "react";
 import FoodCard from "@/components/FoodCard";
 import { Input, InputField, InputIcon, InputSlot } from "@/components/ui/input";
-import { SearchIcon } from "lucide-react-native";
+import { CameraIcon, FilterIcon, SearchIcon } from "lucide-react-native";
 import { VStack } from "@/components/ui/vstack";
 import { Heading } from "@/components/ui/heading";
 import React from "react";
@@ -12,21 +12,68 @@ import { Spinner } from "@/components/ui/spinner";
 import ContentLayout from "@/components/ContentLayout";
 import { getMenu, resetMenu } from "@/api/menuSession";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { HStack } from "@/components/ui/hstack";
+import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
+import {
+  Actionsheet,
+  ActionsheetContent,
+  ActionsheetItem,
+  ActionsheetItemText,
+  ActionsheetDragIndicator,
+  ActionsheetDragIndicatorWrapper,
+  ActionsheetBackdrop,
+  ActionsheetSectionList,
+  ActionsheetSectionHeaderText,
+} from "@/components/ui/actionsheet"
+import SidebarFilter from "@/components/SidebarFilter";
 
+const HeaderView = ({ setSearchText, menu }: { setSearchText: Dispatch<SetStateAction<string>>, menu: Meal[] }) => {
 
-const HeaderView = (props: { setSearchText: any }) => {
+  const FilterView = () => {
+    const [showActionsheet, setShowActionsheet] = useState(false);
+    const handleClose = () => setShowActionsheet(false);
+    const DATA = [
+      {
+        title: "Gender",
+        data: ["Men", "Women", "Boy", "Girl"],
+      },
+    ]
+
+    return (
+      <>
+        <Button variant="link" size="md" className="rounded-md" onPress={() => setShowActionsheet(true)}>
+          <ButtonIcon as={FilterIcon} />
+        </Button>
+        <Actionsheet isOpen={showActionsheet} onClose={handleClose} snapPoints={[50]}>
+          <ActionsheetBackdrop />
+          <ActionsheetContent>
+            <ActionsheetDragIndicatorWrapper>
+              <ActionsheetDragIndicator />
+            </ActionsheetDragIndicatorWrapper>
+            <SidebarFilter />
+          </ActionsheetContent>
+        </Actionsheet>
+      </>
+    );
+  }
 
   return (
-    <VStack space="md" className="sticky top-0 pb-3 bg-white">
-      <Heading size="3xl">
-        Dining Hall Menu
-      </Heading>
-      <Input className="">
+    <VStack space="md" className="sticky top-0 pb-3 bg-zinc-100">
+      <HStack className="w-full items-center justify-between" >
+        <Heading size="3xl">
+          Dining Hall Menu
+        </Heading>
+        <Button variant="link" size="md" className="rounded-md">
+          <ButtonIcon as={CameraIcon} />
+        </Button>
+        <FilterView />
+      </HStack>
+      <Input className="bg-zinc-200 border-outline-100">
         <InputSlot className="pl-3">
           <InputIcon as={SearchIcon} />
         </InputSlot>
         <InputField
-          onChangeText={(text) => props.setSearchText(text.toLowerCase())}
+          onChangeText={(text) => setSearchText(text.toLowerCase())}
           placeholder="Search..."
           selectionColor="rgb(225, 25, 50)"
           className="text-md"
@@ -80,8 +127,9 @@ export default function Food() {
 
   // if scrolled too fast it can bug out
 
+  // menu is null at certain times
   return (
-    <ContentLayout data={menu.length}>
+    <ContentLayout data={1}>
       <FlatList
         className="px-5"
         data={menu.filter((food) => food.menu_item.name.toLowerCase().includes(searchText.toLowerCase()))}
@@ -94,7 +142,7 @@ export default function Food() {
         onEndReachedThreshold={5}
         refreshing={loading}
         onRefresh={onRefresh}
-        ListHeaderComponent={<HeaderView setSearchText={setSearchText} />}
+        ListHeaderComponent={<HeaderView setSearchText={setSearchText} menu={menu} />}
         ListEmptyComponent={<ListEmptyView />}
         ListFooterComponent={() => loading && <Spinner size="small" className="text-primary-500" />}
         initialNumToRender={4}

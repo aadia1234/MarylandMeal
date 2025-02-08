@@ -11,7 +11,7 @@ export default function MealLog({ title, log }: { title: string, log?: { item: M
             variant="unfilled"
             type="single"
             defaultValue={["a"]}
-            className="m-5 w-full border border-outline-200"
+            className="m-5 w-full rounded-md border border-outline-0 bg-white"
         >
             <AccordionItem value="a">
                 <AccordionHeader>

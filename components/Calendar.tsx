@@ -27,9 +27,9 @@ export default function Calendar(props: any) {
       trigger={(triggerProps) => {
         return (
           <Button
-            size="lg"
-            variant="outline"
-            className="rounded-md aspect-square"
+            size="md"
+            variant="link"
+            className="rounded-md"
             {...triggerProps}
           >
             <ButtonIcon as={CalendarClock} />

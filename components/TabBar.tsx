@@ -62,12 +62,12 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
                                 <Icon
                                     as={icon}
                                     size="xl"
-                                    className={`h-7 aspect-square ${isFocused
+                                    className={`h-${options.title === "Menu" ? 10 : 7} ${options.title === "Menu" && "mb-1"} aspect-square ${isFocused
                                         ? "text-primary-500"
                                         : "text-typography-400"
                                         }`}
                                 />
-                                {/* { options.title !== "Menu" && 
+                                { options.title !== "Menu" && 
                                 <Text
                                     size="xs"
                                     className={`${isFocused
@@ -77,7 +77,7 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
                                 >
                                     {route.name[0].toUpperCase() + route.name.substring(1)}
                                 </Text>
-                                } */}
+                                }
                             </Center>
                         </VStack>
 

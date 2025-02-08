@@ -61,6 +61,6 @@ app.use(
 
 app.use("/user", user);
 
-app.listen(process.env.EXPO_PUBLIC_PORT, () =>
+app.listen({ port: process.env.EXPO_PUBLIC_PORT, host: "10.174.8.42" }, () =>
   console.log("Server running on port: " + process.env.EXPO_PUBLIC_PORT)
 );

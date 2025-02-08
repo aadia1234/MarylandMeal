@@ -2,6 +2,7 @@ import UserModel from "../models/UserModel";
 import FoodLogModel from "../models/FoodLogModel";
 import express, { Request, Response, NextFunction } from "express";
 import { User } from "@/interfaces/User";
+import bcrypt from "bcryptjs";
 
 interface Locals {
   user?: User;
@@ -126,5 +127,20 @@ router.post("/logout", requireAuth, async (req, res) => {
     }
   });
 });
+
+router.patch("/update", requireAuth, async (req, res) => {
+  const user = res.locals.user;
+  const { name, oldPassword, newPassword } = req.body;
+
+  // what if user ONLY submits name change
+
+  if (bcrypt.compareSync(oldPassword, user.password)) {
+    user.name = name;
+    user.password = await bcrypt.hash(newPassword, 10);
+  } else {
+    res.status(401).send({ message: "Invalid old password!"})
+  }
+  
+})
 
 export default router;
