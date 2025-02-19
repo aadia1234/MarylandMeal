@@ -26,6 +26,7 @@ import { CheckIcon, GlobeIcon } from "lucide-react-native";
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectTrigger } from "@/components/ui/select";
 import { MacroProgressView } from "@/components/ui/macro-progress";
 import Macro from "@/interfaces/Macro";
+import { getMacros } from "@/api/userSession";
 
 const FoodItemLayout = (props: any) => {
   return (
@@ -47,7 +48,14 @@ const Food = () => {
   const item: Meal = getMenuItem(id as string);
   const [quantity, setQuantity] = useState('1'); // 1
   const food = item.menu_item;
-
+  const [date, setDate] = useState(new Date());
+  const [macros, setMacros] = useState<{ target: Macro; consumed: Macro; } | null>();
+  const [preview, setPreview] = useState({
+    calories: food.calories,
+    protein: food.protein,
+    carbs: food.carbs,
+    fats: food.fats
+  })
   const list = [
     { macro: "Calories", amount: food.calories },
     { macro: "Carbs", amount: food.carbs },
@@ -55,33 +63,7 @@ const Food = () => {
     { macro: "Fat", amount: food.fats }
   ];
 
-  // TEST VALUES -> replace with actual values for user
-  const macros = {
-    target: {
-      calories: 2000,
-      protein: 100,
-      carbs: 100,
-      fats: 100
-    },
-    consumed: {
-      calories: 1250,
-      protein: 55,
-      carbs: 30,
-      fats: 25
-    },
-    preview: {
-      calories: 100,
-      protein: 10,
-      carbs: 20,
-      fats: 25
-    }
-  }
-  // [
-  //   { macro: "calories", target: 2000, consumed: 1200 },
-  //   { macro: "protein", target: 100, consumed: 55 },
-  //   { macro: "carbs", target: 100, consumed: 17 },
-  //   { macro: "fats", target: 100, consumed: 30 }
-  // ];
+  useEffect(() => { getMacros(date).then((macros) => setMacros(macros)) }, [date, log]);
 
   const Header = () => {
     return (
@@ -122,16 +104,6 @@ const Food = () => {
   //             </SelectDragIndicatorWrapper>
   //             <SelectItem label="1 cup" value="cup" />
   //             <SelectItem label="1 tbsp" value="tbsp" />
-  //             <SelectItem label="1 oz" value="oz" />
-  //             <SelectItem label="1 mg" value="mg" />
-  //             <SelectItem label="1 g" value="g" />
-  //             <SelectItem label="1 lb(s)" value="lbs" />
-  //             <SelectItem label="1 kg" value="kg" />
-  //             <SelectItem label="1 fluid oz" value="fluid-oz" />
-  //             <SelectItem label="1 ml" value="ml" />
-  //             <SelectItem label="1 liter" value="liter" />
-  //             <SelectItem label="1 tsp(s)" value="tsps" />
-
   //           </SelectContent>
   //         </SelectPortal>
   //       </Select>
@@ -143,9 +115,15 @@ const Food = () => {
   const handleQuantityChange = (input: string) => {
     const decimalRegex = /^\d{0,4}(\.\d{0,2})?$/;
     
-    // If the input matches the regex, update the state
+    // If the input matches the regex, update the state and macro previews
     if (decimalRegex.test(input)) {
       setQuantity(input);
+      setPreview({
+        calories: food.calories * Number(input),
+        protein: food.protein * Number(input),
+        carbs: food.carbs * Number(input),
+        fats: food.fats * Number (input)
+      })
     }
   };
 
@@ -213,7 +191,7 @@ const Food = () => {
           </Accordion>
 
           {/* Macro Previews */}
-          {macros && <MacroProgressView target={macros.target} consumed={macros.consumed} preview={macros.preview} />}
+          {macros && preview && <MacroProgressView target={macros.target} consumed={macros.consumed} preview={preview} />}
           
         </VStack>
       </Card>

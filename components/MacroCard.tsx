@@ -12,7 +12,8 @@ export default function MacroCard({ macro, target, consumed, preview }: { macro:
         preview = 0;
     }
 
-    console.log("Preview amount for", macro, ":", preview);
+
+    console.log("Macro:", macro, ", target:", target, ", consumed:", consumed, ", preview:", preview);
 
     function strokeColor() {
         const ratio = consumed / target;
@@ -33,7 +34,7 @@ export default function MacroCard({ macro, target, consumed, preview }: { macro:
                             <CircularProgress
                                 value={(preview + consumed)}
                                 radius={35}
-                                duration={2000}
+                                duration={0}
                                 progressValueColor={'transparent'}
                                 activeStrokeColor={'pink'}
                                 activeStrokeWidth={5}
@@ -46,7 +47,7 @@ export default function MacroCard({ macro, target, consumed, preview }: { macro:
                             <CircularProgress
                                 value={consumed}
                                 radius={35}
-                                duration={2000}
+                                duration={1000}
                                 progressValueColor={'black'}
                                 activeStrokeColor={strokeColor()}
                                 activeStrokeWidth={5}
