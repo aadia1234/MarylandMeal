@@ -14,7 +14,7 @@ import { ScrollView } from "@/components/ui/scroll-view";
 import { HStack } from "@/components/ui/hstack";
 import { Divider } from "@/components/ui/divider";
 import { View } from "@/components/ui/view";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getUser, log } from "@/api/userSession";
 import { Meal } from "@/interfaces/Meal";
 import { getMenuItem } from "@/api/menuSession";
@@ -24,6 +24,8 @@ import { Center } from "@/components/ui/center";
 import { Accordion, AccordionContent, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from "@/components/ui/accordion";
 import { CheckIcon, GlobeIcon } from "lucide-react-native";
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectTrigger } from "@/components/ui/select";
+import { MacroProgressView } from "@/components/ui/macro-progress";
+import Macro from "@/interfaces/Macro";
 
 const FoodItemLayout = (props: any) => {
   return (
@@ -52,6 +54,34 @@ const Food = () => {
     { macro: "Protein", amount: food.protein },
     { macro: "Fat", amount: food.fats }
   ];
+
+  // TEST VALUES -> replace with actual values for user
+  const macros = {
+    target: {
+      calories: 2000,
+      protein: 100,
+      carbs: 100,
+      fats: 100
+    },
+    consumed: {
+      calories: 1250,
+      protein: 55,
+      carbs: 30,
+      fats: 25
+    },
+    preview: {
+      calories: 100,
+      protein: 10,
+      carbs: 20,
+      fats: 25
+    }
+  }
+  // [
+  //   { macro: "calories", target: 2000, consumed: 1200 },
+  //   { macro: "protein", target: 100, consumed: 55 },
+  //   { macro: "carbs", target: 100, consumed: 17 },
+  //   { macro: "fats", target: 100, consumed: 30 }
+  // ];
 
   const Header = () => {
     return (
@@ -124,8 +154,11 @@ const Food = () => {
       <Header />
       <Card variant="elevated" className="rounded-md">
         <VStack space="md">
+          {/* Macros */}
           <HorizontalMacroView data={list} />
           <Divider className="my-3"></Divider>
+
+          {/* Quantity and Serving Size */}
           <VStack space="md" className="px-0">
             <HStack className="w-full h-fit justify-between items-center px-4">
               <Text size="md">Quantity:</Text>
@@ -144,6 +177,8 @@ const Food = () => {
             {/* <ServingSizeView /> */}
             <Divider className="mt-3"></Divider>
           </VStack>
+
+          {/* Ingredients Accordion */}
           <Accordion
             size="md"
             variant="unfilled"
@@ -176,6 +211,10 @@ const Food = () => {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
+
+          {/* Macro Previews */}
+          {macros && <MacroProgressView target={macros.target} consumed={macros.consumed} preview={macros.preview} />}
+          
         </VStack>
       </Card>
     </VStack>
