@@ -22,6 +22,6 @@ export default function Index() {
     if (false) {
         return <Redirect href="/(tabs)/profile"></Redirect>
     } else {
-        return <Redirect href="/auth/welcome"></Redirect>
+        return <Redirect href="/auth"></Redirect>
     }
 }

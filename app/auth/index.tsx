@@ -35,11 +35,11 @@ const SplashScreen = () => {
           </Heading>
         </Center>
       </HStack>
-      <VStack className="w-full h-16" space="lg">
-        <Button className="w-full h-full rounded-2xl" onPress={login}>
+      <VStack className="w-full h-14" space="lg">
+        <Button className="w-full h-full rounded-lg" onPress={login}>
           <ButtonText size="lg" className="font-medium">Log in</ButtonText>
         </Button>
-        <Button className="w-full h-full rounded-2xl" onPress={signup}>
+        <Button className="w-full h-full rounded-lg" onPress={signup}>
           <ButtonText size="lg" className="font-medium">Sign Up</ButtonText>
         </Button>
       </VStack>
@@ -47,7 +47,7 @@ const SplashScreen = () => {
   );
 };
 
-export default function Welcome() {
+export default function Index() {
   return (
     <AuthLayout>
       <SplashScreen />

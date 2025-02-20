@@ -66,7 +66,7 @@ const ProfileView = ({ user, update }: { user: User, update: any }) => {
               variant="solid"
               action="primary"
               onPress={() => setShowModal(true)}
-              className="gap-3 relative w-32 rounded-2xl"
+              className="gap-3 relative w-32 rounded-lg"
             >
               <ButtonText>Edit</ButtonText>
               <ButtonIcon as={EditIcon} />
@@ -74,8 +74,8 @@ const ProfileView = ({ user, update }: { user: User, update: any }) => {
             <Button
               variant="solid"
               action="primary"
-              className="gap-3 relative w-32 rounded-2xl"
-              onPress={async () => { await logout(); router.replace("/auth/welcome"); }}
+              className="gap-3 relative w-32 rounded-lg"
+              onPress={async () => { await logout(); router.replace("/auth"); }}
             >
               <ButtonText>Logout</ButtonText>
               <ButtonIcon as={LogOutIcon} />

@@ -149,7 +149,7 @@ export default function EditProfile({ update, showModal, setShowModal }: { updat
                                                         },
                                                     }}
                                                     render={({ field: { onChange, onBlur, value } }) => (
-                                                        <Input>
+                                                        <Input className="rounded-lg">
                                                             <InputField
                                                                 placeholder={name}
                                                                 type={controllerName.includes("Password") ? "password" : "text"}
@@ -176,7 +176,7 @@ export default function EditProfile({ update, showModal, setShowModal }: { updat
                                 })
                             }
                         </Grid>
-                        <Button className="rounded-2xl" onPress={() => { handleSubmit(onSubmit)() }}>
+                        <Button className="rounded-lg" onPress={() => { handleSubmit(onSubmit)() }}>
                             <ButtonText>
                                 Save Changes
                             </ButtonText>
