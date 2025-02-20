@@ -35,12 +35,12 @@ const SplashScreen = () => {
           </Heading>
         </Center>
       </HStack>
-      <VStack className="w-full" space="lg">
-        <Button className="w-full" onPress={login}>
-          <ButtonText className="font-medium">Log in</ButtonText>
+      <VStack className="w-full h-16" space="lg">
+        <Button className="w-full h-full rounded-2xl" onPress={login}>
+          <ButtonText size="lg" className="font-medium">Log in</ButtonText>
         </Button>
-        <Button onPress={signup}>
-          <ButtonText className="font-medium">Sign Up</ButtonText>
+        <Button className="w-full h-full rounded-2xl" onPress={signup}>
+          <ButtonText size="lg" className="font-medium">Sign Up</ButtonText>
         </Button>
       </VStack>
     </VStack>
