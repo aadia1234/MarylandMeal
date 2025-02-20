@@ -38,9 +38,8 @@ import { AlertTriangle } from "lucide-react-native";
 import { Pressable } from "@/components/ui/pressable";
 // import useRouter from "@unitools/router";
 import { router } from "expo-router";
-import AuthLayout from "./AuthLayout";
-import * as api from "@/api/userSession";
-import { User } from "@/interfaces/User";
+import AuthLayout from "../../components/AuthLayout";
+import { login } from "@/api/authenticateSession";
 
 const loginSchema = z.object({
   email: z.string().min(1, "Email is required").email(),
@@ -78,7 +77,7 @@ const LoginView = () => {
   };
 
   const onSubmit = async (data: LoginSchemaType) => {
-    const user = await api.authenticate(data.email, data.password);
+    const user = await login(data.email, data.password);
 
     if (user) {
       setValidated({ emailValid: true, passwordValid: true });

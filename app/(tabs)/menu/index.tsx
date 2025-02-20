@@ -132,7 +132,7 @@ export default function Food() {
     <ContentLayout data={1}>
       <FlatList
         className="px-5"
-        data={menu.filter((food) => food.menu_item.name.toLowerCase().includes(searchText.toLowerCase()))}
+        data={menu?.filter((food) => food.menu_item.name.toLowerCase().includes(searchText.toLowerCase()))}
         renderItem={FoodLogMemoView}
         keyExtractor={(food) => food.id.toString()}
         contentContainerStyle={{ flexGrow: 1 }}

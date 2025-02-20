@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import { Button, ButtonText } from "@/components/ui/button";
 import { VStack } from "@/components/ui/vstack";
-import AuthLayout from "./AuthLayout";
+import AuthLayout from "../../components/AuthLayout";
 import { Image } from "@/components/ui/image";
 import { HStack } from "@/components/ui/hstack";
 import { Heading } from "@/components/ui/heading";

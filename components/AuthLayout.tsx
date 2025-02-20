@@ -22,7 +22,7 @@ export default function AuthLayout(props: any) {
                         <Image
                             height={100}
                             width={100}
-                            source={require("../../assets/images/MarylandMeal.png")}
+                            source={require("@/assets/images/MarylandMeal.png")}
                             className="object-cover h-full w-full"
                             alt="MarylandMeals"
                         />

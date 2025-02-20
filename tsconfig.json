@@ -16,7 +16,7 @@
     "global.d.ts",
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
-    "server/server.ts",
+    "server/app.ts",
     "lib/routes/users.mjs",
     "server/models/UserModel.ts",
     "scripts/createUser.mjs",
@@ -26,6 +26,6 @@
     "react-native.config.js",
     "server/auth.ts",
     "server/models/FoodLogModel.ts",
-    "server/routes/user.ts"
+    "server/routes/user/user.ts"
   ]
 }

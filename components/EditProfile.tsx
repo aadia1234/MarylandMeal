@@ -3,17 +3,12 @@ import { Box } from "@/components/ui/box";
 import { HStack } from "@/components/ui/hstack";
 import {
     AlertCircleIcon,
-    ChevronDownIcon,
     CloseIcon,
-    GlobeIcon,
     Icon,
 } from "@/components/ui/icon";
 import { VStack } from "@/components/ui/vstack";
-import { Pressable } from "@/components/ui/pressable";
-import { AlertCircle } from "lucide-react-native";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
-import { Image } from "@/components/ui/image";
 import {
     Modal,
     ModalBackdrop,
@@ -23,12 +18,6 @@ import {
     ModalHeader,
 } from "@/components/ui/modal";
 import { Input, InputField } from "@/components/ui/input";
-import {
-    Avatar,
-    AvatarBadge,
-    AvatarImage,
-} from "@/components/ui/avatar";
-import { Center } from "@/components/ui/center";
 import { Keyboard } from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -41,22 +30,32 @@ import {
     FormControlLabel,
     FormControlLabelText,
 } from "@/components/ui/form-control";
-import {
-    Select,
-    SelectBackdrop,
-    SelectContent,
-    SelectDragIndicator,
-    SelectDragIndicatorWrapper,
-    SelectIcon,
-    SelectInput,
-    SelectItem,
-    SelectPortal,
-    SelectTrigger,
-} from "@/components/ui/select";
-import { userSchema, userSchemaDetails } from "@/app/(tabs)/profile/AccountCardType";
-import { updateUser } from "@/api/userSession";
+import { Grid, GridItem } from "./ui/grid";
+import { z } from "zod";
+import { updateName } from "@/api/updateSession";
 
-export default function EditProfile({ showModal, setShowModal }: { showModal: boolean; setShowModal: any; }) {
+const userSchema = z.object({
+    firstName: z
+        .string()
+        .min(1, "First name is required")
+        .max(50, "First name must be less than 50 characters"),
+    lastName: z
+        .string()
+        .min(1, "Last name is required")
+        .max(50, "Last name must be less than 50 characters"),
+    // oldPassword: z
+    //     .string()
+    //     .min(1, "Old password is required")
+    //     .max(50, "Old password must be less than 50 characters"),
+    // newPassword: z
+    //     .string()
+    //     .min(1, "New Password is required")
+    //     .max(50, "New password must be less than 50 characters"),
+});
+
+type userSchemaDetails = z.infer<typeof userSchema>;
+
+export default function EditProfile({ update, showModal, setShowModal }: { update: any, showModal: boolean; setShowModal: any; }) {
     const ref = useRef(null);
     const {
         control,
@@ -75,16 +74,25 @@ export default function EditProfile({ showModal, setShowModal }: { showModal: bo
     const onSubmit = async (_data: userSchemaDetails) => {
         // check if async works or not with handleSubmit!
         const name = _data.firstName + " " + _data.lastName;
-        const didUpdate = await updateUser(name, _data.oldPassword, _data.newPassword);
+        const didUpdate = await updateName(name);
+        
         if (didUpdate) {
             setShowModal(false);
             reset();
+            update(true);
             // show successful message
         } else {
             // show error message
         }
 
     };
+
+    const inputs: { name: string, controllerName: "firstName" | "lastName" }[] = [
+        { name: "First Name", controllerName: "firstName" },
+        { name: "Last Name", controllerName: "lastName" },
+        // { name: "Old Password", controllerName: "oldPassword" },
+        // { name: "New Password", controllerName: "newPassword" }
+    ];
 
     return (
         <Modal
@@ -109,192 +117,69 @@ export default function EditProfile({ showModal, setShowModal }: { showModal: bo
                         />
                     </ModalCloseButton>
                 </ModalHeader>
-                <ModalBody className="mt-10">
+                <ModalBody className="mt-10 mb-0">
                     <VStack space="2xl">
-                        <HStack className="items-center justify-between">
-                            <FormControl
-                                isInvalid={!!errors.firstName || isNameFocused}
-                                className="w-[47%]"
-                            >
-                                <FormControlLabel className="mb-2">
-                                    <FormControlLabelText>First Name</FormControlLabelText>
-                                </FormControlLabel>
-                                <Controller
-                                    name="firstName"
-                                    control={control}
-                                    rules={{
-                                        validate: async (value) => {
-                                            try {
-                                                await userSchema.parseAsync({
-                                                    firstName: value,
-                                                });
-                                                return true;
-                                            } catch (error: any) {
-                                                return error.message;
-                                            }
-                                        },
-                                    }}
-                                    render={({ field: { onChange, onBlur, value } }) => (
-                                        <Input>
-                                            <InputField
-                                                placeholder="First Name"
-                                                type="text"
-                                                value={value}
-                                                onChangeText={onChange}
-                                                onBlur={onBlur}
-                                                onSubmitEditing={handleKeyPress}
-                                                returnKeyType="done"
-                                            />
-                                        </Input>
-                                    )}
-                                />
-                                <FormControlError>
-                                    <FormControlErrorIcon as={AlertCircleIcon} size="md" />
-                                    <FormControlErrorText>
-                                        {errors?.firstName?.message}
-                                    </FormControlErrorText>
-                                </FormControlError>
-                            </FormControl>
-                            <FormControl
-                                isInvalid={!!errors.lastName || isNameFocused}
-                                className="w-[47%]"
-                            >
-                                <FormControlLabel className="mb-2">
-                                    <FormControlLabelText>Last Name</FormControlLabelText>
-                                </FormControlLabel>
-                                <Controller
-                                    name="lastName"
-                                    control={control}
-                                    rules={{
-                                        validate: async (value) => {
-                                            try {
-                                                await userSchema.parseAsync({
-                                                    lastName: value,
-                                                });
-                                                return true;
-                                            } catch (error: any) {
-                                                return error.message;
-                                            }
-                                        },
-                                    }}
-                                    render={({ field: { onChange, onBlur, value } }) => (
-                                        <Input>
-                                            <InputField
-                                                placeholder="Last Name"
-                                                type="text"
-                                                value={value}
-                                                onChangeText={onChange}
-                                                onBlur={onBlur}
-                                                onSubmitEditing={handleKeyPress}
-                                                returnKeyType="done"
-                                            />
-                                        </Input>
-                                    )}
-                                />
-                                <FormControlError>
-                                    <FormControlErrorIcon as={AlertCircleIcon} size="md" />
-                                    <FormControlErrorText>
-                                        {errors?.lastName?.message}
-                                    </FormControlErrorText>
-                                </FormControlError>
-                            </FormControl>
-                        </HStack>
-                        <HStack className="items-center justify-between">
-                            <FormControl
-                                // fix this
-                                isInvalid={!!errors.oldPassword || isNameFocused}
-                                className="w-[47%]"
-                            >
-                                <FormControlLabel className="mb-2">
-                                    <FormControlLabelText>Old Password</FormControlLabelText>
-                                </FormControlLabel>
-                                <Controller
-                                    name="oldPassword"
-                                    control={control}
-                                    rules={{
-                                        validate: async (value) => {
-                                            try {
-                                                await userSchema.parseAsync({
-                                                    oldPassword: value,
-                                                });
-                                                return true;
-                                            } catch (error: any) {
-                                                return error.message;
-                                            }
-                                        },
-                                    }}
-                                    render={({ field: { onChange, onBlur, value } }) => (
-                                        <Input>
-                                            <InputField
-                                                placeholder="Old Password"
-                                                type="text"
-                                                value={value}
-                                                onChangeText={onChange}
-                                                onBlur={onBlur}
-                                                onSubmitEditing={handleKeyPress}
-                                                returnKeyType="done"
-                                            />
-                                        </Input>
-                                    )}
-                                />
-                                <FormControlError>
-                                    <FormControlErrorIcon as={AlertCircleIcon} size="md" />
-                                    <FormControlErrorText>
-                                        {errors?.firstName?.message}
-                                    </FormControlErrorText>
-                                </FormControlError>
-                            </FormControl>
-                            <FormControl
-                                isInvalid={!!errors.newPassword || isNameFocused}
-                                className="w-[47%]"
-                            >
-                                <FormControlLabel className="mb-2">
-                                    <FormControlLabelText>New Password</FormControlLabelText>
-                                </FormControlLabel>
-                                <Controller
-                                    name="newPassword"
-                                    control={control}
-                                    rules={{
-                                        validate: async (value) => {
-                                            try {
-                                                await userSchema.parseAsync({
-                                                    newPassword: value,
-                                                });
-                                                return true;
-                                            } catch (error: any) {
-                                                return error.message;
-                                            }
-                                        },
-                                    }}
-                                    render={({ field: { onChange, onBlur, value } }) => (
-                                        <Input>
-                                            <InputField
-                                                placeholder="New Password"
-                                                type="text"
-                                                value={value}
-                                                onChangeText={onChange}
-                                                onBlur={onBlur}
-                                                onSubmitEditing={handleKeyPress}
-                                                returnKeyType="done"
-                                            />
-                                        </Input>
-                                    )}
-                                />
-                                <FormControlError>
-                                    <FormControlErrorIcon as={AlertCircleIcon} size="md" />
-                                    <FormControlErrorText>
-                                        {errors?.lastName?.message}
-                                    </FormControlErrorText>
-                                </FormControlError>
-                            </FormControl>
-                        </HStack>
-                        <Button
-                            onPress={() => {
-                                handleSubmit(onSubmit)();
-                            }}
-                            className="flex-1 p-2"
-                        >
-                            <ButtonText>Save Changes</ButtonText>
+                        <Grid className="gap-y-4 gap-x-4" _extra={{ className: "grid-cols-2" }}>
+                            {
+                                inputs.map(({ name, controllerName }, index) => {
+                                    return (
+                                        <GridItem _extra={{
+                                            className: "col-span-1",
+                                        }} key={index}>
+                                            <FormControl
+                                                isInvalid={!!errors.firstName || isNameFocused}
+                                                className="w-full"
+                                            >
+                                                <FormControlLabel className="mb-2">
+                                                    <FormControlLabelText>{name}</FormControlLabelText>
+                                                </FormControlLabel>
+                                                <Controller
+                                                    name={controllerName}
+                                                    control={control}
+                                                    rules={{
+                                                        validate: async (value) => {
+                                                            try {
+                                                                await userSchema.parseAsync({
+                                                                    firstName: value,
+                                                                });
+                                                                return true;
+                                                            } catch (error: any) {
+                                                                return error.message;
+                                                            }
+                                                        },
+                                                    }}
+                                                    render={({ field: { onChange, onBlur, value } }) => (
+                                                        <Input>
+                                                            <InputField
+                                                                placeholder={name}
+                                                                type={controllerName.includes("Password") ? "password" : "text"}
+                                                                value={value}
+                                                                onChangeText={onChange}
+                                                                onBlur={onBlur}
+                                                                onSubmitEditing={handleKeyPress}
+                                                                selectionColor="rgb(225, 25, 50)"
+                                                                returnKeyType="done"
+                                                            />
+                                                        </Input>
+                                                    )}
+                                                />
+                                                <FormControlError>
+                                                    <FormControlErrorIcon as={AlertCircleIcon} size="md" />
+                                                    <FormControlErrorText>
+                                                        {/* not working  */}
+                                                        {errors[controllerName]?.message}
+                                                    </FormControlErrorText>
+                                                </FormControlError>
+                                            </FormControl>
+                                        </GridItem>
+                                    );
+                                })
+                            }
+                        </Grid>
+                        <Button onPress={() => { handleSubmit(onSubmit)() }}>
+                            <ButtonText>
+                                Save Changes
+                            </ButtonText>
                         </Button>
                     </VStack>
                 </ModalBody>

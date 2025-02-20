@@ -1,6 +1,8 @@
 import FoodLog from "@/interfaces/FoodLog";
-import Macro from "@/interfaces/Macro";
+import Macros from "@/interfaces/Macros";
+import { ObjectId } from "mongodb";
 import { Schema, model } from "mongoose";
+import MacrosSchema from "./MacrosSchema";
 
 const emptyMacros = {
   calories: 0,
@@ -9,17 +11,11 @@ const emptyMacros = {
   carbs: 0,
 };
 
-const MacroSchema = new Schema<Macro>({
-  calories: Number,
-  fats: Number,
-  protein: Number,
-  carbs: Number,
-});
-
 const FoodLogSchema = new Schema<FoodLog>(
   {
     userId: {
-      type: Schema.ObjectId,
+      type: ObjectId,
+      ref: "UserModel",
       required: true,
     },
     date: {
@@ -27,11 +23,11 @@ const FoodLogSchema = new Schema<FoodLog>(
       default: Date.now,
     },
     target: {
-      type: MacroSchema,
+      type: MacrosSchema,
       required: true,
     },
     consumed: {
-      type: MacroSchema,
+      type: MacrosSchema,
       default: emptyMacros,
     },
     ids: {

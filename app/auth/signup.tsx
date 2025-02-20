@@ -36,8 +36,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertTriangle } from "lucide-react-native";
 import { Pressable } from "@/components/ui/pressable";
-import AuthLayout from "./AuthLayout";
-import * as api from "@/api/userSession";
+import AuthLayout from "../../components/AuthLayout";
+import { register } from "@/api/authenticateSession";
 
 const signUpSchema = z.object({
   email: z.string().min(1, "Email is required").email(),
@@ -108,7 +108,7 @@ const SignUpView = () => {
           );
         },
       });
-      api.register("first last", data.email, data.password);
+      register("first last", data.email, data.password);
       reset();
     } else {
       toast.show({

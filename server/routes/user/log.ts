@@ -1,31 +1,11 @@
-import UserModel from "../models/UserModel";
-import FoodLogModel from "../models/FoodLogModel";
+import UserModel from "../../models/UserModel";
+import FoodLogModel from "../../models/FoodLogModel";
 import express, { Request, Response, NextFunction } from "express";
 import { User } from "@/interfaces/User";
+import update from "./update";
 import bcrypt from "bcryptjs";
 
-interface Locals {
-  user?: User;
-  message?: string;
-}
-
-declare global {
-  namespace Express {
-    interface Response {
-      locals: Locals;
-    }
-  }
-}
-
-const router = express.Router();
-
-const requireAuth = (req: Request, res: Response, next: NextFunction) => {
-  if (req.session.userId) {
-    next();
-  } else {
-    res.status(401).send({ message: "User not authenticated" });
-  }
-};
+const log = express.Router();
 
 const initNewFoodLog = async (user: User) => {
   const log = new FoodLogModel({
@@ -57,6 +37,7 @@ const getFoodLog = async (user: User, date: Date) => {
     date.getDate() + 1
   );
 
+  // Maybe use populate instead?
   const log =
     (await FoodLogModel.findOne({
       _id: { $in: user.foodLogIds },
@@ -69,21 +50,8 @@ const getFoodLog = async (user: User, date: Date) => {
   return log;
 };
 
-router.use(async (req, res, next) => {
-  const userId = req.session.userId;
-  const user = await UserModel.findById(userId);
-  const t = user as User;
-  res.locals.user = user as User;
-  next();
-});
-
-router.get("", requireAuth, async (req, res) => {
-  const user = res.locals.user;
-  res.send(user);
-});
-
-router.post("/log", requireAuth, async (req, res) => {
-  const user = res.locals.user;
+log.post("/", async (req, res) => {
+  const user: User = res.locals.user;
   const queryStr = req.query.date as string;
   const date = new Date(queryStr);
   const { meal, quantity } = req.body;
@@ -109,38 +77,12 @@ router.post("/log", requireAuth, async (req, res) => {
   }
 });
 
-router.get("/log", requireAuth, async (req, res) => {
-  const user = res.locals.user;
+log.get("/", async (req, res) => {
+  const user: User = res.locals.user;
   const queryStr = req.query.date as string;
   const date = new Date(queryStr);
   const log = await getFoodLog(user, date);
   res.send(log);
 });
 
-router.post("/logout", requireAuth, async (req, res) => {
-  req.session.destroy((error) => {
-    if (error) {
-      res.status(401).send({ message: "error" });
-    } else {
-      res.clearCookie(process.env.COOKIE_NAME!);
-      res.send({ message: "logged out" });
-    }
-  });
-});
-
-router.patch("/update", requireAuth, async (req, res) => {
-  const user = res.locals.user;
-  const { name, oldPassword, newPassword } = req.body;
-
-  // what if user ONLY submits name change
-
-  if (bcrypt.compareSync(oldPassword, user.password)) {
-    user.name = name;
-    user.password = await bcrypt.hash(newPassword, 10);
-  } else {
-    res.status(401).send({ message: "Invalid old password!"})
-  }
-  
-})
-
-export default router;
+export default log;

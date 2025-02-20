@@ -1,6 +1,7 @@
 import { User } from "@/interfaces/User";
 import { ObjectId } from "mongodb";
 import { Schema, model } from "mongoose";
+import MacrosSchema from "./MacrosSchema";
 
 const UserSchema = new Schema<User>(
   {
@@ -22,8 +23,20 @@ const UserSchema = new Schema<User>(
       required: true,
     },
     foodLogIds: {
-      type: [ObjectId],
+      type: [{ type: ObjectId, ref: "FoodLogModel" }],
       required: true,
+    },
+    currentWeight: {
+      type: Number,
+      required: true,
+    },
+    goalWeight: {
+      type: Number,
+      required: true,
+    },
+    goalMacros: {
+      type: MacrosSchema,
+      required: false,
     },
   },
   {

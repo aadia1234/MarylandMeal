@@ -19,7 +19,7 @@ import React from "react";
 import MacroCard from "@/components/MacroCard";
 import { VStack } from "@/components/ui/vstack";
 import FoodCard from "@/components/FoodCard";
-import { getFoodLog, getMacros } from "@/api/userSession";
+import { getFoodLog, getMacros } from "@/api/logSession";
 import FoodLogDocument from "@/interfaces/FoodLog";
 import { Grid, GridItem } from "@/components/ui/grid";
 import { SafeAreaView, Text } from "react-native";
@@ -28,12 +28,12 @@ import { View } from "@/components/ui/view";
 import ContentLayout from "@/components/ContentLayout";
 import { useIsFocused } from "@react-navigation/native";
 import MealLog from "@/components/MealLog";
-import Macro from "@/interfaces/Macro";
+import Macros from "@/interfaces/Macros";
 import FoodLog from "@/interfaces/FoodLog";
 import { Meal } from "@/interfaces/Meal";
 
 
-const MacroProgressView = ({ target, consumed }: { target: Macro, consumed: Macro }) => {
+const MacroProgressView = ({ target, consumed }: { target: Macros, consumed: Macros }) => {
   const macros = [
     { macro: "calories", target: target.calories, consumed: consumed.calories },
     { macro: "protein", target: target.protein, consumed: consumed.protein },
@@ -60,7 +60,7 @@ const MacroProgressView = ({ target, consumed }: { target: Macro, consumed: Macr
 export default function Dashboard() {
   const [date, setDate] = useState(new Date());
   const [log, setLog] = useState<{ item: Meal, quantity: number }[]>();
-  const [macros, setMacros] = useState<{ target: Macro; consumed: Macro; } | null>();
+  const [macros, setMacros] = useState<{ target: Macros; consumed: Macros; } | null>();
   const isFocused = useIsFocused();
 
   const options: Intl.DateTimeFormatOptions = {

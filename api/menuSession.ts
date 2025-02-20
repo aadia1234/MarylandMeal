@@ -1,19 +1,19 @@
 import axios from "axios";
 import { Meal } from "@/interfaces/Meal";
 
+let menu: Meal[] = [];
+let page = 0;
+
 const session = axios.create({
   baseURL: process.env.EXPO_PUBLIC_MENU_BASE_URL!,
   headers: { Authorization: "token" },
   withCredentials: true,
 });
 
-let menu: Meal[] = [];
-let page = 0;
-
 export async function getMenu() {
   try {
     const res = await session.get(
-      process.env.EXPO_PUBLIC_DAILYITEMS_URL! + "&page=" + ++page
+      process.env.EXPO_PUBLIC_DAILYITEMS_URL! + "page=" + ++page
     );
     menu.push(...res.data.results);
     return menu;
@@ -23,11 +23,6 @@ export async function getMenu() {
   }
 }
 
-export function resetMenu() {
-  menu = [];
-  page = 0;
-}
-
 export function getMenuItem(id: string) {
   return menu.find((item) => item.menu_item.id === Number(id))!;
 }
@@ -35,7 +30,7 @@ export function getMenuItem(id: string) {
 export async function getFood(id: number) {
   try {
     const res = await session.get(
-      process.env.EXPO_PUBLIC_DAILYITEMS_URL! + "&id=" + id
+      process.env.EXPO_PUBLIC_DAILYITEMS_URL! + "id=" + id
     );
 
     return res.data;
@@ -43,4 +38,9 @@ export async function getFood(id: number) {
     console.log(error);
     return null;
   }
+}
+
+export function resetMenu() {
+  menu = [];
+  page = 0;
 }

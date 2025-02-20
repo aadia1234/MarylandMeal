@@ -1,9 +1,10 @@
-import Macro from "./Macro";
+import Macros from "./Macros";
+import { ObjectId } from "mongoose";
 
 export default interface FoodLog {
-  userId: Number;
+  userId: ObjectId;
   date: Date;
-  target: Macro;
-  consumed: Macro;
+  target: Macros;
+  consumed: Macros;
   ids: { id: number; quantity: number }[];
 }

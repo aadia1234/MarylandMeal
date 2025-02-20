@@ -10,7 +10,7 @@ import { Button, ButtonText } from "./ui/button";
 import { Meal } from "@/interfaces/Meal";
 import { Box } from "./ui/box";
 import { Grid, GridItem } from "./ui/grid";
-import Macro from "@/interfaces/Macro";
+import Macros from "@/interfaces/Macros";
 import HorizontalMacroView from "./HorizontalMacroView";
 
 function FoodCard({ item, quantity }: { item: Meal, quantity?: number }) {
