@@ -14,7 +14,7 @@ import {
   AccordionTitleText,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ChevronDownIcon, ChevronUpIcon } from "@/components/ui/icon";
+import { ChevronDownIcon, ChevronUpIcon, Icon } from "@/components/ui/icon";
 import React from "react";
 import MacroCard from "@/components/MacroCard";
 import { VStack } from "@/components/ui/vstack";
@@ -42,7 +42,7 @@ const MacroProgressView = ({ target, consumed }: { target: Macros, consumed: Mac
   ];
 
   return (
-    <Grid className="gap-y-2 gap-x-2" _extra={{ className: "grid-cols-2" }}>
+    <Grid className="gap-y-2 gap-x-2 bg-white rounded-2xl" _extra={{ className: "grid-cols-2" }}>
       {
         macros.map((entry, index) => {
           return (
@@ -82,11 +82,13 @@ export default function Dashboard() {
         showsVerticalScrollIndicator={false}
       >
         <VStack className="md:px-10 md:pt-6 w-full px-5" space="2xl">
-          <HStack className="w-full items-center justify-between" >
-            <Heading size="3xl">
-              {date.toLocaleDateString("en-us", options)}
-            </Heading>
-            <Calendar date={date} setDate={setDate} placement="bottom" />
+          <HStack className="w-full items-center justify-start" >
+            <Calendar date={date} setDate={setDate} placement="bottom">
+              <Heading size="3xl" className="text-primary-600">
+                {date.toLocaleDateString("en-us", options)}
+              </Heading>
+              {/* <Icon as={ChevronDownIcon} className="text-primary-600 aspect-square w-8"></Icon> */}
+            </Calendar>
           </HStack>
           <VStack>
             {/* needs to be fixed! - if macro exceeds the target then it glitches! also animation is glitchy!*/}

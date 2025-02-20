@@ -9,19 +9,23 @@ import { View } from "./ui/view";
 
 export default function MacroCard({ macro, target, consumed }: { macro: string, target: number, consumed: number }) {
 
+    const ratio = 0.8;
+
     function strokeColor() {
-        const ratio = consumed / target;
+        // const ratio = consumed / target;
         const color = 255 * ratio;
         const green = color <= 255 ? color : 255;
         const red = 255 - green;
-        return `rgb(${red}, ${green}, 0)`
+        const blue = 0;
+        return `rgb(${red}, ${green}, ${blue})`
     }
+
     return (
-        <Card variant="elevated" className="rounded-md w-full h-fit grow p-2 m-auto">
+        <Card variant="elevated" className="rounded-2xl w-full h-fit grow p-2 m-auto">
             <Center className="aspect-video m-auto">
                 <Center className="w-fit">
                     <CircularProgress
-                        value={consumed}
+                        value={ratio * target}
                         radius={35}
                         duration={2000}
                         progressValueColor={'black'}

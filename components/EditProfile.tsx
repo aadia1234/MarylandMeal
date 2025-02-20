@@ -104,7 +104,7 @@ export default function EditProfile({ update, showModal, setShowModal }: { updat
             size="lg"
         >
             <ModalBackdrop />
-            <ModalContent>
+            <ModalContent className="rounded-2xl">
                 <ModalHeader className="absolute w-full mt-4 ml-6">
                     <Heading size="2xl" className="text-typography-800">
                         Edit Profile
@@ -176,7 +176,7 @@ export default function EditProfile({ update, showModal, setShowModal }: { updat
                                 })
                             }
                         </Grid>
-                        <Button onPress={() => { handleSubmit(onSubmit)() }}>
+                        <Button className="rounded-2xl" onPress={() => { handleSubmit(onSubmit)() }}>
                             <ButtonText>
                                 Save Changes
                             </ButtonText>

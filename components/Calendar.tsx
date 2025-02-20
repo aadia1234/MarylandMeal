@@ -32,7 +32,8 @@ export default function Calendar(props: any) {
             className="rounded-md"
             {...triggerProps}
           >
-            <ButtonIcon as={CalendarClock} />
+            {props.children}
+            {/* <ButtonIcon as={CalendarClock} /> */}
           </Button>
         );
       }}
