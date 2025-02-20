@@ -26,14 +26,27 @@ import {
 } from "@/components/ui/select"
 import { User } from "@/interfaces/User";
 import { getUser } from "@/api/userSession";
-import { updateWeight } from "@/api/updateSession";
+import { updateGoalMacros, updateWeight } from "@/api/updateSession";
+import Macros from "@/interfaces/Macros";
 
 export default function Goals() {
     const [user, setUser] = useState<User>();
+    const [macros, setMacros] = useState<Macros>({
+        calories: 1,
+        fats: 2,
+        protein: 3,
+        carbs: 4
+    });
     const [userUpdated, setUserUpdated] = useState(false);
     const goalsDescription = "Set and customize weight and macro goals for your fitness journey.";
 
-    useEffect(() => { getUser().then((user) => { setUser(user); setUserUpdated(false) }) }, [userUpdated]);
+    useEffect(() => {
+        getUser().then((user) => {
+            setUser(user);
+            setMacros(user.goalMacros);
+            setUserUpdated(false);
+        })
+    }, [userUpdated]);
 
 
     const WeightGoalsView = () => {
@@ -84,15 +97,32 @@ export default function Goals() {
         const [selectedGrams, setSelectedGrams] = useState(0);
         const [selectedCalories, setSelectedCalories] = useState(0);
 
-        const MacroRow = ({ title, amount }: { title: string, amount: number }) => {
+        const MacroRow = ({ macro, amount }: { macro: string, amount: number }) => {
+            const title = macro[0].toUpperCase() + macro.substring(1, macro.length) + " Goal";
             const grams = Array.from({ length: 201 }, (_, i) => i * 5);
             const calories = Array.from({ length: 201 }, (_, i) => i * 50)
-            const isCalories = title.toLowerCase().includes("calorie");
+            const isCalories = macro === "calorie";
+
+            function updateMacro(amt: number) {
+                if (isCalories) {
+                    macros.calories = amt;
+                } else if (macro === "protein") {
+                    macros.protein = amt;
+                } else if (macro === "carbs") {
+                    macros.carbs = amt;
+                } else {
+                    macros.fats = amt;
+                }
+
+                console.log(macros);
+
+                updateGoalMacros(macros);
+            }
 
             return (
                 <HStack className="justify-between w-full py-1 items-center">
                     <Text>{title}</Text>
-                    <Select>
+                    <Select onValueChange={(amt) => updateMacro(parseInt(amt))}>
                         <SelectTrigger variant="outline" size="md" className="border-0">
                             <SelectInput placeholder={amount + (isCalories ? " Cal" : " lbs")} className="text-primary-700" />
                             <SelectIcon className="mr-1" as={ChevronDownIcon} />
@@ -119,13 +149,13 @@ export default function Goals() {
         return (
             <SectionView title="Daily Macro Goals">
                 <Center className="w-full h-fit">
-                    <MacroRow title="Calorie Goal" amount={3000} />
+                    <MacroRow macro="calorie" amount={macros.calories} />
                     <Divider />
-                    <MacroRow title="Protein Goal" amount={100} />
+                    <MacroRow macro="protein" amount={macros.protein} />
                     <Divider />
-                    <MacroRow title="Carbs Goal" amount={200} />
+                    <MacroRow macro="carbs" amount={macros.carbs} />
                     <Divider />
-                    <MacroRow title="Fats Goal" amount={300} />
+                    <MacroRow macro="fats" amount={macros.fats} />
                 </Center>
             </SectionView>
         );

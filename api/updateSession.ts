@@ -42,10 +42,10 @@ export async function updateWeight(weights: {
 export async function updateGoalMacros(macros: Macros) {
   try {
     const res = await session.patch(
-      process.env.EXPO_PUBLIC_UPDATE_URL! + "/weight",
-      macros
+      process.env.EXPO_PUBLIC_UPDATE_URL! + "/macros",
+      { macros }
     );
-    console.log("Successfully updated name!");
+    console.log("Successfully updated macros!");
     return true;
   } catch (error) {
     console.log(error);

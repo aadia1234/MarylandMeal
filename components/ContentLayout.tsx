@@ -4,6 +4,7 @@ import { SafeAreaView, View } from "react-native";
 
 export default function ContentLayout(props: any) {
 
+    // use skeleton instead! (maybe!)
     if (!props.data) {
         return <LoadingSpinner />
     } else {

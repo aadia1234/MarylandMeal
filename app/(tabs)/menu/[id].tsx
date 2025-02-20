@@ -15,7 +15,7 @@ import { HStack } from "@/components/ui/hstack";
 import { Divider } from "@/components/ui/divider";
 import { View } from "@/components/ui/view";
 import React, { useState } from "react";
-import { getUser, log } from "@/api/logSession";
+import { log } from "@/api/logSession";
 import { Meal } from "@/interfaces/Meal";
 import { getMenuItem } from "@/api/menuSession";
 import HorizontalMacroView from "@/components/HorizontalMacroView";
@@ -32,7 +32,7 @@ const FoodItemLayout = (props: any) => {
         className="w-full h-full"
         contentContainerStyle={{ flexGrow: 1 }}
       >
-        <VStack className="w-full p-4" space="md">
+        <VStack className="w-full p-5" space="md">
           {props.children}
         </VStack>
       </ScrollView>
