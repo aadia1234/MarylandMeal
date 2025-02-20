@@ -57,7 +57,7 @@ export default function Notifications() {
 
 
     return (
-        <SettingsLayout icon={BellIcon} title="Notifications" description={preferencesDescription}>
+        <SettingsLayout data={[]} icon={BellIcon} title="Notifications" description={preferencesDescription}>
             <DiningHallsView />
         </SettingsLayout>
     );

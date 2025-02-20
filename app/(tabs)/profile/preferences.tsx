@@ -2,7 +2,7 @@ import SectionView from "@/components/SectionView";
 import SettingsLayout from "@/components/SettingsLayout";
 import { Accordion, AccordionContent, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from "@/components/ui/accordion";
 import { Text } from "@/components/ui/text";
-import { ChevronDownIcon, ChevronUpIcon, GoalIcon, HeartIcon, MenuIcon, Target, TargetIcon, Wifi } from "lucide-react-native";
+import { ChevronDownIcon, ChevronUpIcon, GoalIcon, HeartIcon, MenuIcon, PlusIcon, Target, TargetIcon, Wifi } from "lucide-react-native";
 import { Picker } from '@react-native-picker/picker';
 import { useState } from "react";
 import { View } from "@/components/ui/view";
@@ -98,11 +98,10 @@ export default function Preferences() {
 
 
     const AllergensView = () => {
-        const [diningOrder, setDiningOrder] = useState(["251 North", "Yahentamitsi", "South Campus"]);
 
         return (
-            <SectionView title="Allergens">
-                <Center className="w-full h-full">
+            <SectionView title="Allergens" icon={PlusIcon} action={() => {}}>
+                <Center className="w-full h-fit">
                 </Center>
             </SectionView>
         );
@@ -111,10 +110,10 @@ export default function Preferences() {
 
 
     return (
-        <SettingsLayout icon={HeartIcon} title="Preferences" description={preferencesDescription}>
+        <SettingsLayout data={[]} icon={HeartIcon} title="Preferences" description={preferencesDescription}>
             <DiningHallsView />
             {/* <FoodView /> */}
-            {/* <AllergensView /> */}
+            <AllergensView />
         </SettingsLayout>
     );
 }

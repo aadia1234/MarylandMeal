@@ -2,7 +2,7 @@ import SectionView from "@/components/SectionView";
 import SettingsLayout from "@/components/SettingsLayout";
 import { Accordion, AccordionContent, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from "@/components/ui/accordion";
 import { Text } from "@/components/ui/text";
-import { ChevronDownIcon, ChevronUpIcon, GoalIcon, Target, TargetIcon, Wifi } from "lucide-react-native";
+import { ChevronDownIcon, GoalIcon, SparkleIcon, SparklesIcon } from "lucide-react-native";
 import { Picker } from '@react-native-picker/picker';
 import { useEffect, useState } from "react";
 import { View } from "@/components/ui/view";
@@ -32,10 +32,10 @@ import Macros from "@/interfaces/Macros";
 export default function Goals() {
     const [user, setUser] = useState<User>();
     const [macros, setMacros] = useState<Macros>({
-        calories: 1,
-        fats: 2,
-        protein: 3,
-        carbs: 4
+        calories: 0,
+        fats: 0,
+        protein: 0,
+        carbs: 0
     });
     const [userUpdated, setUserUpdated] = useState(false);
     const goalsDescription = "Set and customize weight and macro goals for your fitness journey.";
@@ -53,7 +53,7 @@ export default function Goals() {
         const [selectedWeight, setSelectedWeight] = useState(0);
 
         const WeightRow = ({ title, weight }: { title: string, weight?: number }) => {
-            const weights = Array.from({ length: 200 }, (_, i) => i * 5);
+            const weights = Array.from({ length: 200 }, (_, i) => (i+1) * 2.5);
             const isGoalWeight = title.toLowerCase().includes("goal");
 
             return (
@@ -81,7 +81,7 @@ export default function Goals() {
         }
 
         return (
-            <SectionView title="Weight Goals">
+            <SectionView title="Weight Goals" icon={SparkleIcon} action={() => {}}>
                 <Center className="w-full h-fit">
                     <WeightRow title="Current Weight" weight={user?.currentWeight} />
                     <Divider />
@@ -100,7 +100,7 @@ export default function Goals() {
         const MacroRow = ({ macro, amount }: { macro: string, amount: number }) => {
             const title = macro[0].toUpperCase() + macro.substring(1, macro.length) + " Goal";
             const grams = Array.from({ length: 201 }, (_, i) => i * 5);
-            const calories = Array.from({ length: 201 }, (_, i) => i * 50)
+            const calories = Array.from({ length: 201 }, (_, i) => i * 25)
             const isCalories = macro === "calorie";
 
             function updateMacro(amt: number) {
@@ -124,7 +124,7 @@ export default function Goals() {
                     <Text>{title}</Text>
                     <Select onValueChange={(amt) => updateMacro(parseInt(amt))}>
                         <SelectTrigger variant="outline" size="md" className="border-0">
-                            <SelectInput placeholder={amount + (isCalories ? " Cal" : " lbs")} className="text-primary-700" />
+                            <SelectInput placeholder={amount + (isCalories ? " Cal" : " g")} className="text-primary-700" />
                             <SelectIcon className="mr-1" as={ChevronDownIcon} />
                         </SelectTrigger>
                         <SelectPortal snapPoints={[50]}>
@@ -147,7 +147,7 @@ export default function Goals() {
         }
 
         return (
-            <SectionView title="Daily Macro Goals">
+            <SectionView title="Daily Macro Goals" icon={SparklesIcon} action={() => { }}>
                 <Center className="w-full h-fit">
                     <MacroRow macro="calorie" amount={macros.calories} />
                     <Divider />
@@ -162,8 +162,9 @@ export default function Goals() {
 
     }
 
+    // ui bugs when loading isn't instantaneous
     return (
-        <SettingsLayout icon={GoalIcon} title={"Goals"} description={goalsDescription}>
+        <SettingsLayout data={{}} icon={GoalIcon} title={"Goals"} description={goalsDescription}>
             <WeightGoalsView />
             <MacroGoals />
         </SettingsLayout>
