@@ -37,7 +37,7 @@ const ProfileView = ({ user, update }: { user: User, update: any }) => {
 
   return (
     <Center className="w-full">
-      <Card variant="elevated" className="w-full rounded-2xl">
+      <Card variant="elevated" className="w-full rounded-xl">
         <EditProfile update={update} showModal={showModal} setShowModal={setShowModal} />
         <VStack space="lg" className="items-center">
           <Avatar size="2xl" className="bg-primary-600">
@@ -93,7 +93,7 @@ const AccountSettingsView = () => {
       <Heading className="font-roboto" size="xl">
         Account
       </Heading>
-      <VStack className="py-2 px-4 rounded-2xl justify-between items-center bg-white">
+      <VStack className="py-2 px-4 rounded-xl justify-between items-center bg-white">
         <SettingsCard key={1} icon={GoalIcon} subText={"Goals"} />
         <SettingsCard key={2} icon={HeartIcon} subText={"Preferences"} />
         <SettingsCard key={3} icon={BellIcon} subText={"Notifications"} isLast={true} />

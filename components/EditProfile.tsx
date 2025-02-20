@@ -104,7 +104,7 @@ export default function EditProfile({ update, showModal, setShowModal }: { updat
             size="lg"
         >
             <ModalBackdrop />
-            <ModalContent className="rounded-2xl">
+            <ModalContent className="rounded-xl">
                 <ModalHeader className="absolute w-full mt-4 ml-6">
                     <Heading size="2xl" className="text-typography-800">
                         Edit Profile

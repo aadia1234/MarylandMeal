@@ -42,7 +42,7 @@ const MacroProgressView = ({ target, consumed }: { target: Macros, consumed: Mac
   ];
 
   return (
-    <Grid className="gap-y-2 gap-x-2 bg-white rounded-2xl" _extra={{ className: "grid-cols-2" }}>
+    <Grid className="gap-y-2 gap-x-2 bg-white rounded-xl" _extra={{ className: "grid-cols-2" }}>
       {
         macros.map((entry, index) => {
           return (
@@ -93,10 +93,10 @@ export default function Dashboard() {
           <VStack>
             {/* needs to be fixed! - if macro exceeds the target then it glitches! also animation is glitchy!*/}
             {macros && <MacroProgressView target={macros.target} consumed={macros.consumed} />}
-            <Center>
+            <VStack className="mt-10">
               <MealLog title={"Meals logged"} log={log} />
               <MealLog title={"Meal Plan"} log={[]} />
-            </Center>
+            </VStack>
           </VStack>
         </VStack>
       </ScrollView>

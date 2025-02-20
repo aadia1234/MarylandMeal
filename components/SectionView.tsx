@@ -10,7 +10,7 @@ import { Button, ButtonIcon } from "./ui/button";
 
 export default function SectionView({ title, children, icon, action }: { title: string, children: any, icon?: LucideIcon, action?: () => void }) {
     return (
-        <Card size="md" variant="elevated" className="w-full h-fit m-5 px-5 rounded-2xl bg-white">
+        <Card size="md" variant="elevated" className="w-full h-fit m-5 px-5 rounded-xl bg-white">
             <VStack>
                 <HStack className="mb-2 justify-between">
                     <Heading size="sm">{title}</Heading>
@@ -23,7 +23,7 @@ export default function SectionView({ title, children, icon, action }: { title: 
                 </HStack>
                 {children}
             </VStack>
-            
+
         </Card>
     );
 }

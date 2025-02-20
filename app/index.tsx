@@ -19,7 +19,7 @@ export default function Index() {
         v();
     }, []);
 
-    if (false) {
+    if (true) {
         return <Redirect href="/(tabs)/profile"></Redirect>
     } else {
         return <Redirect href="/auth"></Redirect>

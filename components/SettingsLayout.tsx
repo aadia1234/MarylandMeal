@@ -34,7 +34,7 @@ export default function SettingsLayout(props: any) {
                         </Pressable>
                     </HStack>
                     <Center className="w-full">
-                        <Card variant="elevated" className="w-full rounded-2xl mb-14">
+                        <Card variant="elevated" className="w-full rounded-xl mb-14">
                             <VStack space="lg" className="items-center">
                                 <Avatar size="xl" className="bg-primary-50">
                                     <Icon as={props.icon} className="aspect-square h-12" />
