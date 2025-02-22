@@ -1,30 +1,11 @@
-import SectionView from "@/components/SectionView";
-import SettingsLayout from "@/components/SettingsLayout";
-import { Accordion, AccordionContent, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from "@/components/ui/accordion";
+import SectionView from "@/components/widgets/SectionView";
+import SettingsLayout from "@/components/layouts/SettingsLayout";
 import { Text } from "@/components/ui/text";
-import { ChevronDownIcon, ChevronUpIcon, GoalIcon, HeartIcon, MenuIcon, PlusIcon, Target, TargetIcon, Wifi } from "lucide-react-native";
-import { Picker } from '@react-native-picker/picker';
+import { CircleHelpIcon, Edit2Icon, HeartIcon, MenuIcon, PlusIcon } from "lucide-react-native";
 import { useState } from "react";
-import { View } from "@/components/ui/view";
 import { HStack } from "@/components/ui/hstack";
-import { Button, ButtonText } from "@/components/ui/button";
-import { VStack } from "@/components/ui/vstack";
 import { Center } from "@/components/ui/center";
-import { Divider } from "@/components/ui/divider";
-import {
-    Select,
-    SelectTrigger,
-    SelectInput,
-    SelectIcon,
-    SelectPortal,
-    SelectBackdrop,
-    SelectContent,
-    SelectDragIndicatorWrapper,
-    SelectDragIndicator,
-    SelectItem,
-    SelectScrollView,
-} from "@/components/ui/select"
-import DraggableFlatList, { NestableScrollContainer, NestableDraggableFlatList, ScaleDecorator, RenderItemParams } from "react-native-draggable-flatlist"
+import DraggableFlatList, { ScaleDecorator, RenderItemParams } from "react-native-draggable-flatlist"
 import { GestureHandlerRootView, TouchableOpacity } from "react-native-gesture-handler";
 import { Icon } from "@/components/ui/icon";
 
@@ -52,7 +33,7 @@ export default function Preferences() {
                 <ScaleDecorator>
                     <TouchableOpacity
                         onLongPress={drag}
-                        // disabled={isActive}
+                    // disabled={isActive}
                     >
                         <HStack className="w-full justify-between items-center py-5">
                             <Text className="">{item}</Text>
@@ -68,7 +49,7 @@ export default function Preferences() {
         };
 
         return (
-            <SectionView title="Dining Hall Preferences">
+            <SectionView title="Dining Hall Preferences" icon={CircleHelpIcon} action={() => { }}>
                 <Center className="w-full h-fit">
                     <GestureHandlerRootView className="flex-1 w-full">
                         <DraggableFlatList
@@ -85,11 +66,10 @@ export default function Preferences() {
     }
 
     const FoodView = () => {
-        const [diningOrder, setDiningOrder] = useState(["251 North", "Yahentamitsi", "South Campus"]);
 
         return (
-            <SectionView title="Food Preferences">
-                <Center className="w-full h-full">
+            <SectionView title="Food Preferences" icon={Edit2Icon} action={() => { }}>
+                <Center className="w-full h-fit">
                 </Center>
             </SectionView>
         );
@@ -100,7 +80,7 @@ export default function Preferences() {
     const AllergensView = () => {
 
         return (
-            <SectionView title="Allergens" icon={PlusIcon} action={() => {}}>
+            <SectionView title="Allergens" icon={PlusIcon} action={() => { }}>
                 <Center className="w-full h-fit">
                 </Center>
             </SectionView>
@@ -112,7 +92,7 @@ export default function Preferences() {
     return (
         <SettingsLayout data={[]} icon={HeartIcon} title="Preferences" description={preferencesDescription}>
             <DiningHallsView />
-            {/* <FoodView /> */}
+            <FoodView />
             <AllergensView />
         </SettingsLayout>
     );

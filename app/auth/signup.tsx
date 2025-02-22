@@ -36,7 +36,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertTriangle } from "lucide-react-native";
 import { Pressable } from "@/components/ui/pressable";
-import AuthLayout from "../../components/AuthLayout";
+import AuthLayout from "../../components/layouts/AuthLayout";
 import { register } from "@/api/authenticateSession";
 
 const signUpSchema = z.object({

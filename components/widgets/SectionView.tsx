@@ -1,18 +1,16 @@
-import { Accordion, AccordionContent, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from "./ui/accordion";
-import { ChevronDownIcon, ChevronUpIcon, LucideIcon } from "lucide-react-native";
+import { LucideIcon } from "lucide-react-native";
 import React from "react";
-import { Card } from "./ui/card";
-import { HStack } from "./ui/hstack";
-import { VStack } from "./ui/vstack";
-import { Heading } from "./ui/heading";
-import { Icon } from "./ui/icon";
-import { Button, ButtonIcon } from "./ui/button";
+import { Card } from "../ui/card";
+import { HStack } from "../ui/hstack";
+import { VStack } from "../ui/vstack";
+import { Heading } from "../ui/heading";
+import { Button, ButtonIcon } from "../ui/button";
 
 export default function SectionView({ title, children, icon, action }: { title: string, children: any, icon?: LucideIcon, action?: () => void }) {
     return (
         <Card size="md" variant="elevated" className="w-full h-fit m-5 px-5 rounded-xl bg-white">
             <VStack>
-                <HStack className="mb-2 justify-between">
+                <HStack className="justify-between">
                     <Heading size="sm">{title}</Heading>
                     {
                         icon && action &&

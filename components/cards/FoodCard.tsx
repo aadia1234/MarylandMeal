@@ -1,17 +1,10 @@
 import { router } from "expo-router";
-import { memo, useRef } from "react";
-import { View, StyleSheet, Image, Pressable, Animated } from "react-native";
-import { Card } from "./ui/card";
-import { Center } from "./ui/center";
-import { VStack } from "./ui/vstack";
-import { Text } from "./ui/text";
-import { HStack } from "./ui/hstack";
-import { Button, ButtonText } from "./ui/button";
+import { memo } from "react";
+import { VStack } from "../ui/vstack";
+import { Text } from "../ui/text";
+import { Button } from "../ui/button";
 import { Meal } from "@/interfaces/Meal";
-import { Box } from "./ui/box";
-import { Grid, GridItem } from "./ui/grid";
-import Macros from "@/interfaces/Macros";
-import HorizontalMacroView from "./HorizontalMacroView";
+import HorizontalMacroView from "../widgets/HorizontalMacroView";
 
 function FoodCard({ item, quantity }: { item: Meal, quantity?: number }) {
   const food = item.menu_item;

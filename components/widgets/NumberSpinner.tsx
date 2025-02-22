@@ -1,9 +1,6 @@
 import { MinusIcon, PlusIcon } from "lucide-react-native";
-import { Button, ButtonIcon } from "./ui/button";
-import { HStack } from "./ui/hstack";
-import { EditIcon, SearchIcon } from "./ui/icon";
-import { Input, InputField, InputIcon, InputSlot } from "./ui/input";
-import { Text } from "./ui/text";
+import { HStack } from "../ui/hstack";
+import { Input, InputField, InputIcon, InputSlot } from "../ui/input";
 import { Dispatch, SetStateAction } from "react";
 
 export default function NumberSpinner({ value, setValue }: { value: number, setValue: Dispatch<SetStateAction<number>> }) {

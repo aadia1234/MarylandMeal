@@ -1,16 +1,14 @@
-import { View } from './ui/view';
+import { View } from '../ui/view';
 import { useLinkBuilder, useTheme } from '@react-navigation/native';
-import { Text } from './ui/text';
-import { Pressable } from "./ui/pressable";
+import { Text } from '../ui/text';
+import { Pressable } from "../ui/pressable";
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { VStack } from './ui/vstack';
-import { GlobeIcon, Icon } from './ui/icon';
-import { Center } from './ui/center';
-import { CirclePlusIcon, HomeIcon, PlusIcon, UserIcon } from 'lucide-react-native';
+import { VStack } from '../ui/vstack';
+import { Icon } from '../ui/icon';
+import { Center } from '../ui/center';
+import { CirclePlusIcon, HomeIcon, UserIcon } from 'lucide-react-native';
 
 export default function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
-    const { colors } = useTheme();
-    const { buildHref } = useLinkBuilder();
 
     return (
         <View className="w-full h-[88px] flex-row px-4 bg-slate-100 border-t border-outline-200">
@@ -67,16 +65,16 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
                                         : "text-typography-400"
                                         }`}
                                 />
-                                { options.title !== "Menu" && 
-                                <Text
-                                    size="xs"
-                                    className={`${isFocused
-                                        ? "text-primary-500"
-                                        : "text-typography-400"
-                                        }`}
-                                >
-                                    {route.name[0].toUpperCase() + route.name.substring(1)}
-                                </Text>
+                                {options.title !== "Menu" &&
+                                    <Text
+                                        size="xs"
+                                        className={`${isFocused
+                                            ? "text-primary-500"
+                                            : "text-typography-400"
+                                            }`}
+                                    >
+                                        {route.name[0].toUpperCase() + route.name.substring(1)}
+                                    </Text>
                                 }
                             </Center>
                         </VStack>

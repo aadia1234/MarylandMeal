@@ -1,13 +1,11 @@
 import React, { useRef, useState } from "react";
-import { Box } from "@/components/ui/box";
-import { HStack } from "@/components/ui/hstack";
 import {
     AlertCircleIcon,
     CloseIcon,
     Icon,
 } from "@/components/ui/icon";
 import { VStack } from "@/components/ui/vstack";
-import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
+import { Button, ButtonText } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import {
     Modal,
@@ -30,7 +28,7 @@ import {
     FormControlLabel,
     FormControlLabelText,
 } from "@/components/ui/form-control";
-import { Grid, GridItem } from "./ui/grid";
+import { Grid, GridItem } from "../ui/grid";
 import { z } from "zod";
 import { updateName } from "@/api/updateSession";
 

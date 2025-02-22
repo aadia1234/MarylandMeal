@@ -14,12 +14,10 @@ import {
 } from "@/components/ui/form-control"
 import { VStack } from "@/components/ui/vstack"
 import { CheckIcon } from "@/components/ui/icon"
-import { Text } from "./ui/text";
 import React, { useState } from "react"
-import { Divider } from "./ui/divider";
 
 
-const CheckboxFilterView = ({ title, options, values, setValues }: { title: string, options: string[], values: string[], setValues: any  }) => {
+const CheckboxFilterView = ({ title, options, values, setValues }: { title: string, options: string[], values: string[], setValues: any }) => {
 
     return (
         <VStack>

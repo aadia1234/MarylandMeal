@@ -1,6 +1,6 @@
-import { ActivityIndicator, FlatList, SafeAreaView, View } from "react-native";
-import { Dispatch, memo, SetStateAction, useCallback, useEffect, useState } from "react";
-import FoodCard from "@/components/FoodCard";
+import { FlatList } from "react-native";
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
+import FoodCard from "@/components/cards/FoodCard";
 import { Input, InputField, InputIcon, InputSlot } from "@/components/ui/input";
 import { CameraIcon, FilterIcon, SearchIcon } from "lucide-react-native";
 import { VStack } from "@/components/ui/vstack";
@@ -9,23 +9,18 @@ import React from "react";
 import { Center } from "@/components/ui/center";
 import { Meal } from "@/interfaces/Meal";
 import { Spinner } from "@/components/ui/spinner";
-import ContentLayout from "@/components/ContentLayout";
+import ContentLayout from "@/components/layouts/ContentLayout";
 import { getMenu, resetMenu } from "@/api/menuSession";
-import LoadingSpinner from "@/components/LoadingSpinner";
 import { HStack } from "@/components/ui/hstack";
-import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
+import { Button, ButtonIcon } from "@/components/ui/button";
 import {
   Actionsheet,
   ActionsheetContent,
-  ActionsheetItem,
-  ActionsheetItemText,
   ActionsheetDragIndicator,
   ActionsheetDragIndicatorWrapper,
   ActionsheetBackdrop,
-  ActionsheetSectionList,
-  ActionsheetSectionHeaderText,
 } from "@/components/ui/actionsheet"
-import SidebarFilter from "@/components/SidebarFilter";
+import SidebarFilter from "@/components/widgets/SidebarFilter";
 
 const HeaderView = ({ setSearchText, menu }: { setSearchText: Dispatch<SetStateAction<string>>, menu: Meal[] }) => {
 

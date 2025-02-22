@@ -1,9 +1,6 @@
 import FoodLog from "@/interfaces/FoodLog";
-import axios from "axios";
-// import { getMenu } from "./menuSession";
 import { getFood } from "./menuSession";
 import { Meal } from "@/interfaces/Meal";
-import { User } from "@/interfaces/User";
 import session from "./userSession";
 
 // fix async

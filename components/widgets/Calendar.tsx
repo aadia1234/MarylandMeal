@@ -1,13 +1,8 @@
-// import { Theme } from "@/constants/Colors";
-// import { Text, View, Image, StyleSheet, TextInput } from "react-native";
-// import DateTimePicker from "react-native-ui-datepicker";
-
 import { useState } from "react";
-import { Popover, PopoverArrow, PopoverBackdrop, PopoverBody, PopoverContent } from "./ui/popover";
-import { Button, ButtonIcon } from "./ui/button";
+import { Popover, PopoverArrow, PopoverBackdrop, PopoverBody, PopoverContent } from "../ui/popover";
+import { Button } from "../ui/button";
 import DateTimePicker from "react-native-ui-datepicker";
-import { CalendarClock } from "lucide-react-native";
-import { Center } from "./ui/center";
+import { Center } from "../ui/center";
 
 export default function Calendar(props: any) {
   const [isOpen, setIsOpen] = useState(false);

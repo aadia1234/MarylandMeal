@@ -1,5 +1,5 @@
-import { Center } from "./ui/center";
-import { Spinner } from "./ui/spinner";
+import { Center } from "../ui/center";
+import { Spinner } from "../ui/spinner";
 
 export default function LoadingSpinner() {
     return (

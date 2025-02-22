@@ -19,14 +19,14 @@ import {
 import { Center } from "@/components/ui/center";
 import { Divider } from "@/components/ui/divider";
 import { isWeb } from "@gluestack-ui/nativewind-utils/IsWeb";
-import EditProfile from "@/components/EditProfile";
-import SettingsCard from "@/components/SettingsCard";
+import EditProfile from "@/components/widgets/EditProfile";
+import SettingsCard from "@/components/cards/SettingsCard";
 import { User } from "@/interfaces/User";
 import { router } from "expo-router";
-import ContentLayout from "@/components/ContentLayout";
+import ContentLayout from "@/components/layouts/ContentLayout";
 import { View } from "@/components/ui/view";
-import HorizontalMacroView from "@/components/HorizontalMacroView";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import HorizontalMacroView from "@/components/widgets/HorizontalMacroView";
+import LoadingSpinner from "@/components/widgets/LoadingSpinner";
 import { BellIcon, ChevronRightIcon, GlobeIcon, GoalIcon, HeartIcon, LogOutIcon, StarIcon } from "lucide-react-native";
 import { Card } from "@/components/ui/card";
 import { getUser, logout } from "@/api/userSession";
@@ -102,6 +102,7 @@ const AccountSettingsView = () => {
   );
 }
 
+// use useContext to make everything faster and instead of passing user to all the views!
 export default function Profile() {
   const [user, setUser] = useState<User>();
   const [userUpdated, setUserUpdated] = useState(false);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Toast, ToastTitle, useToast } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/toast";
 import { HStack } from "@/components/ui/hstack";
 import { VStack } from "@/components/ui/vstack";
 import { Heading } from "@/components/ui/heading";
@@ -28,17 +28,15 @@ import {
   EyeOffIcon,
   Icon,
 } from "@/components/ui/icon";
-import { Button, ButtonText, ButtonIcon } from "@/components/ui/button";
+import { Button, ButtonText } from "@/components/ui/button";
 import { Keyboard } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertTriangle } from "lucide-react-native";
-// import { GoogleIcon } from "./assets/icons/google";
 import { Pressable } from "@/components/ui/pressable";
-// import useRouter from "@unitools/router";
 import { router } from "expo-router";
-import AuthLayout from "../../components/AuthLayout";
+import AuthLayout from "../../components/layouts/AuthLayout";
 import { login } from "@/api/authenticateSession";
 
 const loginSchema = z.object({

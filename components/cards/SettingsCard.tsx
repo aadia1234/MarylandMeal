@@ -1,10 +1,9 @@
 import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
-import React, { Fragment } from "react";
+import React from "react";
 import { Divider } from "@/components/ui/divider";
-import { Button } from "./ui/button";
-import { Pressable } from "./ui/pressable";
+import { Pressable } from "../ui/pressable";
 import { Href, router } from "expo-router";
 import { ChevronRightIcon, LucideIcon } from "lucide-react-native";
 

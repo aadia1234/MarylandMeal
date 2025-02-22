@@ -1,5 +1,5 @@
-import SectionView from "@/components/SectionView";
-import SettingsLayout from "@/components/SettingsLayout";
+import SectionView from "@/components/widgets/SectionView";
+import SettingsLayout from "@/components/layouts/SettingsLayout";
 import { Accordion, AccordionContent, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from "@/components/ui/accordion";
 import { Text } from "@/components/ui/text";
 import { ChevronDownIcon, GoalIcon, SparkleIcon, SparklesIcon } from "lucide-react-native";
@@ -53,7 +53,7 @@ export default function Goals() {
         const [selectedWeight, setSelectedWeight] = useState(0);
 
         const WeightRow = ({ title, weight }: { title: string, weight?: number }) => {
-            const weights = Array.from({ length: 200 }, (_, i) => (i+1) * 2.5);
+            const weights = Array.from({ length: 200 }, (_, i) => (i + 1) * 2.5);
             const isGoalWeight = title.toLowerCase().includes("goal");
 
             return (
@@ -81,7 +81,7 @@ export default function Goals() {
         }
 
         return (
-            <SectionView title="Weight Goals" icon={SparkleIcon} action={() => {}}>
+            <SectionView title="Weight Goals" icon={SparkleIcon} action={() => { }}>
                 <Center className="w-full h-fit">
                     <WeightRow title="Current Weight" weight={user?.currentWeight} />
                     <Divider />

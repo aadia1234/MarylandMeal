@@ -1,11 +1,7 @@
-import { StyleSheet } from "react-native";
-import { router, useLocalSearchParams, useNavigation } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { Card } from "@/components/ui/card";
 import { VStack } from "@/components/ui/vstack";
 import { Heading } from "@/components/ui/heading";
-import { Box } from "@/components/ui/box";
-import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
-import { Image } from "@/components/ui/image";
 import { Text } from "@/components/ui/text";
 import { Pressable } from "@/components/ui/pressable";
 import { ArrowLeftIcon, ChevronDownIcon, ChevronUpIcon, Icon } from "@/components/ui/icon";
@@ -13,16 +9,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "@/components/ui/scroll-view";
 import { HStack } from "@/components/ui/hstack";
 import { Divider } from "@/components/ui/divider";
-import { View } from "@/components/ui/view";
 import React, { useState } from "react";
 import { log } from "@/api/logSession";
 import { Meal } from "@/interfaces/Meal";
 import { getMenuItem } from "@/api/menuSession";
-import HorizontalMacroView from "@/components/HorizontalMacroView";
-import NumberSpinner from "@/components/NumberSpinner";
-import { Center } from "@/components/ui/center";
+import HorizontalMacroView from "@/components/widgets/HorizontalMacroView";
+import NumberSpinner from "@/components/widgets/NumberSpinner";
 import { Accordion, AccordionContent, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from "@/components/ui/accordion";
-import { CheckIcon, GlobeIcon } from "lucide-react-native";
+import { CheckIcon } from "lucide-react-native";
 import { Select, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectTrigger } from "@/components/ui/select";
 
 const FoodItemLayout = (props: any) => {

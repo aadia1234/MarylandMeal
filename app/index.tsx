@@ -1,8 +1,6 @@
 
-import { User } from "@/interfaces/User";
 import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
-import * as AuthSession from 'expo-auth-session';
 import { login } from "@/api/authenticateSession";
 
 
@@ -20,7 +18,7 @@ export default function Index() {
     }, []);
 
     if (true) {
-        return <Redirect href="/(tabs)/profile"></Redirect>
+        return <Redirect href="/(tabs)/home"></Redirect>
     } else {
         return <Redirect href="/auth"></Redirect>
     }

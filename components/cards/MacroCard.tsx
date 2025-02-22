@@ -1,11 +1,7 @@
-import { VStack } from "@/components/ui/vstack";
-import { Text } from "@/components/ui/text";
 import { Card } from "@/components/ui/card";
-import { Image } from "@/components/ui/image";
 import { Center } from "@/components/ui/center";
 import CircularProgress from 'react-native-circular-progress-indicator';
 import React from "react";
-import { View } from "./ui/view";
 
 export default function MacroCard({ macro, target, consumed }: { macro: string, target: number, consumed: number }) {
 

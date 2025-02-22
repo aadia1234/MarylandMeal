@@ -1,58 +1,117 @@
 import { useEffect, useState } from "react";
-import { useNavigation } from "expo-router";
-import Calendar from "@/components/Calendar";
+import Calendar from "@/components/widgets/Calendar";
 import { ScrollView } from "@/components/ui/scroll-view";
 import { HStack } from "@/components/ui/hstack";
 import { Heading } from "@/components/ui/heading";
 import { Center } from "@/components/ui/center";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionHeader,
-  AccordionIcon,
-  AccordionItem,
-  AccordionTitleText,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { ChevronDownIcon, ChevronUpIcon, Icon } from "@/components/ui/icon";
 import React from "react";
-import MacroCard from "@/components/MacroCard";
 import { VStack } from "@/components/ui/vstack";
-import FoodCard from "@/components/FoodCard";
 import { getFoodLog, getMacros } from "@/api/logSession";
-import FoodLogDocument from "@/interfaces/FoodLog";
 import { Grid, GridItem } from "@/components/ui/grid";
-import { SafeAreaView, Text } from "react-native";
-import { View } from "@/components/ui/view";
-// import { Text } from "@/components/ui/text";
-import ContentLayout from "@/components/ContentLayout";
+import { Text } from "@/components/ui/text";
+import ContentLayout from "@/components/layouts/ContentLayout";
 import { useIsFocused } from "@react-navigation/native";
-import MealLog from "@/components/MealLog";
+import MealLog from "@/components/widgets/MealLog";
 import Macros from "@/interfaces/Macros";
-import FoodLog from "@/interfaces/FoodLog";
 import { Meal } from "@/interfaces/Meal";
+import { Card } from "@/components/ui/card";
+import { CircularProgressBase } from "react-native-circular-progress-indicator";
+import { Divider } from "@/components/ui/divider";
 
 
 const MacroProgressView = ({ target, consumed }: { target: Macros, consumed: Macros }) => {
   const macros = [
-    { macro: "calories", target: target.calories, consumed: consumed.calories },
-    { macro: "protein", target: target.protein, consumed: consumed.protein },
-    { macro: "carbs", target: target.carbs, consumed: consumed.carbs },
-    { macro: "fats", target: target.fats, consumed: consumed.fats }
+    { name: "Calories", target: target.calories, consumed: consumed.calories },
+    { name: "Protein", target: target.protein, consumed: consumed.protein },
+    { name: "Carbs", target: target.carbs, consumed: consumed.carbs },
+    { name: "Fats", target: target.fats, consumed: consumed.fats }
   ];
 
+  const props = {
+    activeStrokeWidth: 25,
+    inActiveStrokeWidth: 25,
+    inActiveStrokeOpacity: 0.2
+  };
+
   return (
-    <Grid className="gap-y-2 gap-x-2 bg-white rounded-xl" _extra={{ className: "grid-cols-2" }}>
-      {
-        macros.map((entry, index) => {
-          return (
-            <GridItem _extra={{ className: "col-span-1" }} key={index}>
-              <MacroCard {...entry} />
-            </GridItem>
-          );
-        })
-      }
-    </Grid>
+    // <Grid className="gap-y-2 gap-x-2 bg-white rounded-xl" _extra={{ className: "grid-cols-2" }}>
+    //   {
+    //     macros.map((entry, index) => {
+    //       return (
+    //         <GridItem _extra={{ className: "col-span-1" }} key={index}>
+    //           <MacroCard {...entry} />
+    //         </GridItem>
+    //       );
+    //     })
+    //   }
+    // </Grid>
+    <Card variant="elevated" className="h-60 rounded-xl">
+      <HStack space="lg" className="w-fit m-auto">
+        <Center className="w-[40%] pl-2">
+          <CircularProgressBase
+            {...props}
+            value={consumed.calories}
+            maxValue={target.calories}
+            radius={80}
+            activeStrokeWidth={15}
+            inActiveStrokeWidth={15}
+            activeStrokeColor={'#e84118'}
+            inActiveStrokeColor={'#e84118'}
+          >
+            <CircularProgressBase
+              {...props}
+              value={consumed.protein}
+              maxValue={target.protein}
+              radius={67.5}
+              activeStrokeWidth={15}
+              inActiveStrokeWidth={15}
+              activeStrokeColor={'#badc58'}
+              inActiveStrokeColor={'#badc58'}
+            >
+              <CircularProgressBase
+                {...props}
+                value={consumed.carbs}
+                maxValue={target.carbs}
+                radius={55}
+                activeStrokeWidth={15}
+                inActiveStrokeWidth={15}
+                activeStrokeColor={'#18dcff'}
+                inActiveStrokeColor={'#18dcff'}
+              >
+                <CircularProgressBase
+                  {...props}
+                  value={consumed.fats}
+                  maxValue={target.fats}
+                  radius={42.5}
+                  activeStrokeWidth={15}
+                  inActiveStrokeWidth={15}
+                  activeStrokeColor={'#ffA500'}
+                  inActiveStrokeColor={'#ffA500'}
+                />
+              </CircularProgressBase>
+            </CircularProgressBase>
+          </CircularProgressBase>
+        </Center>
+        <VStack className="w-[60%] h-full">
+          <Grid className="gap-y-6 gap-x-0" _extra={{ className: "grid-cols-2" }}>
+            {
+              macros.map((macro, index) => {
+                return (
+                  <GridItem _extra={{ className: "col-span-1" }} key={index} className="">
+                    <VStack className="items-center">
+                      <Text size="lg" bold>{macro.name} ({macro.name === "Calories" ? "kcal" : "g"})</Text>
+                      <Text size="xl">{macro.consumed.toFixed()}</Text>
+                      <Divider className="w-14"></Divider>
+                      <Text size="xl">{macro.target.toFixed()}</Text>
+                    </VStack>
+                  </GridItem>
+                );
+              })
+            }
+          </Grid>
+        </VStack>
+      </HStack>
+    </Card>
   );
 }
 

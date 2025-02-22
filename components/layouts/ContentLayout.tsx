@@ -1,4 +1,4 @@
-import LoadingSpinner from "@/components/LoadingSpinner";
+import LoadingSpinner from "../widgets/LoadingSpinner";
 import { SafeAreaView, View } from "react-native";
 
 

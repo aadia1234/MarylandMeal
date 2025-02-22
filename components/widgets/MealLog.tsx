@@ -1,8 +1,8 @@
 import { Meal } from "@/interfaces/Meal";
-import { Accordion, AccordionContent, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from "./ui/accordion";
+import { Accordion, AccordionContent, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from "../ui/accordion";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react-native";
-import FoodCard from "./FoodCard";
 import React from "react";
+import FoodCard from "../cards/FoodCard";
 
 export default function MealLog({ title, log }: { title: string, log?: { item: Meal, quantity: number }[] }) {
     return (

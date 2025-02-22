@@ -1,16 +1,14 @@
 import { HStack } from "@/components/ui/hstack";
-import { SafeAreaView } from "@/components/ui/safe-area-view";
 import { ScrollView } from "@/components/ui/scroll-view";
 import { VStack } from "@/components/ui/vstack";
-import { Image } from "@/components/ui/image";
-import { Pressable } from "./ui/pressable";
-import { Icon } from "./ui/icon";
-import { Text } from "./ui/text";
-import { ArrowLeftIcon, ChevronUpIcon, PowerCircleIcon, User, Wifi } from "lucide-react-native";
+import { Pressable } from "../ui/pressable";
+import { Icon } from "../ui/icon";
+import { Text } from "../ui/text";
+import { ArrowLeftIcon } from "lucide-react-native";
 import { router } from "expo-router";
-import { Center } from "./ui/center";
-import { Card } from "./ui/card";
-import { Avatar, AvatarImage } from "./ui/avatar";
+import { Center } from "../ui/center";
+import { Card } from "../ui/card";
+import { Avatar } from "../ui/avatar";
 import ContentLayout from "./ContentLayout";
 
 export default function SettingsLayout(props: any) {
