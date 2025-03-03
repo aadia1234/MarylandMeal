@@ -9,4 +9,5 @@ export interface User extends Document {
   currentWeight: number;
   goalWeight: number;
   goalMacros: Macros;
+  // create allergens as a string[]
 }

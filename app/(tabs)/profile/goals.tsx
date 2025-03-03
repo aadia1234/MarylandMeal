@@ -4,7 +4,7 @@ import { Accordion, AccordionContent, AccordionHeader, AccordionIcon, AccordionI
 import { Text } from "@/components/ui/text";
 import { ChevronDownIcon, GoalIcon, SparkleIcon, SparklesIcon } from "lucide-react-native";
 import { Picker } from '@react-native-picker/picker';
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { View } from "@/components/ui/view";
 import { HStack } from "@/components/ui/hstack";
 import { Button, ButtonText } from "@/components/ui/button";
@@ -28,25 +28,17 @@ import { User } from "@/interfaces/User";
 import { getUser } from "@/api/userSession";
 import { updateGoalMacros, updateWeight } from "@/api/updateSession";
 import Macros from "@/interfaces/Macros";
+import { UserContext } from "./user_provider";
 
 export default function Goals() {
-    const [user, setUser] = useState<User>();
+  const { user, setUser } = useContext(UserContext);
+    const goalsDescription = "Set and customize weight and macro goals for your fitness journey.";
     const [macros, setMacros] = useState<Macros>({
         calories: 0,
         fats: 0,
         protein: 0,
         carbs: 0
     });
-    const [userUpdated, setUserUpdated] = useState(false);
-    const goalsDescription = "Set and customize weight and macro goals for your fitness journey.";
-
-    useEffect(() => {
-        getUser().then((user) => {
-            setUser(user);
-            setMacros(user.goalMacros);
-            setUserUpdated(false);
-        })
-    }, [userUpdated]);
 
 
     const WeightGoalsView = () => {
@@ -81,7 +73,7 @@ export default function Goals() {
         }
 
         return (
-            <SectionView title="Weight Goals" icon={SparkleIcon} action={() => { }}>
+            <SectionView title="Weight Goals" icon={SparklesIcon} action={() => { }}>
                 <Center className="w-full h-fit">
                     <WeightRow title="Current Weight" weight={user?.currentWeight} />
                     <Divider />
