@@ -1,5 +1,6 @@
+import { SafeAreaView } from "react-native-safe-area-context";
 import LoadingSpinner from "../widgets/LoadingSpinner";
-import { SafeAreaView, View } from "react-native";
+import { View } from "react-native";
 
 
 export default function ContentLayout(props: any) {
@@ -9,7 +10,7 @@ export default function ContentLayout(props: any) {
         return <LoadingSpinner />
     } else {
         return (
-            <SafeAreaView className="w-full h-full bg-zinc-100">
+            <SafeAreaView edges={["top", "left", "right"]} className="w-full h-full bg-zinc-100">
                 <View className="w-full h-full pt-5">
                     {props.children}
                 </View>

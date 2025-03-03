@@ -17,6 +17,8 @@ import { Meal } from "@/interfaces/Meal";
 import { Card } from "@/components/ui/card";
 import { CircularProgressBase } from "react-native-circular-progress-indicator";
 import { Divider } from "@/components/ui/divider";
+import { ChevronDownIcon } from "lucide-react-native";
+import { Icon } from "@/components/ui/icon";
 
 
 const MacroProgressView = ({ target, consumed }: { target: Macros, consumed: Macros }) => {
@@ -140,13 +142,13 @@ export default function Dashboard() {
       <ScrollView
         showsVerticalScrollIndicator={false}
       >
-        <VStack className="md:px-10 md:pt-6 w-full px-5" space="2xl">
+        <VStack className="w-full px-5" space="2xl">
           <HStack className="w-full items-center justify-start" >
             <Calendar date={date} setDate={setDate} placement="bottom">
               <Heading size="3xl" className="text-primary-600">
                 {date.toLocaleDateString("en-us", options)}
               </Heading>
-              {/* <Icon as={ChevronDownIcon} className="text-primary-600 aspect-square w-8"></Icon> */}
+              <Icon as={ChevronDownIcon} className="text-primary-600 aspect-square w-8"></Icon>
             </Calendar>
           </HStack>
           <VStack>

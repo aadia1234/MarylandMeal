@@ -17,6 +17,7 @@ export default function SettingsLayout(props: any) {
             <ScrollView
                 className="w-full h-full"
                 contentContainerStyle={{ flexGrow: 1 }}
+                showsVerticalScrollIndicator={false}
             >
                 <VStack className="px-5">
                     <HStack className="items-center justify-between mb-10">
@@ -24,7 +25,7 @@ export default function SettingsLayout(props: any) {
                             <HStack>
                                 <Icon
                                     as={ArrowLeftIcon}
-                                    className="md:hidden stroke-background-800"
+                                    className="stroke-background-800"
                                     size="xl"
                                 />
                                 {/* <Text>Back</Text> */}
@@ -35,7 +36,7 @@ export default function SettingsLayout(props: any) {
                         <Card variant="elevated" className="w-full rounded-xl mb-14">
                             <VStack space="lg" className="items-center">
                                 <Avatar size="xl" className="bg-primary-50">
-                                    <Icon as={props.icon} className="aspect-square h-12" />
+                                    <Icon as={props.icon} className=" aspect-square h-12" />
                                 </Avatar>
                                 <VStack className="gap-1 w-full items-center">
                                     <Text size="2xl" className="font-roboto text-dark">

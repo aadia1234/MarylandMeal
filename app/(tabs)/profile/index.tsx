@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { Box } from "@/components/ui/box";
 import { HStack } from "@/components/ui/hstack";
 import {
@@ -27,18 +27,22 @@ import ContentLayout from "@/components/layouts/ContentLayout";
 import { View } from "@/components/ui/view";
 import HorizontalMacroView from "@/components/widgets/HorizontalMacroView";
 import LoadingSpinner from "@/components/widgets/LoadingSpinner";
-import { BellIcon, ChevronRightIcon, GlobeIcon, GoalIcon, HeartIcon, LogOutIcon, StarIcon } from "lucide-react-native";
+import { BellIcon, ChevronRightIcon, GlobeIcon, GoalIcon, HeartIcon, LogOutIcon, PersonStandingIcon, StarIcon, UserPenIcon } from "lucide-react-native";
 import { Card } from "@/components/ui/card";
 import { getUser, logout } from "@/api/userSession";
+import { UserContext } from "./user_provider";
+import { useIsFocused } from "@react-navigation/native";
 
 
-const ProfileView = ({ user, update }: { user: User, update: any }) => {
+
+const ProfileView = () => {
+  const { user, setUser } = useContext(UserContext);
   const [showModal, setShowModal] = useState(false);
 
   return (
     <Center className="w-full">
       <Card variant="elevated" className="w-full rounded-xl">
-        <EditProfile update={update} showModal={showModal} setShowModal={setShowModal} />
+        <EditProfile showModal={showModal} setShowModal={setShowModal} />
         <VStack space="lg" className="items-center">
           <Avatar size="2xl" className="bg-primary-600">
             <AvatarImage
@@ -51,36 +55,15 @@ const ProfileView = ({ user, update }: { user: User, update: any }) => {
           </Avatar>
           <VStack className="gap-1 w-full items-center">
             <Text size="2xl" className="font-roboto text-center text-dark">
-              {user.name}
+              {user?.name}
             </Text>
             <Text className="font-roboto text-center text-sm text-typography-700">
-              {user.email}
+              {user?.email}
             </Text>
             <Text className="font-roboto text-center text-sm text-typography-700">
               Streaks: -1
             </Text>
           </VStack>
-
-          <HStack space="lg" className="w-full justify-center">
-            <Button
-              variant="solid"
-              action="primary"
-              onPress={() => setShowModal(true)}
-              className="gap-3 relative w-32 rounded-lg"
-            >
-              <ButtonText>Edit</ButtonText>
-              <ButtonIcon as={EditIcon} />
-            </Button>
-            <Button
-              variant="solid"
-              action="primary"
-              className="gap-3 relative w-32 rounded-lg"
-              onPress={async () => { await logout(); router.replace("/auth"); }}
-            >
-              <ButtonText>Logout</ButtonText>
-              <ButtonIcon as={LogOutIcon} />
-            </Button>
-          </HStack>
         </VStack>
       </Card>
     </Center>
@@ -94,9 +77,10 @@ const AccountSettingsView = () => {
         Account
       </Heading>
       <VStack className="py-2 px-4 rounded-xl justify-between items-center bg-white">
-        <SettingsCard key={1} icon={GoalIcon} subText={"Goals"} />
-        <SettingsCard key={2} icon={HeartIcon} subText={"Preferences"} />
-        <SettingsCard key={3} icon={BellIcon} subText={"Notifications"} isLast={true} />
+        <SettingsCard key={1} icon={UserPenIcon} subText={"Edit Profile"} />
+        <SettingsCard key={2} icon={GoalIcon} subText={"Goals"} />
+        <SettingsCard key={3} icon={HeartIcon} subText={"Preferences"} />
+        <SettingsCard key={4} icon={BellIcon} subText={"Notifications"} isLast={true} />
       </VStack>
     </VStack>
   );
@@ -104,10 +88,9 @@ const AccountSettingsView = () => {
 
 // use useContext to make everything faster and instead of passing user to all the views!
 export default function Profile() {
-  const [user, setUser] = useState<User>();
-  const [userUpdated, setUserUpdated] = useState(false);
-
-  useEffect(() => { getUser().then((user) => { setUser(user); setUserUpdated(false) }) }, [userUpdated]);
+  const { user, setUser } = useContext(UserContext);
+  const isFocused = useIsFocused();
+  useEffect(() => { getUser().then((user) => { setUser(user); }) }, [isFocused]);
 
   return (
     <ContentLayout data={user?._id}>
@@ -116,8 +99,18 @@ export default function Profile() {
         className="h-fit w-full"
       >
         <VStack className="h-full w-full mb-16 px-5" space="2xl">
-          <Heading size="3xl" className="text-primary-600">Hi, {user?.name}</Heading>
-          <ProfileView user={user!} update={setUserUpdated} />
+          <HStack className="w-full justify-between items-center">
+            <Heading size="3xl" className="text-primary-600">Hi, {user?.name}</Heading>
+            <Button
+              variant="link"
+              action="primary"
+              className="gap-3 relative rounded-lg"
+              onPress={async () => { await logout(); router.replace("/auth"); }}
+            >
+              <ButtonIcon as={LogOutIcon} />
+            </Button>
+          </HStack>
+          <ProfileView />
           <AccountSettingsView />
         </VStack>
       </ScrollView>
@@ -126,5 +119,3 @@ export default function Profile() {
 
 
 };
-
-

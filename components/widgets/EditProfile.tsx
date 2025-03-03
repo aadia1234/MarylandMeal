@@ -53,7 +53,7 @@ const userSchema = z.object({
 
 type userSchemaDetails = z.infer<typeof userSchema>;
 
-export default function EditProfile({ update, showModal, setShowModal }: { update: any, showModal: boolean; setShowModal: any; }) {
+export default function EditProfile({ showModal, setShowModal }: { showModal: boolean; setShowModal: any; }) {
     const ref = useRef(null);
     const {
         control,
@@ -77,7 +77,6 @@ export default function EditProfile({ update, showModal, setShowModal }: { updat
         if (didUpdate) {
             setShowModal(false);
             reset();
-            update(true);
             // show successful message
         } else {
             // show error message

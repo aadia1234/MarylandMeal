@@ -21,6 +21,7 @@ import {
   ActionsheetBackdrop,
 } from "@/components/ui/actionsheet"
 import SidebarFilter from "@/components/widgets/SidebarFilter";
+import { TouchableWithoutFeedback } from "react-native";
 
 const HeaderView = ({ setSearchText, menu }: { setSearchText: Dispatch<SetStateAction<string>>, menu: Meal[] }) => {
 
@@ -55,7 +56,7 @@ const HeaderView = ({ setSearchText, menu }: { setSearchText: Dispatch<SetStateA
   return (
     <VStack space="md" className="sticky top-0 pb-3 bg-zinc-100">
       <HStack className="w-full items-center justify-between" >
-        <Heading size="3xl">
+        <Heading size="3xl" className="text-primary-600">
           Dining Hall Menu
         </Heading>
         <Button variant="link" size="md" className="rounded-md">
@@ -141,8 +142,10 @@ export default function Food() {
         ListEmptyComponent={<ListEmptyView />}
         ListFooterComponent={() => loading && <Spinner size="small" className="text-primary-500" />}
         initialNumToRender={4}
-        // getItemLayout={}
+        keyboardDismissMode="on-drag"
+        keyboardShouldPersistTaps="always"
         removeClippedSubviews
+      // getItemLayout={}
       // windowSize={}
       // viewabilityConfig
       // debug
