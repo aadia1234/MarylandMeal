@@ -2,12 +2,15 @@ import { router } from "expo-router";
 import { memo } from "react";
 import { VStack } from "../ui/vstack";
 import { Text } from "../ui/text";
-import { Button } from "../ui/button";
+import { Button, ButtonText } from "../ui/button";
 import { Meal } from "@/interfaces/Meal";
 import HorizontalMacroView from "../widgets/HorizontalMacroView";
+import FoodAllergenView from "../widgets/FoodAllergenView";
 
 function FoodCard({ item, quantity }: { item: Meal, quantity?: number }) {
   const food = item.menu_item;
+  const allergens = item.menu_item.allergens;
+
 
   const onPress = () => {
     router.push({ pathname: "/menu/[id]", params: { id: food.id } });
@@ -23,14 +26,16 @@ function FoodCard({ item, quantity }: { item: Meal, quantity?: number }) {
 
   return (
     <Button
-      variant="outline"
+      variant="link"
       onPress={onPress}
-      className={`w-fit h-fit my-2 p-2 justify-center border border-outline-${quantity ? 100 : 0} bg-white rounded-md`}
+      className={`w-fit h-fit my-2 p-2 justify-center border${quantity ? "" : "none"} border-outline-${quantity ? 100 : 0} bg-white rounded-xl`}
     >
-      <VStack space="sm" className="mx-2 pb-2 w-full items-center">
+      <VStack space="md" className="mx-2 w-full items-center">
         <Text bold size="xl" numberOfLines={1}>{food.name} {quantity && `(x${quantity})`}</Text>
         <HorizontalMacroView data={macros} />
+        <FoodAllergenView data={allergens} />
         {/* allergen macro view */}
+
       </VStack>
     </Button>
   );

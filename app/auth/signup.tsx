@@ -167,7 +167,7 @@ const SignUpView = () => {
                 },
               }}
               render={({ field: { onChange, onBlur, value } }) => (
-                <Input>
+                <Input className="rounded-lg">
                   <InputField
                     className="text-sm"
                     placeholder="Email"
@@ -209,7 +209,7 @@ const SignUpView = () => {
                 },
               }}
               render={({ field: { onChange, onBlur, value } }) => (
-                <Input>
+                <Input className="rounded-lg">
                   <InputField
                     className="text-sm"
                     placeholder="Password"
@@ -254,7 +254,7 @@ const SignUpView = () => {
                 },
               }}
               render={({ field: { onChange, onBlur, value } }) => (
-                <Input>
+                <Input className="rounded-lg">
                   <InputField
                     placeholder="Confirm Password"
                     className="text-sm"
@@ -306,13 +306,13 @@ const SignUpView = () => {
         </VStack>
 
         <VStack className="w-full my-7" space="lg">
-          <Button className="w-full" onPress={handleSubmit(onSubmit)}>
+          <Button className="w-full rounded-lg" onPress={handleSubmit(onSubmit)}>
             <ButtonText className="font-medium">Sign up</ButtonText>
           </Button>
           <Button
             variant="outline"
             action="secondary"
-            className="w-full gap-1"
+            className="w-full gap-1 rounded-lg"
             onPress={() => { }}
           >
             <ButtonText className="font-medium">

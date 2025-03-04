@@ -95,16 +95,14 @@ const MacroProgressView = ({ target, consumed }: { target: Macros, consumed: Mac
           </CircularProgressBase>
         </Center>
         <VStack className="w-[60%] h-full">
-          <Grid className="gap-y-6 gap-x-0" _extra={{ className: "grid-cols-2" }}>
+          <Grid className="gap-y-6 gap-x-0 m-auto" _extra={{ className: "grid-cols-2" }}>
             {
               macros.map((macro, index) => {
                 return (
                   <GridItem _extra={{ className: "col-span-1" }} key={index} className="">
                     <VStack className="items-center">
                       <Text size="lg" bold>{macro.name} ({macro.name === "Calories" ? "kcal" : "g"})</Text>
-                      <Text size="xl">{macro.consumed.toFixed()}</Text>
-                      <Divider className="w-14"></Divider>
-                      <Text size="xl">{macro.target.toFixed()}</Text>
+                      <Text size="xl">{macro.consumed.toFixed()}/{macro.target.toFixed()}</Text>
                     </VStack>
                   </GridItem>
                 );

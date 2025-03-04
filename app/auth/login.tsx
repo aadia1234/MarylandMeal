@@ -143,7 +143,7 @@ const LoginView = () => {
                 },
               }}
               render={({ field: { onChange, onBlur, value } }) => (
-                <Input>
+                <Input className="rounded-lg">
                   <InputField
                     placeholder="Enter email"
                     value={value}
@@ -186,7 +186,7 @@ const LoginView = () => {
                 },
               }}
               render={({ field: { onChange, onBlur, value } }) => (
-                <Input>
+                <Input className="rounded-lg">
                   <InputField
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter password"
@@ -238,13 +238,13 @@ const LoginView = () => {
           </HStack>
         </VStack>
         <VStack className="w-full my-7 " space="lg">
-          <Button className="w-full" onPress={handleSubmit(onSubmit)}>
+          <Button className="w-full rounded-lg" onPress={handleSubmit(onSubmit)}>
             <ButtonText className="font-medium">Log in</ButtonText>
           </Button>
           <Button
             variant="outline"
             action="secondary"
-            className="w-full gap-1"
+            className="w-full gap-1 rounded-lg"
             onPress={() => { }}
           >
             <ButtonText className="font-medium">

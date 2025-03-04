@@ -2,7 +2,7 @@ import { getUser } from "@/api/userSession";
 import { User } from "@/interfaces/User";
 import { Stack } from "expo-router";
 import { createContext, useEffect, useState } from "react";
-import { UserProvider } from "./user_provider";
+import UserProvider from "./user_provider";
 
 
 

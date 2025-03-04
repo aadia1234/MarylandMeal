@@ -46,7 +46,7 @@ export default function Calendar(props: any) {
               selectedItemColor="#fa1932" // need to double check!
               headerButtonColor="#fa1932"
               headerButtonsPosition="around"
-              dayContainerStyle={{ aspectRatio: 1, margin: "auto", borderRadius: 5 }}
+              dayContainerStyle={{ aspectRatio: 1, margin: "auto", borderRadius: 8 }}
               onChange={(params) =>
                 props.setDate(new Date(params.date as Date))
               }

@@ -4,7 +4,7 @@ import { createContext, SetStateAction, useEffect, useState } from "react";
 
 export const UserContext = createContext<{ user: User | undefined, setUser: any }>({ user: undefined, setUser: undefined });
 
-export const UserProvider = (props: any) => {
+export default function UserProvider(props: any) {
     const [user, setUser] = useState<User>();
     useEffect(() => { getUser().then((user) => { setUser(user); }) }, []);
 

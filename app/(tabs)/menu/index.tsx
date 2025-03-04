@@ -1,4 +1,4 @@
-import { FlatList } from "react-native";
+import { FlatList, RefreshControl } from "react-native";
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 import FoodCard from "@/components/cards/FoodCard";
 import { Input, InputField, InputIcon, InputSlot } from "@/components/ui/input";
@@ -12,46 +12,14 @@ import { Spinner } from "@/components/ui/spinner";
 import ContentLayout from "@/components/layouts/ContentLayout";
 import { getMenu, resetMenu } from "@/api/menuSession";
 import { HStack } from "@/components/ui/hstack";
-import { Button, ButtonIcon } from "@/components/ui/button";
-import {
-  Actionsheet,
-  ActionsheetContent,
-  ActionsheetDragIndicator,
-  ActionsheetDragIndicatorWrapper,
-  ActionsheetBackdrop,
-} from "@/components/ui/actionsheet"
-import SidebarFilter from "@/components/widgets/SidebarFilter";
+import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
+
+import SidebarFilter from "@/components/widgets/FilterView";
 import { TouchableWithoutFeedback } from "react-native";
+import FilterView from "@/components/widgets/FilterView";
+import HelpButton from "@/components/widgets/HelpButton";
 
-const HeaderView = ({ setSearchText, menu }: { setSearchText: Dispatch<SetStateAction<string>>, menu: Meal[] }) => {
-
-  const FilterView = () => {
-    const [showActionsheet, setShowActionsheet] = useState(false);
-    const handleClose = () => setShowActionsheet(false);
-    const DATA = [
-      {
-        title: "Gender",
-        data: ["Men", "Women", "Boy", "Girl"],
-      },
-    ]
-
-    return (
-      <>
-        <Button variant="link" size="md" className="rounded-md" onPress={() => setShowActionsheet(true)}>
-          <ButtonIcon as={FilterIcon} />
-        </Button>
-        <Actionsheet isOpen={showActionsheet} onClose={handleClose} snapPoints={[50]}>
-          <ActionsheetBackdrop />
-          <ActionsheetContent>
-            <ActionsheetDragIndicatorWrapper>
-              <ActionsheetDragIndicator />
-            </ActionsheetDragIndicatorWrapper>
-            <SidebarFilter />
-          </ActionsheetContent>
-        </Actionsheet>
-      </>
-    );
-  }
+const HeaderView = ({ setSearchText, menu, setMenu }: { setSearchText: Dispatch<SetStateAction<string>>, menu: Meal[], setMenu: Dispatch<SetStateAction<Meal[]>> }) => {
 
   return (
     <VStack space="md" className="sticky top-0 pb-3 bg-zinc-100">
@@ -59,12 +27,12 @@ const HeaderView = ({ setSearchText, menu }: { setSearchText: Dispatch<SetStateA
         <Heading size="3xl" className="text-primary-600">
           Dining Hall Menu
         </Heading>
-        <Button variant="link" size="md" className="rounded-md">
-          <ButtonIcon as={CameraIcon} />
-        </Button>
-        <FilterView />
+        <HStack space="2xl">
+          <HelpButton title="Legend" message="Lorem Ipsum" />
+          <FilterView menu={menu} setMenu={setMenu} />
+        </HStack>
       </HStack>
-      <Input className="bg-zinc-200 border-outline-100">
+      <Input className="bg-zinc-200 border-outline-100 rounded-lg">
         <InputSlot className="pl-3">
           <InputIcon as={SearchIcon} />
         </InputSlot>
@@ -82,20 +50,23 @@ const HeaderView = ({ setSearchText, menu }: { setSearchText: Dispatch<SetStateA
 export default function Food() {
   const [searchText, setSearchText] = useState("");
   const [menu, setMenu] = useState<Meal[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [filteredMenu, setFilteredMenu] = useState<Meal[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   const fetchItems = async () => {
-    if (loading || searchText !== "") { return; }
-    setLoading(true);
+    if (refreshing || searchText !== "" || (filteredMenu.length == 0 && menu.length > 0)) { return; }
+    setRefreshing(true);
     const data = await getMenu();
     setMenu(data as Meal[]);
-    setLoading(false);
+    setFilteredMenu(data as Meal[]);
+    setRefreshing(false);
   };
 
-  const onRefresh = () => {
+  const onRefresh = async () => {
     setMenu([]);
     resetMenu();
-    fetchItems();
+    await fetchItems();
+    setFilteredMenu(menu);
   };
 
   useEffect(() => { fetchItems() }, []);
@@ -105,8 +76,13 @@ export default function Food() {
   // best practices like PureComponent, shouldComponentUpdate,
   // etc. { "contentLength": 9748.3330078125, "dt": 3067, "prevDt": 871 }
 
-
-
+  const MenuSpinner = () => {
+    return (
+      <Center>
+        <Spinner size="small" className="py-10 text-primary-500" />
+      </Center>
+    );
+  };
 
   const ListEmptyView = () => {
     return (
@@ -121,14 +97,20 @@ export default function Food() {
 
   const FoodLogMemoView = useCallback(({ item }: { item: Meal }) => (<FoodCard item={item} />), []);
 
-  // if scrolled too fast it can bug out
+  let searchFilter = (food: Meal) => {
+    return food.menu_item.name.toLowerCase().includes(searchText.toLowerCase());
+  }
 
+  // const [filterMenu, setFilterMenu] = useState(searchFilter);
+
+
+  // if scrolled too fast it can bug out
   // menu is null at certain times
   return (
     <ContentLayout data={1}>
       <FlatList
         className="px-5"
-        data={menu?.filter((food) => food.menu_item.name.toLowerCase().includes(searchText.toLowerCase()))}
+        data={filteredMenu.filter(searchFilter)}
         renderItem={FoodLogMemoView}
         keyExtractor={(food) => food.id.toString()}
         contentContainerStyle={{ flexGrow: 1 }}
@@ -136,11 +118,12 @@ export default function Food() {
         stickyHeaderIndices={[0]}
         onEndReached={fetchItems}
         onEndReachedThreshold={5}
-        refreshing={loading}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={["red"]} tintColor={"red"} />}
+        refreshing={refreshing}
         onRefresh={onRefresh}
-        ListHeaderComponent={<HeaderView setSearchText={setSearchText} menu={menu} />}
+        ListHeaderComponent={<HeaderView setSearchText={setSearchText} menu={menu} setMenu={setFilteredMenu} />}
         ListEmptyComponent={<ListEmptyView />}
-        ListFooterComponent={() => loading && <Spinner size="small" className="text-primary-500" />}
+        ListFooterComponent={() => refreshing && <MenuSpinner />}
         initialNumToRender={4}
         keyboardDismissMode="on-drag"
         keyboardShouldPersistTaps="always"

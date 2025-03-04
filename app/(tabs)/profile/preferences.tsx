@@ -3,7 +3,7 @@ import SettingsLayout from "@/components/layouts/SettingsLayout";
 import { Text } from "@/components/ui/text";
 import { CircleHelpIcon, Edit2Icon, HeartIcon, MenuIcon, PlusIcon, TrashIcon } from "lucide-react-native";
 import { View } from "@/components/ui/view";
-import { useCallback, useContext, useState } from "react";
+import { memo, useCallback, useContext, useState } from "react";
 import { HStack } from "@/components/ui/hstack";
 import { Center } from "@/components/ui/center";
 import DraggableFlatList, { ScaleDecorator, RenderItemParams } from "react-native-draggable-flatlist"
@@ -35,7 +35,15 @@ import { VStack } from "@/components/ui/vstack";
 import { UserContext } from "./user_provider";
 import { Heading } from "@/components/ui/heading";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
-import { FlatList, ListRenderItem, TouchableOpacity } from "react-native";
+import { FlatList, ListRenderItem, ListRenderItemInfo, TouchableOpacity } from "react-native";
+import Allergen, { allergens } from "@/interfaces/Allergen";
+import ReorderableList, {
+    ReorderableListReorderEvent,
+    reorderItems,
+    useReorderableDrag,
+} from 'react-native-reorderable-list';
+import { Pressable } from "@/components/ui/pressable";
+import AllergenView from "@/components/widgets/AllergenView";
 
 export default function Preferences() {
     const { user, setUser } = useContext(UserContext);
@@ -56,34 +64,39 @@ export default function Preferences() {
         const diningHalls = ["251 North", "Yahentamitsi", "South Campus"];
         const [diningOrder, setDiningOrder] = useState(diningHalls);
 
-        const renderItem = ({ item, drag, isActive }: RenderItemParams<string>) => {
+        const Card = memo(({item}: {item: string}) => {
+            const drag = useReorderableDrag();
+
             return (
-                // <ScaleDecorator>
-                    <TouchableOpacity
-                        onLongPress={drag}
-                    // disabled={isActive}
-                    >
-                        <HStack className="w-full justify-between items-center py-5">
-                            <Text className="">{diningOrder.indexOf(item) + 1}. {item}</Text>
-                            <Icon
-                                as={MenuIcon}
-                                className="px-4 stroke-background-800"
-                                size="xl"
-                            />
-                        </HStack>
-                    </TouchableOpacity>
-                // </ScaleDecorator>
+                <Pressable onLongPress={drag}>
+                    <HStack className="w-full justify-between items-center py-5 pl-1">
+                        <Text>{diningOrder.indexOf(item) + 1}. {item}</Text>
+                        <Icon
+                            as={MenuIcon}
+                            className="px-4 stroke-background-800"
+                            size="xl"
+                        />
+                    </HStack>
+                </Pressable>
             );
+        });
+
+        const renderItem = ({ item }: ListRenderItemInfo<string>) => (<Card item={item} />);
+
+        const handleReorder = ({ from, to }: ReorderableListReorderEvent) => {
+            setDiningOrder((items) => reorderItems(items, from, to));
         };
 
         return (
             <SectionView title="Dining Hall Preferences" icon={CircleHelpIcon} action={() => setShowModal(true)}>
                 <Center className="w-full h-48">
-                    <DraggableFlatList
+                    <ReorderableList
                         data={diningOrder}
                         renderItem={renderItem}
                         keyExtractor={(item) => item}
-                        onDragEnd={({ data }) => setDiningOrder(data)}
+                        scrollEnabled={false}
+                        onReorder={handleReorder}
+                        // onDragEnd={({ data }) => setDiningOrder(data)}
                     />
                 </Center>
             </SectionView>
@@ -103,51 +116,15 @@ export default function Preferences() {
 
 
     const AllergensView = () => {
-        type AllergenType = { name: string, symbol: string, color: string };
-        const swipeWidth = 75;
-        const allergens = [
-            { name: "Dairy", symbol: "D", color: "#1f4e79" },
-            { name: "Eggs", symbol: "E", color: "#d4a017" },
-            { name: "Fish", symbol: "F", color: "#c73d4b" },
-            { name: "Gluten", symbol: "G", color: "#c45b31" },
-            { name: "Nuts", symbol: "N", color: "#b94737" },
-            { name: "Sesame", symbol: "SS", color: "#e2a655" },
-            { name: "Shellfish", symbol: "SF", color: "#5da89b" },
-            { name: "Soy", symbol: "S", color: "#71a33d" },
-            { name: "Halal Friendly", symbol: "HF", color: "#4c78a8" },
-            { name: "Locally Grown", symbol: "L", color: "#8a8d91" },
-            { name: "Smart Choice", symbol: "🌿", color: "#ffcc5c" },
-            { name: "Vegan", symbol: "VG", color: "#824e9e" },
-            { name: "Vegetarian", symbol: "V", color: "#3f602b" }
-        ];
-
-        const [userAllergens, setUserAllergens] = useState<AllergenType[]>([]);
+        const [userAllergens, setUserAllergens] = useState<Allergen[]>([]);
         const [showAllergens, setShowAllergens] = useState(false);
 
         const handleClose = () => setShowAllergens(false);
 
-        const allergenIcon = (symbol: string, color: string) => {
-            const radius = 12;
+        
 
-            const icon = createIcon({
-                viewBox: "0 0 32 32",
-                path: (
-                    <>
-                        <Path
-                            d={`M 16 16 m -${radius}, 0 a ${radius},${radius} 0 1,0 ${2 * radius},0 a ${radius},${radius} 0 1,0 -${2 * radius},0`}
-                            fill={color}
-                            stroke={color}
-                            strokeWidth="2"
-                        />
-                    </>
-                ),
-            })
-
-            return icon;
-        }
-
-        const UnderlayRight = ({ allergen }: { allergen: AllergenType }) => {
-            const { close } = useSwipeableItemParams<AllergenType>();
+        const UnderlayRight = ({ allergen }: { allergen: Allergen }) => {
+            const { close } = useSwipeableItemParams<Allergen>();
 
             // needs to be fixed
             const deleteAllergen = () => {
@@ -157,7 +134,7 @@ export default function Preferences() {
             
             return (
                 <View className="flex-1 bg-red-500 flex-row align-center h-fit justify-start text-center pr-5">
-                    <Center className={`w-[${swipeWidth}px]`}>
+                    <Center className="w-[75px]">
                         <Button variant="link" className="w-full" onPress={deleteAllergen}>
                             <ButtonIcon as={TrashIcon} size="lg" className="text-white"/>
                         </Button> 
@@ -166,22 +143,15 @@ export default function Preferences() {
             );
         };
 
-        const renderItem: ListRenderItem<AllergenType> = useCallback(({ item: allergen }) => {
+        const renderItem: ListRenderItem<Allergen> = useCallback(({ item: allergen }) => {
             return (
                 <SwipeableItem
                     key={allergen.name}
                     item={allergen}
                     renderUnderlayRight={() => <UnderlayRight allergen={allergen} />}
-                    snapPointsRight={[swipeWidth]}
+                    snapPointsRight={[75]}
                 >
-                    <HStack space="md" className="w-fit items-center py-3 bg-white">
-                        <Icon
-                            as={allergenIcon(allergen.symbol, allergen.color)}
-                            className="aspect-square"
-                            size="sm"
-                        />
-                        <Text className="">{allergen.name}</Text>
-                    </HStack>
+                    <AllergenView size="md" className="bg-white py-2" {...allergen} />
                 </SwipeableItem>
             );
         }, []);
@@ -208,9 +178,8 @@ export default function Preferences() {
                                 .filter((allergen) => !userAllergens.some((ua) => ua.name === allergen.name))
                                 .map((allergen) => {
                                     return (
-                                        <ActionsheetItem key={allergen.name} onPress={() => { setUserAllergens(userAllergens.concat(allergen)); handleClose(); }}>
-                                            <ActionsheetIcon as={allergenIcon(allergen.symbol, allergen.color)} />
-                                            <ActionsheetItemText>{allergen.name}</ActionsheetItemText>
+                                        <ActionsheetItem className="pl-0 py-2" key={allergen.name} onPress={() => { setUserAllergens(userAllergens.concat(allergen)); handleClose(); }}>
+                                            <AllergenView size="md" {...allergen} />
                                         </ActionsheetItem>
                                     );
                                 })
