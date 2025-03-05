@@ -43,8 +43,8 @@ export default function Calendar(props: any) {
               date={props.date}
               maxDate={Date.now()}
               displayFullDays
-              selectedItemColor="#fa1932" // need to double check!
-              headerButtonColor="#fa1932"
+              selectedItemColor="#E11932" // need to double check!
+              headerButtonColor="#E11932"
               headerButtonsPosition="around"
               dayContainerStyle={{ aspectRatio: 1, margin: "auto", borderRadius: 8 }}
               onChange={(params) =>

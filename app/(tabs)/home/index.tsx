@@ -143,10 +143,10 @@ export default function Dashboard() {
         <VStack className="w-full px-5" space="2xl">
           <HStack className="w-full items-center justify-start" >
             <Calendar date={date} setDate={setDate} placement="bottom">
-              <Heading size="3xl" className="text-primary-600">
+              <Heading size="3xl" className="text-primary-500">
                 {date.toLocaleDateString("en-us", options)}
               </Heading>
-              <Icon as={ChevronDownIcon} className="text-primary-600 aspect-square w-8"></Icon>
+              <Icon as={ChevronDownIcon} className="text-primary-500 aspect-square w-8"></Icon>
             </Calendar>
           </HStack>
           <VStack>

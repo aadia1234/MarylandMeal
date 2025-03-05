@@ -14,39 +14,30 @@ export default function Notifications() {
     const { user, setUser } = useContext(UserContext);
     const preferencesDescription = "Personalize food choices, dining preferences, and allergens for your diet.";
 
+    const color = { false: colors.gray[300], true: "#E11932" };
+
     // (NOBRIDGE) ERROR  VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList - backed container instead. [Component Stack]
     // When using NestableDraggableFlatLists, all React Native warnings about nested list performance will be disabled.
     const AlertsView = () => {
         return (
             <SectionView title="Alerts">
-                <Center className="w-full h-fit">
+                <Center className="w-full h-fit mt-2">
                     <VStack space="lg">
                         <HStack space="md" className="w-full items-center justify-between">
-                            <Text size="sm">Allow suggestions</Text>
-                            <Switch
-                                trackColor={{ false: colors.gray[300], true: colors.red[500] }}
-                            // thumbColor={colors.gray[50]}
-                            // activeThumbColor={colors.gray[50]}
-                            // ios_backgroundColor={"255 255 255"}
-                            />
+                            <Text size="md">Allow suggestions</Text>
+                            <Switch trackColor={color} />
                         </HStack>
                         <HStack space="md" className="w-full items-center justify-between">
-                            <Text size="sm">Alerts on when to eat</Text>
-                            <Switch
-                                trackColor={{ false: colors.gray[300], true: colors.red[500] }}
-                            // thumbColor={colors.gray[50]}
-                            // activeThumbColor={colors.gray[50]}
-                            // ios_backgroundColor={"255 255 255"}
-                            />
+                            <Text size="md">Alerts on when to eat</Text>
+                            <Switch trackColor={color} />
                         </HStack>
                         <HStack space="md" className="w-full items-center justify-between">
-                            <Text size="sm">Alert when new meal plan is created</Text>
-                            <Switch
-                                trackColor={{ false: colors.gray[300], true: colors.red[500] }}
-                            // thumbColor={colors.gray[50]}
-                            // activeThumbColor={colors.gray[50]}
-                            // ios_backgroundColor={"255 255 255"}
-                            />
+                            <Text size="md">Alert when new meal plan is created</Text>
+                            <Switch trackColor={color} />
+                        </HStack>
+                        <HStack space="md" className="w-full items-center justify-between">
+                            <Text size="md">Alert streak is about to be lost</Text>
+                            <Switch trackColor={color} />
                         </HStack>
                     </VStack>
                 </Center>

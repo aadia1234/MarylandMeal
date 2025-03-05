@@ -22,7 +22,7 @@ export default function HelpButton({ title, message, className }: { title: strin
     return (
         <>
             <Button variant="link" className={className} onPress={() => setShowModal(true)}>
-                <ButtonIcon as={HelpCircleIcon} />
+                <ButtonIcon as={HelpCircleIcon} className="text-primary-500" />
             </Button>
             <Modal
                 isOpen={showModal}

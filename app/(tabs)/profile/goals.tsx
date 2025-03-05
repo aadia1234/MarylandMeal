@@ -53,7 +53,7 @@ export default function Goals() {
                     <Text>{title}</Text>
                     <Select onValueChange={(weight) => updateWeight(isGoalWeight ? { targetWeight: parseInt(weight) } : { currentWeight: parseInt(weight) })}>
                         <SelectTrigger variant="outline" size="md" className="border-0">
-                            <SelectInput placeholder={weight + " lbs"} className="text-primary-700" />
+                            <SelectInput placeholder={weight + " lbs"} className="text-primary-500" />
                             <SelectIcon className="mr-1" as={ChevronDownIcon} />
                         </SelectTrigger>
                         <SelectPortal snapPoints={[50]}>
@@ -116,7 +116,7 @@ export default function Goals() {
                     <Text>{title}</Text>
                     <Select onValueChange={(amt) => updateMacro(parseInt(amt))}>
                         <SelectTrigger variant="outline" size="md" className="border-0">
-                            <SelectInput placeholder={amount + (isCalories ? " Cal" : " g")} className="text-primary-700" />
+                            <SelectInput placeholder={amount + (isCalories ? " Cal" : " g")} className="text-primary-500" />
                             <SelectIcon className="mr-1" as={ChevronDownIcon} />
                         </SelectTrigger>
                         <SelectPortal snapPoints={[50]}>

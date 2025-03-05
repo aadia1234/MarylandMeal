@@ -1,5 +1,5 @@
 import { FlatList, RefreshControl } from "react-native";
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
+import { createContext, Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 import FoodCard from "@/components/cards/FoodCard";
 import { Input, InputField, InputIcon, InputSlot } from "@/components/ui/input";
 import { CameraIcon, FilterIcon, SearchIcon } from "lucide-react-native";
@@ -12,24 +12,21 @@ import { Spinner } from "@/components/ui/spinner";
 import ContentLayout from "@/components/layouts/ContentLayout";
 import { getMenu, resetMenu } from "@/api/menuSession";
 import { HStack } from "@/components/ui/hstack";
-import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
-
-import SidebarFilter from "@/components/widgets/FilterView";
-import { TouchableWithoutFeedback } from "react-native";
 import FilterView from "@/components/widgets/FilterView";
 import HelpButton from "@/components/widgets/HelpButton";
+import Allergen from "@/interfaces/Allergen";
 
-const HeaderView = ({ setSearchText, menu, setMenu }: { setSearchText: Dispatch<SetStateAction<string>>, menu: Meal[], setMenu: Dispatch<SetStateAction<Meal[]>> }) => {
+const HeaderView = ({ setSearchText }: { setSearchText: Dispatch<SetStateAction<string>> }) => {
 
   return (
     <VStack space="md" className="sticky top-0 pb-3 bg-zinc-100">
       <HStack className="w-full items-center justify-between" >
-        <Heading size="3xl" className="text-primary-600">
+        <Heading size="3xl" className="text-primary-500">
           Dining Hall Menu
         </Heading>
         <HStack space="2xl">
           <HelpButton title="Legend" message="Lorem Ipsum" />
-          <FilterView menu={menu} setMenu={setMenu} />
+          <FilterView />
         </HStack>
       </HStack>
       <Input className="bg-zinc-200 border-outline-100 rounded-lg">
@@ -39,7 +36,7 @@ const HeaderView = ({ setSearchText, menu, setMenu }: { setSearchText: Dispatch<
         <InputField
           onChangeText={(text) => setSearchText(text.toLowerCase())}
           placeholder="Search..."
-          selectionColor="rgb(225, 25, 50)"
+          selectionColor="#E11932"
           className="text-md"
         />
       </Input>
@@ -47,18 +44,32 @@ const HeaderView = ({ setSearchText, menu, setMenu }: { setSearchText: Dispatch<
   );
 };
 
+type FilterContextType = { setDiningHalls: Dispatch<SetStateAction<string[]>>, setAllergens: Dispatch<SetStateAction<Allergen[]>> }
+
+export const FilterContext = createContext <FilterContextType>({
+  setDiningHalls: function (value: SetStateAction<string[]>): void {
+    throw new Error("Function not implemented.");
+  },
+  setAllergens: function (value: SetStateAction<Allergen[]>): void {
+    throw new Error("Function not implemented.");
+  }
+});
+
+
 export default function Food() {
   const [searchText, setSearchText] = useState("");
   const [menu, setMenu] = useState<Meal[]>([]);
-  const [filteredMenu, setFilteredMenu] = useState<Meal[]>([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [diningHalls, setDiningHalls] = useState<string[]>([]);
+  const [allergens, setAllergens] = useState<Allergen[]>([]);
+
+
 
   const fetchItems = async () => {
-    if (refreshing || searchText !== "" || (filteredMenu.length == 0 && menu.length > 0)) { return; }
+    if (refreshing || searchText !== "") { return; }
     setRefreshing(true);
-    const data = await getMenu();
+    const data = await getMenu({ diningHalls, allergens });
     setMenu(data as Meal[]);
-    setFilteredMenu(data as Meal[]);
     setRefreshing(false);
   };
 
@@ -66,7 +77,6 @@ export default function Food() {
     setMenu([]);
     resetMenu();
     await fetchItems();
-    setFilteredMenu(menu);
   };
 
   useEffect(() => { fetchItems() }, []);
@@ -97,10 +107,6 @@ export default function Food() {
 
   const FoodLogMemoView = useCallback(({ item }: { item: Meal }) => (<FoodCard item={item} />), []);
 
-  let searchFilter = (food: Meal) => {
-    return food.menu_item.name.toLowerCase().includes(searchText.toLowerCase());
-  }
-
   // const [filterMenu, setFilterMenu] = useState(searchFilter);
 
 
@@ -110,7 +116,7 @@ export default function Food() {
     <ContentLayout data={1}>
       <FlatList
         className="px-5"
-        data={filteredMenu.filter(searchFilter)}
+        data={menu.filter((food) => food.menu_item.name.toLowerCase().includes(searchText.toLowerCase()))}
         renderItem={FoodLogMemoView}
         keyExtractor={(food) => food.id.toString()}
         contentContainerStyle={{ flexGrow: 1 }}
@@ -121,7 +127,7 @@ export default function Food() {
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={["red"]} tintColor={"red"} />}
         refreshing={refreshing}
         onRefresh={onRefresh}
-        ListHeaderComponent={<HeaderView setSearchText={setSearchText} menu={menu} setMenu={setFilteredMenu} />}
+        ListHeaderComponent={<FilterContext.Provider value={{ setDiningHalls, setAllergens }}><HeaderView setSearchText={setSearchText} /></FilterContext.Provider>}
         ListEmptyComponent={<ListEmptyView />}
         ListFooterComponent={() => refreshing && <MenuSpinner />}
         initialNumToRender={4}

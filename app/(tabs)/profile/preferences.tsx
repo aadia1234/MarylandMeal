@@ -45,6 +45,7 @@ import ReorderableList, {
 import { Pressable } from "@/components/ui/pressable";
 import AllergenView from "@/components/widgets/AllergenView";
 
+
 export default function Preferences() {
     const { user, setUser } = useContext(UserContext);
     const preferencesDescription = "Personalize food choices, dining preferences, and allergens for your diet.";
@@ -64,7 +65,7 @@ export default function Preferences() {
         const diningHalls = ["251 North", "Yahentamitsi", "South Campus"];
         const [diningOrder, setDiningOrder] = useState(diningHalls);
 
-        const Card = memo(({item}: {item: string}) => {
+        const Card = memo(({ item }: { item: string }) => {
             const drag = useReorderableDrag();
 
             return (
@@ -96,7 +97,7 @@ export default function Preferences() {
                         keyExtractor={(item) => item}
                         scrollEnabled={false}
                         onReorder={handleReorder}
-                        // onDragEnd={({ data }) => setDiningOrder(data)}
+                    // onDragEnd={({ data }) => setDiningOrder(data)}
                     />
                 </Center>
             </SectionView>
@@ -121,7 +122,7 @@ export default function Preferences() {
 
         const handleClose = () => setShowAllergens(false);
 
-        
+
 
         const UnderlayRight = ({ allergen }: { allergen: Allergen }) => {
             const { close } = useSwipeableItemParams<Allergen>();
@@ -131,13 +132,13 @@ export default function Preferences() {
                 setUserAllergens(userAllergens.filter((ua) => ua.name !== allergen.name));
                 close();
             }
-            
+
             return (
                 <View className="flex-1 bg-red-500 flex-row align-center h-fit justify-start text-center pr-5">
                     <Center className="w-[75px]">
                         <Button variant="link" className="w-full" onPress={deleteAllergen}>
-                            <ButtonIcon as={TrashIcon} size="lg" className="text-white"/>
-                        </Button> 
+                            <ButtonIcon as={TrashIcon} size="lg" className="text-white" />
+                        </Button>
                     </Center>
                 </View>
             );

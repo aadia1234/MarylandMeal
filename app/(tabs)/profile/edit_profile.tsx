@@ -30,6 +30,7 @@ import { updateGoalMacros, updateName, updateWeight } from "@/api/updateSession"
 import Macros from "@/interfaces/Macros";
 import { Input, InputField } from "@/components/ui/input";
 import { UserContext } from "./user_provider";
+import colors from "tailwindcss/colors";
 
 export default function EditProfile() {
     const { user } = useContext(UserContext);
@@ -50,12 +51,14 @@ export default function EditProfile() {
                             isDisabled={false}
                             isInvalid={false}
                             isReadOnly={false}
-                            className="w-1/2"
+                            className="w-1/2 border-0"
                         >
                             <InputField
                                 value={firstName}
-                                placeholder="Enter Text here..."
+                                placeholder="Enter your first name..."
                                 onChangeText={(text) => setFirstName(text)}
+                                selectionColor="#E11932"
+
                             />
                         </Input>
                     </HStack>
@@ -68,12 +71,13 @@ export default function EditProfile() {
                             isDisabled={false}
                             isInvalid={false}
                             isReadOnly={false}
-                            className="w-1/2"
+                            className="w-1/2 border-0"
                         >
                             <InputField 
                                 value={lastName}
-                                placeholder="Enter Text here..."
-                                onChangeText={(text) => setLastName(text)}    
+                                placeholder="Enter your last name..."
+                                onChangeText={(text) => setLastName(text)}
+                                selectionColor="#E11932"  
                             />
                         </Input>
                     </HStack>

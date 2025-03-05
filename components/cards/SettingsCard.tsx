@@ -19,7 +19,7 @@ export default function SettingsCard({ icon, subText, isLast }: { icon: LucideIc
                         <Icon as={icon} className="stroke-[#747474]" />
                         <Text size="lg">{subText}</Text>
                     </HStack>
-                    <Icon as={ChevronRightIcon} className="stroke-primary-200" />
+                    <Icon as={ChevronRightIcon} className="stroke-primary-100" />
                 </HStack>
             </Pressable>
             {!isLast && <Divider className="my-1" />}

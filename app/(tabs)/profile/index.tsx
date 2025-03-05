@@ -44,7 +44,7 @@ const ProfileView = () => {
       <Card variant="elevated" className="w-full rounded-xl">
         <EditProfile showModal={showModal} setShowModal={setShowModal} />
         <VStack space="lg" className="items-center">
-          <Avatar size="2xl" className="bg-primary-600">
+          <Avatar size="2xl" className="bg-primary-500">
             <AvatarImage
               alt="Profile Image"
               height={100}
@@ -100,14 +100,14 @@ export default function Profile() {
       >
         <VStack className="h-full w-full mb-16 px-5" space="2xl">
           <HStack className="w-full justify-between items-center">
-            <Heading size="3xl" className="text-primary-600">Hi, {user?.name}</Heading>
+            <Heading size="3xl" className="text-primary-500">Hi, {user?.name}</Heading>
             <Button
               variant="link"
               action="primary"
               className="gap-3 relative rounded-lg"
               onPress={async () => { await logout(); router.replace("/auth"); }}
             >
-              <ButtonIcon as={LogOutIcon} />
+              <ButtonIcon as={LogOutIcon} className="text-primary-500" />
             </Button>
           </HStack>
           <ProfileView />

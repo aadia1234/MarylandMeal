@@ -40,7 +40,7 @@ export default function AllergenView({ name, symbol, color, size, className }: A
                 <Text size="sm" className="absolute font-bold text-white">{symbol}</Text>
             </Center>
             :
-            <HStack space="md" className={"w-fit items-center" + className}>
+            <HStack space="md" className={"w-fit items-center " + className}>
                 <Center>
                     <Icon
                         as={allergenIcon(symbol, color)}

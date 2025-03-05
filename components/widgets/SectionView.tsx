@@ -16,7 +16,7 @@ export default function SectionView({ title, children, icon, action }: { title: 
                     {
                         icon && action &&
                         <Button variant="link" size="md" onPress={action} className="p-0 h-fit m-0">
-                            <ButtonIcon as={icon} />
+                            <ButtonIcon as={icon} className="text-primary-500" />
                         </Button>
                     }
                 </HStack>

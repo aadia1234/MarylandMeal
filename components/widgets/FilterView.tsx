@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form-control"
 import { VStack } from "@/components/ui/vstack"
 import { CheckIcon } from "@/components/ui/icon"
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react"
 import { HStack } from "../ui/hstack"
 import { Button, ButtonIcon, ButtonText } from "../ui/button"
 import { FilterIcon, HelpCircleIcon } from "lucide-react-native"
@@ -29,6 +29,7 @@ import {
   ActionsheetBackdrop,
 } from "@/components/ui/actionsheet"
 import { allergens } from "@/interfaces/Allergen"
+import { FilterContext } from "@/app/(tabs)/menu"
 
 
 
@@ -70,13 +71,15 @@ const CheckboxFilterView = ({ title, options, values, setValues }: { title: stri
 }
 
 
-export default function FilterView({ menu, setMenu }: { menu: Meal[], setMenu: Dispatch<SetStateAction<Meal[]>> }) {
+export default function FilterView() {
     
     const diningHalls = ["Yahentamitsi", "South Campus", "251 North"];
     const [selectedDiningHalls, setSelectedDiningHalls] = useState(diningHalls);
     const [selectedAllergens, setSelectedAllergens] = useState([]);
     const [showActionsheet, setShowActionsheet] = useState(false);
     const handleClose = () => setShowActionsheet(false);
+
+    const { setDiningHalls, setAllergens } = useContext(FilterContext);
 
     const clearFilters = () => {
         setSelectedDiningHalls([]);
@@ -92,29 +95,15 @@ export default function FilterView({ menu, setMenu }: { menu: Meal[], setMenu: D
     }
 
     useEffect(() => {
-        const filteredMenu = menu.filter((item) => {
-            return selectedDiningHalls.some((hall) => {
-                switch (hall) {
-                    case "Yahentamitsi":
-                        return item.dh_y;
-                    case "South Campus":
-                        return item.dh_south;
-                    case "251 North":
-                        return item.dh_251;
-                    default:
-                        return false;
-                }
-            }) && selectedAllergens.every((allergen) => {
-                return item.menu_item.allergens?.includes(allergen);
-            });
-        });
-        setMenu(filteredMenu);
+        setDiningHalls(selectedDiningHalls);
+        setAllergens(selectedAllergens);
+        console.log("CHANGED" + selectedDiningHalls)
     }, [selectedDiningHalls, selectedAllergens]);
 
     return (
         <>
             <Button variant="link" size="md" className="rounded-md" onPress={() => setShowActionsheet(true)}>
-                <ButtonIcon as={FilterIcon} />
+                <ButtonIcon as={FilterIcon} className="text-primary-500" />
             </Button>
             <Actionsheet isOpen={showActionsheet} onClose={handleClose} snapPoints={[50]}>
                 <ActionsheetBackdrop />
@@ -122,8 +111,8 @@ export default function FilterView({ menu, setMenu }: { menu: Meal[], setMenu: D
                     <ActionsheetDragIndicatorWrapper>
                         <ActionsheetDragIndicator />
                     </ActionsheetDragIndicatorWrapper>
-                    <FormControl className="w-full h-full p-5">
-                        <ScrollView className="w-full h-full z-0">
+                    <FormControl className="w-full h-full p-5 pb-safe">
+                        <ScrollView showsVerticalScrollIndicator={false} className="w-full h-full z-0">
                             <HelpButton title="Filters" message="lorem" className="h-fit z-10 absolute right-0 top-0" />
                             <VStack space="4xl">
                                 <CheckboxFilterView title="Dining Halls" options={diningHalls} values={selectedDiningHalls} setValues={setSelectedDiningHalls} />
