@@ -89,7 +89,7 @@ export default function Goals() {
         const [selectedGrams, setSelectedGrams] = useState(0);
         const [selectedCalories, setSelectedCalories] = useState(0);
 
-        const MacroRow = ({ macro, amount }: { macro: string, amount: number }) => {
+        const MacroRow = ({ macro, amount }: { macro: string, amount?: number }) => {
             const title = macro[0].toUpperCase() + macro.substring(1, macro.length) + " Goal";
             const grams = Array.from({ length: 201 }, (_, i) => i * 5);
             const calories = Array.from({ length: 201 }, (_, i) => i * 25)
@@ -141,13 +141,13 @@ export default function Goals() {
         return (
             <SectionView title="Daily Macro Goals" icon={SparklesIcon} action={() => { }}>
                 <Center className="w-full h-fit">
-                    <MacroRow macro="calorie" amount={macros.calories} />
+                    <MacroRow macro="calorie" amount={user?.goalMacros.calories} />
                     <Divider />
-                    <MacroRow macro="protein" amount={macros.protein} />
+                    <MacroRow macro="protein" amount={user?.goalMacros.protein} />
                     <Divider />
-                    <MacroRow macro="carbs" amount={macros.carbs} />
+                    <MacroRow macro="carbs" amount={user?.goalMacros.carbs} />
                     <Divider />
-                    <MacroRow macro="fats" amount={macros.fats} />
+                    <MacroRow macro="fats" amount={user?.goalMacros.fats} />
                 </Center>
             </SectionView>
         );

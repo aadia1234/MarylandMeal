@@ -1,36 +1,15 @@
 import SectionView from "@/components/widgets/SectionView";
 import SettingsLayout from "@/components/layouts/SettingsLayout";
-import { Accordion, AccordionContent, AccordionHeader, AccordionIcon, AccordionItem, AccordionTitleText, AccordionTrigger } from "@/components/ui/accordion";
 import { Text } from "@/components/ui/text";
-import { CheckIcon, ChevronDownIcon, GoalIcon, SparkleIcon, SparklesIcon, UserPenIcon } from "lucide-react-native";
-import { Picker } from '@react-native-picker/picker';
-import { useContext, useEffect, useState } from "react";
-import { View } from "@/components/ui/view";
+import { CheckIcon, UserPenIcon } from "lucide-react-native";
+import { useContext, useState } from "react";
 import { HStack } from "@/components/ui/hstack";
-import { Button, ButtonText } from "@/components/ui/button";
-import { VStack } from "@/components/ui/vstack";
 import { Center } from "@/components/ui/center";
 import { Divider } from "@/components/ui/divider";
-import {
-    Select,
-    SelectTrigger,
-    SelectInput,
-    SelectIcon,
-    SelectPortal,
-    SelectBackdrop,
-    SelectContent,
-    SelectDragIndicatorWrapper,
-    SelectDragIndicator,
-    SelectItem,
-    SelectScrollView,
-} from "@/components/ui/select"
-import { User } from "@/interfaces/User";
-import { getUser } from "@/api/userSession";
-import { updateGoalMacros, updateName, updateWeight } from "@/api/updateSession";
-import Macros from "@/interfaces/Macros";
+import { updateName } from "@/api/updateSession";
 import { Input, InputField } from "@/components/ui/input";
 import { UserContext } from "./user_provider";
-import colors from "tailwindcss/colors";
+
 
 export default function EditProfile() {
     const { user } = useContext(UserContext);
