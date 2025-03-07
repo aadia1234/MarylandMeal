@@ -1,6 +1,6 @@
 import React from "react";
 import { HStack } from "@/components/ui/hstack";
-import { allergens } from "@/interfaces/Allergen";
+import { allergens } from "@/types/Allergen";
 import AllergenView from "./AllergenView";
 
 export default function FoodAllergenView({ data }: { data?: string[] }) {

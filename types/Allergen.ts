@@ -1,10 +1,10 @@
 
 
-export default interface Allergen {
-    name: string;
-    symbol: string;
-    color: string
-}
+export type Allergen = {
+    name: string,
+    symbol: string,
+    color: string,
+};
 
 export const allergens: Allergen[] = [
   { name: "Dairy", symbol: "D", color: "#1f4e79" },

@@ -22,13 +22,13 @@ import HelpButton from "./HelpButton"
 import { ScrollView } from "react-native"
 import { Meal } from "@/interfaces/Meal"
 import {
-  Actionsheet,
-  ActionsheetContent,
-  ActionsheetDragIndicator,
-  ActionsheetDragIndicatorWrapper,
-  ActionsheetBackdrop,
+    Actionsheet,
+    ActionsheetContent,
+    ActionsheetDragIndicator,
+    ActionsheetDragIndicatorWrapper,
+    ActionsheetBackdrop,
 } from "@/components/ui/actionsheet"
-import { allergens } from "@/interfaces/Allergen"
+import { allergens } from "@/types/Allergen"
 import { FilterContext } from "@/app/(tabs)/menu"
 
 
@@ -49,9 +49,9 @@ const CheckboxFilterView = ({ title, options, values, setValues }: { title: stri
                 }}
             >
                 <VStack space="sm">
-                    {options.map((option) => {
+                    {options.map((option, index) => {
                         return (
-                            <Checkbox size="sm" value={option}>
+                            <Checkbox key={index} size="sm" value={option}>
                                 <CheckboxIndicator className="mr-2">
                                     <CheckboxIcon as={CheckIcon} />
                                 </CheckboxIndicator>
@@ -72,7 +72,7 @@ const CheckboxFilterView = ({ title, options, values, setValues }: { title: stri
 
 
 export default function FilterView() {
-    
+
     const diningHalls = ["Yahentamitsi", "South Campus", "251 North"];
     const [selectedDiningHalls, setSelectedDiningHalls] = useState(diningHalls);
     const [selectedAllergens, setSelectedAllergens] = useState([]);
@@ -112,8 +112,8 @@ export default function FilterView() {
                         <ActionsheetDragIndicator />
                     </ActionsheetDragIndicatorWrapper>
                     <FormControl className="w-full h-full px-5 pt-5">
+                        <HelpButton title="Select Filters" message="Filter menu items by selecting specific dining halls or excluding meals with certain allergens to customize your dining experience. Update Preferences saves your filter selections to your profile as defaults across the app, Reset Filters reverts to your saved profile preferences, and Clear Filters removes all active filters from the Menu page to display all available meals at once, helping you find options that match your dietary needs quickly and efficiently." className="h-fit z-10 absolute right-5 top-5" />
                         <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="pb-safe" className="w-full h-full z-0">
-                            <HelpButton title="Filters" message="lorem" className="h-fit z-10 absolute right-0 top-0" />
                             <VStack space="4xl">
                                 <CheckboxFilterView title="Dining Halls" options={diningHalls} values={selectedDiningHalls} setValues={setSelectedDiningHalls} />
                                 <CheckboxFilterView title="Allergens" options={allergens.map((allergen) => allergen.name)} values={selectedAllergens} setValues={setSelectedAllergens} />

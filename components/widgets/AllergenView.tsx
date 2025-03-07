@@ -1,4 +1,4 @@
-import Allergen from "@/interfaces/Allergen";
+import Allergen from "@/types/Allergen";
 import { HStack } from "../ui/hstack";
 import { createIcon, Icon } from "../ui/icon";
 import { Text } from "../ui/text";

@@ -14,7 +14,7 @@ import { getMenu, resetMenu } from "@/api/menuSession";
 import { HStack } from "@/components/ui/hstack";
 import FilterView from "@/components/widgets/FilterView";
 import HelpButton from "@/components/widgets/HelpButton";
-import Allergen from "@/interfaces/Allergen";
+import { Allergen } from "@/types/Allergen";
 
 const HeaderView = ({ setSearchText }: { setSearchText: Dispatch<SetStateAction<string>> }) => {
 
@@ -25,7 +25,7 @@ const HeaderView = ({ setSearchText }: { setSearchText: Dispatch<SetStateAction<
           Dining Hall Menu
         </Heading>
         <HStack space="2xl">
-          <HelpButton title="Legend" message="Lorem Ipsum" />
+          <HelpButton title="Menu Legend" message="When browsing the Maryland Meals app, you can easily view allergens and menu items displayed in an intuitive layout designed for quick scanning. Each food item shows essential information including allergen indicators and dietary symbols, helping you identify suitable options at a glance. For a more comprehensive experience, simply tap on any food item to access detailed nutritional information, ingredient lists, and complete allergen details. From this expanded view, you can also log meals to your food diary, track your dietary patterns, or save favorites for quick access later. This seamless interaction makes it simple to make informed dining decisions while managing your dietary preferences and restrictions across all campus dining halls." />
           <FilterView />
         </HStack>
       </HStack>
@@ -46,7 +46,7 @@ const HeaderView = ({ setSearchText }: { setSearchText: Dispatch<SetStateAction<
 
 type FilterContextType = { setDiningHalls: Dispatch<SetStateAction<string[]>>, setAllergens: Dispatch<SetStateAction<Allergen[]>> }
 
-export const FilterContext = createContext <FilterContextType>({
+export const FilterContext = createContext<FilterContextType>({
   setDiningHalls: function (value: SetStateAction<string[]>): void {
     throw new Error("Function not implemented.");
   },

@@ -1,8 +1,7 @@
-import UserModel from "../../models/UserModel";
-import FoodLogModel from "../../models/FoodLogModel";
 import express, { Request, Response, NextFunction } from "express";
 import { User } from "@/interfaces/User";
 import bcrypt from "bcryptjs";
+import { getFoodLog } from "./log";
 
 const update = express.Router();
 
@@ -51,6 +50,30 @@ update.patch("/macros", async (req, res) => {
   const { macros } = req.body;
 
   user.goalMacros = macros;
+  user.save();
+
+  const log = await getFoodLog(user, new Date());
+  log.target = macros;
+  log.save();
+
+  res.send({ message: "Success" });
+});
+
+update.patch("/allergens", async (req, res) => {
+  const user: User = res.locals.user;
+  const { allergenNames } = req.body;
+
+  user.allergens = allergenNames;
+  user.save();
+
+  res.send({ message: "Success" });
+});
+
+update.patch("/diningHallPreferences", async (req, res) => {
+  const user: User = res.locals.user;
+  const { diningHallPreferences } = req.body;
+
+  user.diningHallPreferences = diningHallPreferences;
   user.save();
 
   res.send({ message: "Success" });

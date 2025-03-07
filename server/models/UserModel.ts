@@ -2,6 +2,7 @@ import { User } from "@/interfaces/User";
 import { ObjectId } from "mongodb";
 import { Schema, model } from "mongoose";
 import MacrosSchema from "./MacrosSchema";
+import { Allergen } from "@/types/Allergen";
 
 const UserSchema = new Schema<User>(
   {
@@ -38,6 +39,14 @@ const UserSchema = new Schema<User>(
       type: MacrosSchema,
       required: false,
     },
+    allergens: {
+      type: [String],
+      required: false,
+    },
+    diningHallPreferences: {
+      type: [String],
+      required: false,
+    }
   },
   {
     timestamps: true,

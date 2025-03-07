@@ -17,7 +17,7 @@ export async function getFoodLog(date: Date) {
 
     return Promise.all(logData);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return [];
   }
 }
@@ -33,11 +33,6 @@ export async function getMacros(date: Date) {
     return { target, consumed };
   } catch (error) {
     console.log(error);
-    console.log(
-      process.env.EXPO_PUBLIC_BASE_URL! +
-        process.env.EXPO_PUBLIC_USER_URL! +
-        process.env.EXPO_PUBLIC_LOG_URL!
-    );
     return null;
   }
 }
@@ -53,4 +48,3 @@ export async function log(meal: Meal, quantity: number) {
     console.log(error);
   }
 }
-

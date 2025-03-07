@@ -130,7 +130,7 @@ export default function Dashboard() {
   };
 
   useEffect(() => { getFoodLog(date).then((log) => setLog(log)) }, [date, isFocused]);
-  useEffect(() => { getMacros(date).then((macros) => setMacros(macros)) }, [date, log]);
+  useEffect(() => { getMacros(date).then((macros) => setMacros(macros)) }, [date, log, isFocused]);
 
 
 
@@ -153,6 +153,7 @@ export default function Dashboard() {
             {/* needs to be fixed! - if macro exceeds the target then it glitches! also animation is glitchy!*/}
             {macros && <MacroProgressView target={macros.target} consumed={macros.consumed} />}
             <VStack className="mt-10">
+              {/* bug - meals not showing */}
               <MealLog title={"Meals logged"} log={log} />
               <MealLog title={"Meal Plan"} log={[]} />
             </VStack>

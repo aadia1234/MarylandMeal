@@ -4,3 +4,11 @@ export default interface Macros {
   protein: number;
   carbs: number;
 }
+
+
+export const emptyMacros = {
+  calories: 0,
+  fats: 0,
+  protein: 0,
+  carbs: 0,
+};

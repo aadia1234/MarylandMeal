@@ -1,8 +1,6 @@
 import UserModel from "../../models/UserModel";
-import FoodLogModel from "../../models/FoodLogModel";
 import express, { Request, Response, NextFunction } from "express";
 import { User } from "@/interfaces/User";
-import bcrypt from "bcryptjs";
 import log from "./log";
 import update from "./update";
 

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Meal } from "@/interfaces/Meal";
-import Allergen from "@/interfaces/Allergen";
+import { Allergen } from "@/types/Allergen";
 
 let menu: Meal[] = [];
 let page = 0;
@@ -20,16 +20,14 @@ export async function getMenu({
 }) {
   try {
     page++;
-    const res = await session.get(
-      process.env.EXPO_PUBLIC_DAILYITEMS_URL!, {
-        params: {
-          date: "2025-01-28",
-          page: page,
-          // dining_halls: diningHalls.join(","),
-          // allergens: allergens.map((a) => a.id).join(","),
-        }
-      }
-    );
+    const res = await session.get(process.env.EXPO_PUBLIC_DAILYITEMS_URL!, {
+      params: {
+        date: "2025-01-28",
+        page: page,
+        // dining_halls: diningHalls.join(","),
+        // allergens: allergens.map((a) => a.id).join(","),
+      },
+    });
     menu.push(...res.data.results);
     return menu;
   } catch (error) {
@@ -54,7 +52,6 @@ export async function getFood(id: number) {
     return null;
   }
 }
-
 
 export function resetMenu() {
   menu = [];

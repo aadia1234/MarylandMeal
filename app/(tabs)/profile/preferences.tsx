@@ -3,7 +3,7 @@ import SettingsLayout from "@/components/layouts/SettingsLayout";
 import { Text } from "@/components/ui/text";
 import { CircleHelpIcon, Edit2Icon, HeartIcon, MenuIcon, PlusIcon, TrashIcon } from "lucide-react-native";
 import { View } from "@/components/ui/view";
-import { memo, useCallback, useContext, useState } from "react";
+import { memo, useCallback, useContext, useEffect, useState } from "react";
 import { HStack } from "@/components/ui/hstack";
 import { Center } from "@/components/ui/center";
 import DraggableFlatList, { ScaleDecorator, RenderItemParams } from "react-native-draggable-flatlist"
@@ -32,11 +32,11 @@ import {
 import { ScrollView } from "@/components/ui/scroll-view";
 import { Circle, Path } from "react-native-svg";
 import { VStack } from "@/components/ui/vstack";
-import { UserContext } from "./user_provider";
+import { UserContext } from "../../../components/navigation/UserProvider";
 import { Heading } from "@/components/ui/heading";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { FlatList, ListRenderItem, ListRenderItemInfo, TouchableOpacity } from "react-native";
-import Allergen, { allergens } from "@/interfaces/Allergen";
+import { Allergen, allergens } from "@/types/Allergen";
 import ReorderableList, {
     ReorderableListReorderEvent,
     reorderItems,
@@ -44,6 +44,7 @@ import ReorderableList, {
 } from 'react-native-reorderable-list';
 import { Pressable } from "@/components/ui/pressable";
 import AllergenView from "@/components/widgets/AllergenView";
+import { updateAllergens, updateDiningHallPreferences } from "@/api/updateSession";
 
 
 export default function Preferences() {
@@ -63,7 +64,11 @@ export default function Preferences() {
     // When using NestableDraggableFlatLists, all React Native warnings about nested list performance will be disabled.
     const DiningHallsView = () => {
         const diningHalls = ["251 North", "Yahentamitsi", "South Campus"];
-        const [diningOrder, setDiningOrder] = useState(diningHalls);
+        const [diningOrder, setDiningOrder] = useState(user.diningHallPreferences);
+
+        useEffect(() => {
+            updateDiningHallPreferences(diningOrder);
+        }, [diningOrder]);
 
         const Card = memo(({ item }: { item: string }) => {
             const drag = useReorderableDrag();
@@ -109,7 +114,7 @@ export default function Preferences() {
 
         return (
             <SectionView title="Food Preferences" icon={Edit2Icon} action={() => { }}>
-                <Text>Hello World!</Text>
+                <></>
             </SectionView>
         );
 
@@ -117,10 +122,15 @@ export default function Preferences() {
 
 
     const AllergensView = () => {
-        const [userAllergens, setUserAllergens] = useState<Allergen[]>([]);
+        const t = user.allergens?.map((allergen) => allergens.find((a) => a.name === allergen)).filter((item): item is Allergen => item !== undefined) || [];
+        const [userAllergens, setUserAllergens] = useState<Allergen[]>(t);
         const [showAllergens, setShowAllergens] = useState(false);
 
         const handleClose = () => setShowAllergens(false);
+
+        useEffect(() => {
+            updateAllergens(userAllergens);
+        }, [userAllergens]);
 
 
 
@@ -223,9 +233,7 @@ export default function Preferences() {
                     </ModalHeader>
                     <ModalBody>
                         <Text size="sm" className="text-typography-500">
-                            Elevate user interactions with our versatile modals. Seamlessly
-                            integrate notifications, forms, and media displays. Make an impact
-                            effortlessly.
+                            Elevate your dining experience by customizing the order of dining halls in your preferences. This ranking directly determines which meal suggestions appear first in your recommendations, with options from your top-ranked halls receiving priority placement. By ordering halls according to your preferences, Maryland Meals optimizes your feed to show the most relevant options from your favorite locations first.
                         </Text>
                     </ModalBody>
                     <ModalFooter>

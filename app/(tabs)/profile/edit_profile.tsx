@@ -8,7 +8,7 @@ import { Center } from "@/components/ui/center";
 import { Divider } from "@/components/ui/divider";
 import { updateName } from "@/api/updateSession";
 import { Input, InputField } from "@/components/ui/input";
-import { UserContext } from "./user_provider";
+import { UserContext } from "../../../components/navigation/UserProvider";
 
 
 export default function EditProfile() {
@@ -16,8 +16,8 @@ export default function EditProfile() {
     const goalsDescription = "Set and customize weight and macro goals for your fitness journey.";
 
     const NamesView = () => {
-        const [firstName, setFirstName] = useState(user?.name.split(" ")[0]);
-        const [lastName, setLastName] = useState(user?.name.split(" ")[1]);
+        const [firstName, setFirstName] = useState(user.name.split(" ")[0]);
+        const [lastName, setLastName] = useState(user.name.split(" ")[1]);
 
         return (
             <SectionView title="Edit Name" icon={CheckIcon} action={() => { updateName(firstName + " " + lastName); }}>
@@ -52,11 +52,11 @@ export default function EditProfile() {
                             isReadOnly={false}
                             className="w-1/2 border-0"
                         >
-                            <InputField 
+                            <InputField
                                 value={lastName}
                                 placeholder="Enter your last name..."
                                 onChangeText={(text) => setLastName(text)}
-                                selectionColor="#E11932"  
+                                selectionColor="#E11932"
                             />
                         </Input>
                     </HStack>

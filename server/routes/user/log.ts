@@ -1,21 +1,14 @@
-import UserModel from "../../models/UserModel";
+
 import FoodLogModel from "../../models/FoodLogModel";
-import express, { Request, Response, NextFunction } from "express";
+import express from "express";
 import { User } from "@/interfaces/User";
-import update from "./update";
-import bcrypt from "bcryptjs";
 
 const log = express.Router();
 
 const initNewFoodLog = async (user: User) => {
   const log = new FoodLogModel({
     userId: user.id,
-    target: {
-      calories: 100,
-      fats: 200,
-      protein: 300,
-      carbs: 400,
-    },
+    target: user.goalMacros,
   });
   await log.save();
 
@@ -25,7 +18,7 @@ const initNewFoodLog = async (user: User) => {
   return log;
 };
 
-const getFoodLog = async (user: User, date: Date) => {
+export const getFoodLog = async (user: User, date: Date) => {
   const startOfDay = new Date(
     date.getFullYear(),
     date.getMonth(),

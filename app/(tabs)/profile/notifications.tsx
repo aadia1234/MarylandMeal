@@ -8,7 +8,7 @@ import { Switch } from "@/components/ui/switch";
 import colors from "tailwindcss/colors"
 import { VStack } from "@/components/ui/vstack";
 import { useContext } from "react";
-import { UserContext } from "./user_provider";
+import { UserContext } from "../../../components/navigation/UserProvider";
 
 export default function Notifications() {
     const { user, setUser } = useContext(UserContext);

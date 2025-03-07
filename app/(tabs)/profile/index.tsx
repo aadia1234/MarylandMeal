@@ -30,7 +30,7 @@ import LoadingSpinner from "@/components/widgets/LoadingSpinner";
 import { BellIcon, ChevronRightIcon, GlobeIcon, GoalIcon, HeartIcon, LogOutIcon, PersonStandingIcon, StarIcon, UserPenIcon } from "lucide-react-native";
 import { Card } from "@/components/ui/card";
 import { getUser, logout } from "@/api/userSession";
-import { UserContext } from "./user_provider";
+import { UserContext } from "../../../components/navigation/UserProvider";
 import { useIsFocused } from "@react-navigation/native";
 
 
@@ -93,14 +93,14 @@ export default function Profile() {
   useEffect(() => { getUser().then((user) => { setUser(user); }) }, [isFocused]);
 
   return (
-    <ContentLayout data={user?._id}>
+    <ContentLayout data={user._id}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         className="h-fit w-full"
       >
         <VStack className="h-full w-full mb-16 px-5" space="2xl">
           <HStack className="w-full justify-between items-center">
-            <Heading size="3xl" className="text-primary-500">Hi, {user?.name}</Heading>
+            <Heading size="3xl" className="text-primary-500">Hi, {user.name}</Heading>
             <Button
               variant="link"
               action="primary"

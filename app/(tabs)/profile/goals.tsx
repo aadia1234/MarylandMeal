@@ -28,12 +28,12 @@ import { User } from "@/interfaces/User";
 import { getUser } from "@/api/userSession";
 import { updateGoalMacros, updateWeight } from "@/api/updateSession";
 import Macros from "@/interfaces/Macros";
-import { UserContext } from "./user_provider";
+import { UserContext } from "@/components/navigation/UserProvider";
 
 export default function Goals() {
     const { user, setUser } = useContext(UserContext);
     const goalsDescription = "Set and customize weight and macro goals for your fitness journey.";
-    const macros = user?.goalMacros;
+    const macros = user.goalMacros;
 
 
     const WeightGoalsView = () => {
@@ -70,9 +70,9 @@ export default function Goals() {
         return (
             <SectionView title="Weight Goals" icon={SparklesIcon} action={() => { }}>
                 <Center className="w-full h-fit">
-                    <WeightRow title="Current Weight" weight={user?.currentWeight} />
+                    <WeightRow title="Current Weight" weight={user.currentWeight} />
                     <Divider />
-                    <WeightRow title="Goal Weight" weight={user?.goalWeight} />
+                    <WeightRow title="Goal Weight" weight={user.goalWeight} />
                 </Center>
 
             </SectionView>
@@ -90,7 +90,7 @@ export default function Goals() {
 
             function updateMacro(amt: number) {
                 if (!macros) return;
-                
+
                 if (isCalories) {
                     macros.calories = amt;
                 } else if (macro === "protein") {
@@ -102,7 +102,6 @@ export default function Goals() {
                 }
 
                 console.log(macros);
-
                 updateGoalMacros(macros);
             }
 
@@ -136,13 +135,13 @@ export default function Goals() {
         return (
             <SectionView title="Daily Macro Goals" icon={SparklesIcon} action={() => { }}>
                 <Center className="w-full h-fit">
-                    <MacroRow macro="calorie" amount={user?.goalMacros.calories} />
+                    <MacroRow macro="calorie" amount={user.goalMacros.calories} />
                     <Divider />
-                    <MacroRow macro="protein" amount={user?.goalMacros.protein} />
+                    <MacroRow macro="protein" amount={user.goalMacros.protein} />
                     <Divider />
-                    <MacroRow macro="carbs" amount={user?.goalMacros.carbs} />
+                    <MacroRow macro="carbs" amount={user.goalMacros.carbs} />
                     <Divider />
-                    <MacroRow macro="fats" amount={user?.goalMacros.fats} />
+                    <MacroRow macro="fats" amount={user.goalMacros.fats} />
                 </Center>
             </SectionView>
         );
