@@ -111,8 +111,8 @@ export default function FilterView() {
                     <ActionsheetDragIndicatorWrapper>
                         <ActionsheetDragIndicator />
                     </ActionsheetDragIndicatorWrapper>
-                    <FormControl className="w-full h-full p-5 pb-safe">
-                        <ScrollView showsVerticalScrollIndicator={false} className="w-full h-full z-0">
+                    <FormControl className="w-full h-full px-5 pt-5">
+                        <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="pb-safe" className="w-full h-full z-0">
                             <HelpButton title="Filters" message="lorem" className="h-fit z-10 absolute right-0 top-0" />
                             <VStack space="4xl">
                                 <CheckboxFilterView title="Dining Halls" options={diningHalls} values={selectedDiningHalls} setValues={setSelectedDiningHalls} />
