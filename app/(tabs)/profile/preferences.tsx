@@ -165,6 +165,7 @@ export default function Preferences() {
                             keyExtractor={(allergen) => allergen.name}
                             data={userAllergens}
                             renderItem={renderItem}
+                            scrollEnabled={false}
                         />
                     </VStack>
                 </SectionView>

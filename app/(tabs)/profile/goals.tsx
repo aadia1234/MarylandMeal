@@ -31,14 +31,9 @@ import Macros from "@/interfaces/Macros";
 import { UserContext } from "./user_provider";
 
 export default function Goals() {
-  const { user, setUser } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const goalsDescription = "Set and customize weight and macro goals for your fitness journey.";
-    const [macros, setMacros] = useState<Macros>({
-        calories: 0,
-        fats: 0,
-        protein: 0,
-        carbs: 0
-    });
+    const macros = user?.goalMacros;
 
 
     const WeightGoalsView = () => {
@@ -86,8 +81,6 @@ export default function Goals() {
     }
 
     const MacroGoals = () => {
-        const [selectedGrams, setSelectedGrams] = useState(0);
-        const [selectedCalories, setSelectedCalories] = useState(0);
 
         const MacroRow = ({ macro, amount }: { macro: string, amount?: number }) => {
             const title = macro[0].toUpperCase() + macro.substring(1, macro.length) + " Goal";
@@ -96,6 +89,8 @@ export default function Goals() {
             const isCalories = macro === "calorie";
 
             function updateMacro(amt: number) {
+                if (!macros) return;
+                
                 if (isCalories) {
                     macros.calories = amt;
                 } else if (macro === "protein") {
