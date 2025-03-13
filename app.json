@@ -16,7 +16,10 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.anonymous.MarylandMeal",
-      "appleTeamId": "95P6AMSZ3D"
+      "appleTeamId": "95P6AMSZ3D",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -35,7 +38,7 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#E11930",
+          "backgroundColor": "#E11932",
           "image": "./assets/images/MarylandMeal.png",
           "imageWidth": 200
         }

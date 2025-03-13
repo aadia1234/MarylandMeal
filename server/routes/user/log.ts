@@ -53,6 +53,7 @@ log.post("/", async (req, res) => {
     const id = meal.menu_item.id;
     const foodLog = await getFoodLog(user, date);
     const consumed = foodLog.consumed;
+    console.log(foodLog);
     const totalConsumed = {
       calories: meal.menu_item.calories * quantity + consumed.calories,
       protein: meal.menu_item.protein * quantity + consumed.protein,
@@ -66,7 +67,8 @@ log.post("/", async (req, res) => {
 
     res.send({ message: "success" });
   } catch (error) {
-    res.sendStatus(401);
+    console.log(error);
+    res.status(401).send({ message: error });
   }
 });
 

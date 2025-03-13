@@ -9,7 +9,7 @@ import FoodAllergenView from "../widgets/FoodAllergenView";
 
 function FoodCard({ item, quantity }: { item: Meal, quantity?: number }) {
   const food = item.menu_item;
-  const allergens = item.menu_item.allergens;
+  const allergens = food.allergens;
 
 
   const onPress = () => {

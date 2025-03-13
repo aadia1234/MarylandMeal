@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Meal } from "@/interfaces/Meal";
 import { Allergen } from "@/types/Allergen";
 
@@ -31,7 +31,7 @@ export async function getMenu({
     menu.push(...res.data.results);
     return menu;
   } catch (error) {
-    console.log(error);
+    (error);
     return null;
   }
 }
@@ -43,12 +43,18 @@ export function getMenuItem(id: string) {
 export async function getFood(id: number) {
   try {
     const res = await session.get(
-      process.env.EXPO_PUBLIC_DAILYITEMS_URL! + "id=" + id
+      process.env.EXPO_PUBLIC_DAILYITEMS_URL!, {
+        params: {
+          date: "2025-01-28",
+          id: id
+        }
+      }
     );
 
     return res.data;
   } catch (error) {
-    console.log(error);
+    const err = error as AxiosError;
+    console.log(err.request);
     return null;
   }
 }

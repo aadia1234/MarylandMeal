@@ -169,7 +169,6 @@ const SignUpView = () => {
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input className="rounded-lg">
                   <InputField
-                    className="text-sm"
                     placeholder="Email"
                     type="text"
                     value={value}
@@ -177,6 +176,8 @@ const SignUpView = () => {
                     onBlur={onBlur}
                     onSubmitEditing={handleKeyPress}
                     returnKeyType="done"
+                    selectionColor="#E11932"
+                    className="text-md"
                   />
                 </Input>
               )}
@@ -211,7 +212,6 @@ const SignUpView = () => {
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input className="rounded-lg">
                   <InputField
-                    className="text-sm"
                     placeholder="Password"
                     value={value}
                     onChangeText={onChange}
@@ -219,6 +219,8 @@ const SignUpView = () => {
                     onSubmitEditing={handleKeyPress}
                     returnKeyType="done"
                     type={showPassword ? "text" : "password"}
+                    selectionColor="#E11932"
+                    className="text-md"
                   />
                   <InputSlot onPress={handleState} className="pr-3">
                     <InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />
@@ -257,13 +259,14 @@ const SignUpView = () => {
                 <Input className="rounded-lg">
                   <InputField
                     placeholder="Confirm Password"
-                    className="text-sm"
                     value={value}
                     onChangeText={onChange}
                     onBlur={onBlur}
                     onSubmitEditing={handleKeyPress}
                     returnKeyType="done"
                     type={showConfirmPassword ? "text" : "password"}
+                    selectionColor="#E11932"
+                    className="text-md"
                   />
 
                   <InputSlot onPress={handleConfirmPwState} className="pr-3">
@@ -323,14 +326,9 @@ const SignUpView = () => {
         </VStack>
         <HStack className="self-center" space="sm">
           <Text size="md">Already have an account?</Text>
-          <Link href="/auth/signin">
-            <LinkText
-              className="font-medium text-primary-700 group-hover/link:text-primary-600 group-hover/pressed:text-primary-700"
-              size="md"
-            >
-              Login
-            </LinkText>
-          </Link>
+          <Button variant="link" className="h-6" onPress={() => router.replace("/auth/login")}>
+            <ButtonText>Log in</ButtonText>
+          </Button>
         </HStack>
       </VStack>
     </VStack>

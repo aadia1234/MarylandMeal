@@ -1,4 +1,4 @@
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 import { Button, ButtonText } from "@/components/ui/button";
 import { VStack } from "@/components/ui/vstack";
 import AuthLayout from "../../components/layouts/AuthLayout";
@@ -8,14 +8,7 @@ import { Heading } from "@/components/ui/heading";
 import { Center } from "@/components/ui/center";
 
 const SplashScreen = () => {
-
-  function login() {
-    router.push("/auth/login");
-  }
-
-  function signup() {
-    router.push("/auth/signup");
-  }
+  const router = useRouter();
 
   return (
     <VStack
@@ -36,10 +29,10 @@ const SplashScreen = () => {
         </Center>
       </HStack>
       <VStack className="w-full h-14 mt-10" space="lg">
-        <Button className="w-full h-full rounded-lg" onPress={login}>
+        <Button className="w-full h-full rounded-lg" onPress={() => router.navigate("/auth/login")}>
           <ButtonText size="lg" className="font-medium">Log in</ButtonText>
         </Button>
-        <Button className="w-full h-full rounded-lg" onPress={signup}>
+        <Button className="w-full h-full rounded-lg" onPress={() => router.navigate("/auth/signup")}>
           <ButtonText size="lg" className="font-medium">Sign Up</ButtonText>
         </Button>
       </VStack>

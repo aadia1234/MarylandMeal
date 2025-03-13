@@ -21,6 +21,12 @@ const FoodLogSchema = new Schema<FoodLog>(
     },
     consumed: {
       type: MacrosSchema,
+      default: {
+        calories: 0,
+        fats: 0,
+        protein: 0,
+        carbs: 0,
+      }
     },
     ids: {
       type: [

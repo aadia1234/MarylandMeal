@@ -2,6 +2,7 @@ import FoodLog from "@/interfaces/FoodLog";
 import { getFood } from "./menuSession";
 import { Meal } from "@/interfaces/Meal";
 import session from "./userSession";
+import { emptyMacros } from "@/interfaces/Macros";
 
 // fix async
 export async function getFoodLog(date: Date) {
@@ -17,7 +18,7 @@ export async function getFoodLog(date: Date) {
 
     return Promise.all(logData);
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     return [];
   }
 }
@@ -29,7 +30,7 @@ export async function getMacros(date: Date) {
       params: { date },
     });
     const log = res.data as FoodLog;
-    const [target, consumed] = [log.target, log.consumed];
+    const [target, consumed] = [log.target, log.consumed || emptyMacros];
     return { target, consumed };
   } catch (error) {
     console.log(error);

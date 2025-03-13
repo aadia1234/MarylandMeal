@@ -4,8 +4,7 @@ import { HStack } from "@/components/ui/hstack";
 import { VStack } from "@/components/ui/vstack";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
-import { LinkText } from "@/components/ui/link";
-import Link from "@unitools/link";
+import { Link, LinkText } from "@/components/ui/link";
 import {
   FormControl,
   FormControlError,
@@ -35,7 +34,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertTriangle } from "lucide-react-native";
 import { Pressable } from "@/components/ui/pressable";
-import { router } from "expo-router";
+import { router, useRouter } from "expo-router";
 import AuthLayout from "../../components/layouts/AuthLayout";
 import { login } from "@/api/authenticateSession";
 
@@ -54,6 +53,7 @@ const LoginView = () => {
     emailValid: true,
     passwordValid: true,
   });
+  const router = useRouter();
 
   const {
     control,
@@ -151,6 +151,8 @@ const LoginView = () => {
                     onBlur={onBlur}
                     onSubmitEditing={handleKeyPress}
                     returnKeyType="done"
+                    selectionColor="#E11932"
+                    className="text-md"
                   />
                 </Input>
               )}
@@ -195,6 +197,8 @@ const LoginView = () => {
                     onBlur={onBlur}
                     onSubmitEditing={handleKeyPress}
                     returnKeyType="done"
+                    selectionColor="#E11932"
+                    className="text-md"
                   />
                   <InputSlot onPress={handleState} className="pr-3">
                     <InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />
@@ -230,11 +234,6 @@ const LoginView = () => {
                 </Checkbox>
               )}
             />
-            <Link href="/auth/forgot-password">
-              <LinkText className="font-medium text-sm text-primary-700 group-hover/link:text-primary-600">
-                Forgot Password?
-              </LinkText>
-            </Link>
           </HStack>
         </VStack>
         <VStack className="w-full my-7 " space="lg">
@@ -255,14 +254,9 @@ const LoginView = () => {
         </VStack>
         <HStack className="self-center" space="sm">
           <Text size="md">Don't have an account?</Text>
-          <Link href="/auth/signup">
-            <LinkText
-              className="font-medium text-primary-700 group-hover/link:text-primary-600  group-hover/pressed:text-primary-700"
-              size="md"
-            >
-              Sign up
-            </LinkText>
-          </Link>
+          <Button variant="link" className="h-6" onPress={() => router.replace("/auth/signup")}>
+            <ButtonText>Sign up</ButtonText>
+          </Button>
         </HStack>
       </VStack>
     </VStack>
