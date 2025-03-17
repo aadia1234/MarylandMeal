@@ -23,6 +23,18 @@ export async function getFoodLog(date: Date) {
   }
 }
 
+export async function getMealPlan(context: string) {
+  try {
+    const res = await session.get(process.env.EXPO_PUBLIC_MEALPLAN_URL!, {
+      params: { context },
+    });
+    return res.data.plan;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
 // fix async
 export async function getMacros(date: Date) {
   try {

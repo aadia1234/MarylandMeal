@@ -95,9 +95,6 @@ const LoginView = () => {
     }
   };
 
-
-
-
   return (
     <VStack className="max-w-[440px] w-full" space="md">
       <VStack className="md:items-center" space="md">
@@ -237,14 +234,17 @@ const LoginView = () => {
           </HStack>
         </VStack>
         <VStack className="w-full my-7 " space="lg">
-          <Button className="w-full rounded-lg" onPress={handleSubmit(onSubmit)}>
+          <Button
+            className="w-full rounded-lg"
+            onPress={handleSubmit(onSubmit)}
+          >
             <ButtonText className="font-medium">Log in</ButtonText>
           </Button>
           <Button
             variant="outline"
             action="secondary"
             className="w-full gap-1 rounded-lg"
-            onPress={() => { }}
+            onPress={() => {}}
           >
             <ButtonText className="font-medium">
               Continue with Google
@@ -254,7 +254,11 @@ const LoginView = () => {
         </VStack>
         <HStack className="self-center" space="sm">
           <Text size="md">Don't have an account?</Text>
-          <Button variant="link" className="h-6" onPress={() => router.replace("/auth/signup")}>
+          <Button
+            variant="link"
+            className="h-6"
+            onPress={() => router.replace("/auth/signup")}
+          >
             <ButtonText>Sign up</ButtonText>
           </Button>
         </HStack>
