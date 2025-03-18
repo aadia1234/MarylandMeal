@@ -15,7 +15,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.marylandmeals.app",
+      "bundleIdentifier": "com.marylandmeals.iosApp",
       "appleTeamId": "95P6AMSZ3D",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
@@ -33,7 +33,7 @@
         "foregroundImage": "./assets/images/MarylandMeal.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.maryandmeals.app"
+      "package": "com.maryandmeals.androidApp"
     },
     "web": {
       "bundler": "metro",
