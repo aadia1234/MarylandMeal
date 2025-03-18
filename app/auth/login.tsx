@@ -37,6 +37,7 @@ import { Pressable } from "@/components/ui/pressable";
 import { router, useRouter } from "expo-router";
 import AuthLayout from "../../components/layouts/AuthLayout";
 import { login } from "@/api/authenticateSession";
+import { Image } from "@/components/ui/image";
 
 const loginSchema = z.object({
   email: z.string().min(1, "Email is required").email(),
@@ -99,27 +100,31 @@ const LoginView = () => {
 
 
   return (
-    <VStack className="max-w-[440px] w-full" space="md">
-      <VStack className="md:items-center" space="md">
-        <Pressable
-          onPress={() => {
-            router.back();
-          }}
-        >
+    <VStack className="max-w-[440px] w-full h-full" space="md">
+      <HStack className="items-center justify-between w-full">
+        <Pressable onPress={() => { router.back(); }} >
           <Icon
             as={ArrowLeftIcon}
-            className="md:hidden text-background-800"
+            className="md:hidden stroke-background-800"
             size="xl"
           />
         </Pressable>
-        <VStack>
-          <Heading className="md:text-center" size="3xl">
-            Log in
-          </Heading>
-          <Text>Login to start using MarylandMeals</Text>
+        <Heading size="xl" numberOfLines={1} className="max-w-[80%]">Login</Heading>
+        <Icon
+          as={undefined}
+          size="xl"
+        />
+      </HStack>
+      <VStack className="w-full h-fit">
+        <VStack className="items-center justify-center my-10" space="md">
+          <Image
+            size="xl"
+            source={require("../../assets/images/MarylandMeal.png")}
+            alt="MarylandMeals"
+            className="rounded-3xl"
+          />
+          <Heading size="3xl" numberOfLines={1} className="text-primary-500">MarylandMeals</Heading>
         </VStack>
-      </VStack>
-      <VStack className="w-full">
         <VStack space="xl" className="w-full">
           <FormControl
             isInvalid={!!errors?.email || !validated.emailValid}
@@ -236,7 +241,7 @@ const LoginView = () => {
             />
           </HStack>
         </VStack>
-        <VStack className="w-full my-7 " space="lg">
+        <VStack className="w-full my-10" space="lg">
           <Button className="w-full rounded-lg" onPress={handleSubmit(onSubmit)}>
             <ButtonText className="font-medium">Log in</ButtonText>
           </Button>

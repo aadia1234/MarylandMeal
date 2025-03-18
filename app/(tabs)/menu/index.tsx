@@ -68,7 +68,7 @@ export default function Food() {
   const fetchItems = async () => {
     if (refreshing || searchText !== "") { return; }
     setRefreshing(true);
-    const data = await getMenu({ diningHalls, allergens });
+    const data = await getMenu(diningHalls, allergens);
     setMenu(data as Meal[]);
     setRefreshing(false);
   };

@@ -30,7 +30,7 @@ const SplashScreen = () => {
       </HStack>
       <VStack className="w-full h-14 mt-10" space="lg">
         <Button className="w-full h-full rounded-lg" onPress={() => router.navigate("/auth/login")}>
-          <ButtonText size="lg" className="font-medium">Log in</ButtonText>
+          <ButtonText size="lg" className="font-medium">Login</ButtonText>
         </Button>
         <Button className="w-full h-full rounded-lg" onPress={() => router.navigate("/auth/signup")}>
           <ButtonText size="lg" className="font-medium">Sign Up</ButtonText>

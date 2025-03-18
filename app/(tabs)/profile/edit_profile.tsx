@@ -71,7 +71,7 @@ export default function EditProfile() {
         const [date, setDate] = useState(new Date(user.dateOfBirth));
 
         return (
-            <SectionView title="Edit Date of birth" icon={CheckIcon} action={() => { updateDateOfBirth(date); }}>
+            <SectionView title="Edit Date of Birth" icon={CheckIcon} action={() => { updateDateOfBirth(date); }}>
                 <Center className="w-full h-fit">
                     <HStack space="lg" className="justify-normal w-full py-1 items-center">
                         <Text>Date of Birth:</Text>
