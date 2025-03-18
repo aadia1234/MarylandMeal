@@ -2169,7 +2169,7 @@ DEPENDENCIES:
   - ExpoAsset (from `../node_modules/expo-asset/ios`)
   - ExpoBlur (from `../node_modules/expo-blur/ios`)
   - ExpoCrypto (from `../node_modules/expo-crypto/ios`)
-  - ExpoFileSystem (from `../node_modules/expo-file-system/ios`)
+  - ExpoFileSystem (from `../node_modules/expo-file-system/ios 2`)
   - ExpoFont (from `../node_modules/expo-font/ios 2`)
   - ExpoHead (from `../node_modules/expo-router/ios`)
   - ExpoKeepAwake (from `../node_modules/expo-keep-awake/ios`)
@@ -2297,7 +2297,7 @@ EXTERNAL SOURCES:
   ExpoCrypto:
     :path: "../node_modules/expo-crypto/ios"
   ExpoFileSystem:
-    :path: "../node_modules/expo-file-system/ios"
+    :path: "../node_modules/expo-file-system/ios 2"
   ExpoFont:
     :path: "../node_modules/expo-font/ios 2"
   ExpoHead:
