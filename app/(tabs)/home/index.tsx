@@ -122,13 +122,6 @@ export default function Dashboard() {
   const [macros, setMacros] = useState<{ target: Macros; consumed: Macros; } | null>();
   const isFocused = useIsFocused();
 
-  const options: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    weekday: undefined,
-  };
-
   useEffect(() => { getFoodLog(date).then((log) => setLog(log)) }, [date, isFocused]);
   useEffect(() => { getMacros(date).then((macros) => setMacros(macros)) }, [date, log, isFocused]);
 
@@ -142,12 +135,7 @@ export default function Dashboard() {
       >
         <VStack className="w-full px-5" space="2xl">
           <HStack className="w-full items-center justify-start" >
-            <Calendar date={date} setDate={setDate} placement="bottom">
-              <Heading size="3xl" className="text-primary-500">
-                {date.toLocaleDateString("en-us", options)}
-              </Heading>
-              <Icon as={ChevronDownIcon} className="text-primary-500 aspect-square w-8"></Icon>
-            </Calendar>
+            <Calendar date={date} setDate={setDate} placement="bottom" />
           </HStack>
           <VStack>
             {/* needs to be fixed! - if macro exceeds the target then it glitches! also animation is glitchy!*/}

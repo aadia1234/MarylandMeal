@@ -6,9 +6,10 @@ import { useContext, useState } from "react";
 import { HStack } from "@/components/ui/hstack";
 import { Center } from "@/components/ui/center";
 import { Divider } from "@/components/ui/divider";
-import { updateName } from "@/api/updateSession";
+import { updateDateOfBirth, updateName } from "@/api/updateSession";
 import { Input, InputField } from "@/components/ui/input";
 import { UserContext } from "../../../components/navigation/UserProvider";
+import Calendar from "@/components/widgets/Calendar";
 
 
 export default function EditProfile() {
@@ -66,12 +67,28 @@ export default function EditProfile() {
 
     }
 
+    const DateOfBirthView = () => {
+        const [date, setDate] = useState(new Date(user.dateOfBirth));
+
+        return (
+            <SectionView title="Edit Date of birth" icon={CheckIcon} action={() => { updateDateOfBirth(date); }}>
+                <Center className="w-full h-fit">
+                    <HStack space="lg" className="justify-normal w-full py-1 items-center">
+                        <Text>Date of Birth:</Text>
+                        <Calendar date={date} setDate={setDate} placement="top" size="sm" />
+                    </HStack>
+                </Center>
+            </SectionView>
+        );
+    }
+
     // ui bugs when loading isn't instantaneous
     return (
         <SettingsLayout data={{}} icon={UserPenIcon} title={"Edit Profile"} description={goalsDescription}>
             {/* <WeightGoalsView />
             <MacroGoals /> */}
             <NamesView />
+            <DateOfBirthView />
         </SettingsLayout>
     );
 }

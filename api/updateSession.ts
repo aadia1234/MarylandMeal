@@ -17,6 +17,21 @@ export async function updateName(name: string) {
   }
 }
 
+export async function updateDateOfBirth(dateOfBirth: Date) {
+  try {
+    const res = await session.patch(
+      process.env.EXPO_PUBLIC_UPDATE_URL! + "/dateOfBirth",
+      { dateOfBirth }
+    );
+
+    console.log("Successfully updated dateOfBirth!");
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
 export async function updateWeight(weights: {
   currentWeight?: number;
   targetWeight?: number;

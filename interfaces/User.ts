@@ -5,6 +5,7 @@ export interface User extends Document {
   name: string;
   email: string;
   password: string;
+  dateOfBirth: Date;
   foodLogIds: ObjectId[];
   currentWeight: number;
   goalWeight: number;
