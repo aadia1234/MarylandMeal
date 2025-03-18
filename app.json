@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "MarylandMeal",
-    "slug": "MarylandMeal",
+    "name": "MarylandMeals",
+    "slug": "MarylandMeals",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/MarylandMeal.png",
@@ -33,7 +33,7 @@
         "foregroundImage": "./assets/images/MarylandMeal.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.MarylandMeal"
+      "package": "com.maryandmeals.app"
     },
     "web": {
       "bundler": "metro",
