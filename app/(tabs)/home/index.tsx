@@ -6,7 +6,7 @@ import { Heading } from "@/components/ui/heading";
 import { Center } from "@/components/ui/center";
 import React from "react";
 import { VStack } from "@/components/ui/vstack";
-import { getFoodLog, getMacros, getMealPlan } from "@/api/logSession";
+import { getFoodLog, getMacros } from "@/api/logSession";
 import { Grid, GridItem } from "@/components/ui/grid";
 import { Text } from "@/components/ui/text";
 import ContentLayout from "@/components/layouts/ContentLayout";
@@ -22,6 +22,8 @@ import { Icon } from "@/components/ui/icon";
 import MealPlan from "@/components/widgets/MealPlan";
 import { UserContext } from "../../../components/navigation/UserProvider";
 import { getUser } from "@/api/userSession";
+import { getMealPlan } from "@/api/aiSession";
+import { MealPlanData } from "@/components/widgets/MealPlan";
 
 const MacroProgressView = ({
   target,
@@ -142,7 +144,7 @@ export default function Dashboard() {
   const isFocused = useIsFocused();
   const [currentWeight, setCurrentWeight] = useState(0);
   const [goalWeight, setGoalWeight] = useState(0);
-  const [mealPlan, setMealPlan] = useState<string>();
+  const [mealPlan, setMealPlan] = useState<MealPlanData>();
 
   const userDetails =
     "Current Weight: " +
@@ -166,6 +168,17 @@ export default function Dashboard() {
     weekday: undefined,
   };
 
+  const generateMealPlan = async () => {
+    getUser()
+      .then((user) => {
+        setCurrentWeight(user.currentWeight);
+        setGoalWeight(user.goalWeight);
+      })
+      .then(() =>
+        getMealPlan(userDetails).then((mealPlan) => setMealPlan(mealPlan))
+      );
+  };
+
   useEffect(() => {
     getFoodLog(date).then((log) => setLog(log));
   }, [date, isFocused]);
@@ -173,11 +186,7 @@ export default function Dashboard() {
     getMacros(date).then((macros) => setMacros(macros));
   }, [date, log, isFocused]);
   useEffect(() => {
-    getUser().then((user) => {
-      setCurrentWeight(user.currentWeight);
-      setGoalWeight(user.goalWeight);
-    });
-    getMealPlan(userDetails).then((mealPlan) => setMealPlan(mealPlan));
+    generateMealPlan();
   }, [isFocused]);
 
   return (
@@ -207,7 +216,14 @@ export default function Dashboard() {
             <VStack className="mt-10">
               {/* bug - meals not showing */}
               <MealLog title={"Meals logged"} log={log} />
-              <MealPlan title={"Meal plan"} content={userDetails} />
+              <MealPlan
+                title={"Meal plan"}
+                content={
+                  mealPlan
+                    ? mealPlan
+                    : { breakfast: [], lunch: [], dinner: [], snacks: [] }
+                }
+              />
             </VStack>
           </VStack>
         </VStack>
