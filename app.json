@@ -15,10 +15,17 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.MarylandMeal",
+      "bundleIdentifier": "com.marylandmeals.app",
       "appleTeamId": "95P6AMSZ3D",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": [
+              "com.googleusercontent.apps.43338451273-ua51jdq1juhcus1nlpckjoqcan2imn87"
+            ]
+          }
+        ]
       }
     },
     "android": {
@@ -41,6 +48,12 @@
           "backgroundColor": "#E11932",
           "image": "./assets/images/MarylandMeal.png",
           "imageWidth": 200
+        }
+      ],
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.43338451273-ua51jdq1juhcus1nlpckjoqcan2imn87"
         }
       ]
     ],

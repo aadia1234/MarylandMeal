@@ -48,6 +48,7 @@
     "@gluestack-ui/tooltip": "^0.1.37",
     "@hookform/resolvers": "^3.9.1",
     "@legendapp/motion": "^2.4.0",
+    "@react-native-google-signin/google-signin": "^13.2.0",
     "@react-native-picker/picker": "^2.9.0",
     "@react-navigation/native": "^7.0.14",
     "@types/mongoose": "^5.11.97",
