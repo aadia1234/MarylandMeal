@@ -40,6 +40,7 @@ import AuthLayout from "../../components/layouts/AuthLayout";
 import { register } from "@/api/authenticateSession";
 import { Center } from "@/components/ui/center";
 import { Image } from "@/components/ui/image";
+import { GoogleIcon } from "@/assets/icons/google";
 
 const signUpSchema = z.object({
   email: z.string().min(1, "Email is required").email(),
@@ -100,18 +101,34 @@ const SignUpView = () => {
 
   const onSubmit = (data: SignUpSchemaType) => {
     if (data.password === data.confirmpassword) {
-      toast.show({
-        placement: "bottom right",
-        render: ({ id }) => {
-          return (
-            <Toast nativeID={id} variant="solid" action="success">
-              <ToastTitle>Success</ToastTitle>
-            </Toast>
-          );
-        },
-      });
-      register("first last", data.email, data.password);
-      reset();
+      const userCreated = register("first last", data.email, data.password);
+
+      if (userCreated) {
+        toast.show({
+          placement: "bottom right",
+          render: ({ id }) => {
+            return (
+              <Toast nativeID={id} variant="solid" action="success">
+                <ToastTitle>Successfully created your account!</ToastTitle>
+              </Toast>
+            );
+          },
+
+        });
+        reset();
+        router.replace("/auth/login");
+      } else {
+        toast.show({
+          placement: "bottom right",
+          render: ({ id }) => {
+            return (
+              <Toast nativeID={id} variant="solid" action="error">
+                <ToastTitle>Unable to create your account</ToastTitle>
+              </Toast>
+            );
+          },
+        });
+      }
     } else {
       toast.show({
         placement: "bottom right",
@@ -128,33 +145,8 @@ const SignUpView = () => {
 
 
   return (
-    <VStack className="max-w-[440px] w-full h-full" space="md">
-      <HStack className="items-center justify-between w-full">
-        <Pressable onPress={() => { router.back(); }} >
-          <Icon
-            as={ArrowLeftIcon}
-            className="md:hidden stroke-background-800"
-            size="xl"
-          />
-        </Pressable>
-        <Heading size="xl" numberOfLines={1} className="max-w-[80%]">Sign up</Heading>
-        <Icon
-          as={undefined}
-          size="xl"
-        />
-      </HStack>
-      <VStack className="w-full h-fit">
-        <VStack className="items-center justify-center my-10" space="md">
-          <Image
-            size="xl"
-            source={require("../../assets/images/MarylandMeal.png")}
-            alt="MarylandMeals"
-            className="rounded-3xl"
-          />
-          <Heading size="3xl" numberOfLines={1} className="text-primary-500">MarylandMeals</Heading>
-        </VStack>
-
-
+    <VStack className="w-full h-fit" space="md">
+      <VStack className="w-full max-w-[440px] mx-auto h-fit">
         <VStack space="xl" className="w-full">
           <VStack space="4xl">
             <FormControl isInvalid={!!errors.email}>
@@ -176,7 +168,7 @@ const SignUpView = () => {
                   },
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
-                  <Input className="rounded-lg">
+                  <Input className="rounded-lg bg-white">
                     <InputField
                       placeholder="Email"
                       type="text"
@@ -219,7 +211,7 @@ const SignUpView = () => {
                   },
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
-                  <Input className="rounded-lg">
+                  <Input className="rounded-lg bg-white">
                     <InputField
                       placeholder="Password"
                       value={value}
@@ -265,7 +257,7 @@ const SignUpView = () => {
                   },
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
-                  <Input className="rounded-lg">
+                  <Input className="rounded-lg bg-white">
                     <InputField
                       placeholder="Confirm Password"
                       value={value}
@@ -303,16 +295,16 @@ const SignUpView = () => {
           <Button
             variant="outline"
             action="secondary"
-            className="w-full gap-1 rounded-lg"
-            onPress={() => { }}
+            className="w-full bg-white rounded-lg"
+          // onPress={loginWithGoogle}
           >
+            <ButtonIcon as={GoogleIcon} />
             <ButtonText className="font-medium">
-              Continue with Google
+              Sign up with Google
             </ButtonText>
-            {/* <ButtonIcon as={GoogleIcon} /> */}
           </Button>
         </VStack>
-        <HStack className="self-center" space="sm">
+        <HStack className="self-center pb-5" space="sm">
           <Text size="md">Already have an account?</Text>
           <Button variant="link" className="h-6" onPress={() => router.replace("/auth/login")}>
             <ButtonText>Log in</ButtonText>
@@ -325,7 +317,7 @@ const SignUpView = () => {
 
 export default function Signup() {
   return (
-    <AuthLayout>
+    <AuthLayout title="Sign up">
       <SignUpView />
     </AuthLayout>
   );

@@ -142,177 +142,152 @@ const LoginView = () => {
 
 
   return (
-    <VStack className="max-w-[440px] w-full h-full" space="md">
-      <HStack className="items-center justify-between w-full">
-        <Pressable onPress={() => { router.back(); }} >
-          <Icon
-            as={ArrowLeftIcon}
-            className="md:hidden stroke-background-800"
-            size="xl"
+    <VStack className="w-full h-fit" space="md">
+      <VStack space="xl" className="w-full">
+        <FormControl
+          isInvalid={!!errors?.email || !validated.emailValid}
+          className="w-full"
+        >
+          <FormControlLabel>
+            <FormControlLabelText>Email</FormControlLabelText>
+          </FormControlLabel>
+          <Controller
+            defaultValue=""
+            name="email"
+            control={control}
+            rules={{
+              validate: async (value) => {
+                try {
+                  await loginSchema.parseAsync({ email: value });
+                  return true;
+                } catch (error: any) {
+                  return error.message;
+                }
+              },
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input className="rounded-lg bg-white">
+                <InputField
+                  placeholder="Enter email"
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  onSubmitEditing={handleKeyPress}
+                  returnKeyType="done"
+                  selectionColor="#E11932"
+                  className="text-md"
+                />
+              </Input>
+            )}
           />
-        </Pressable>
-        <Heading size="xl" numberOfLines={1} className="max-w-[80%]">Login</Heading>
-        <Icon
-          as={undefined}
-          size="xl"
-        />
-      </HStack>
-      <VStack className="w-full h-fit">
-        <VStack className="items-center justify-center my-10" space="md">
-          <Image
-            size="xl"
-            source={require("../../assets/images/MarylandMeal.png")}
-            alt="MarylandMeals"
-            className="rounded-3xl"
+          <FormControlError>
+            <FormControlErrorIcon as={AlertTriangle} />
+            <FormControlErrorText>
+              {errors?.email?.message ||
+                (!validated.emailValid && "Email ID not found")}
+            </FormControlErrorText>
+          </FormControlError>
+        </FormControl>
+        {/* Label Message */}
+        <FormControl
+          isInvalid={!!errors.password || !validated.passwordValid}
+          className="w-full"
+        >
+          <FormControlLabel>
+            <FormControlLabelText>Password</FormControlLabelText>
+          </FormControlLabel>
+          <Controller
+            defaultValue=""
+            name="password"
+            control={control}
+            rules={{
+              validate: async (value) => {
+                try {
+                  await loginSchema.parseAsync({ password: value });
+                  return true;
+                } catch (error: any) {
+                  return error.message;
+                }
+              },
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input className="rounded-lg bg-white">
+                <InputField
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter password"
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  onSubmitEditing={handleKeyPress}
+                  returnKeyType="done"
+                  selectionColor="#E11932"
+                  className="text-md"
+                />
+                <InputSlot onPress={handleState} className="pr-3">
+                  <InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />
+                </InputSlot>
+              </Input>
+            )}
           />
-          <Heading size="3xl" numberOfLines={1} className="text-primary-500">MarylandMeals</Heading>
-        </VStack>
-        <VStack space="xl" className="w-full">
-          <FormControl
-            isInvalid={!!errors?.email || !validated.emailValid}
-            className="w-full"
-          >
-            <FormControlLabel>
-              <FormControlLabelText>Email</FormControlLabelText>
-            </FormControlLabel>
-            <Controller
-              defaultValue=""
-              name="email"
-              control={control}
-              rules={{
-                validate: async (value) => {
-                  try {
-                    await loginSchema.parseAsync({ email: value });
-                    return true;
-                  } catch (error: any) {
-                    return error.message;
-                  }
-                },
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <Input className="rounded-lg">
-                  <InputField
-                    placeholder="Enter email"
-                    value={value}
-                    onChangeText={onChange}
-                    onBlur={onBlur}
-                    onSubmitEditing={handleKeyPress}
-                    returnKeyType="done"
-                    selectionColor="#E11932"
-                    className="text-md"
-                  />
-                </Input>
-              )}
-            />
-            <FormControlError>
-              <FormControlErrorIcon as={AlertTriangle} />
-              <FormControlErrorText>
-                {errors?.email?.message ||
-                  (!validated.emailValid && "Email ID not found")}
-              </FormControlErrorText>
-            </FormControlError>
-          </FormControl>
-          {/* Label Message */}
-          <FormControl
-            isInvalid={!!errors.password || !validated.passwordValid}
-            className="w-full"
-          >
-            <FormControlLabel>
-              <FormControlLabelText>Password</FormControlLabelText>
-            </FormControlLabel>
-            <Controller
-              defaultValue=""
-              name="password"
-              control={control}
-              rules={{
-                validate: async (value) => {
-                  try {
-                    await loginSchema.parseAsync({ password: value });
-                    return true;
-                  } catch (error: any) {
-                    return error.message;
-                  }
-                },
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <Input className="rounded-lg">
-                  <InputField
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter password"
-                    value={value}
-                    onChangeText={onChange}
-                    onBlur={onBlur}
-                    onSubmitEditing={handleKeyPress}
-                    returnKeyType="done"
-                    selectionColor="#E11932"
-                    className="text-md"
-                  />
-                  <InputSlot onPress={handleState} className="pr-3">
-                    <InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />
-                  </InputSlot>
-                </Input>
-              )}
-            />
-            <FormControlError>
-              <FormControlErrorIcon as={AlertTriangle} />
-              <FormControlErrorText>
-                {errors?.password?.message ||
-                  (!validated.passwordValid && "Password was incorrect")}
-              </FormControlErrorText>
-            </FormControlError>
-          </FormControl>
-          <HStack className="w-full justify-between ">
-            <Controller
-              name="rememberme"
-              defaultValue={false}
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <Checkbox
-                  size="sm"
-                  value="Remember me"
-                  isChecked={value}
-                  onChange={onChange}
-                  aria-label="Remember me"
-                >
-                  <CheckboxIndicator>
-                    <CheckboxIcon as={CheckIcon} />
-                  </CheckboxIndicator>
-                  <CheckboxLabel>Remember me</CheckboxLabel>
-                </Checkbox>
-              )}
-            />
-          </HStack>
-        </VStack>
-        <VStack className="w-full my-10" space="lg">
-          <Button className="w-full rounded-lg" onPress={handleSubmit(onSubmit)}>
-            <ButtonText className="font-medium">Log in</ButtonText>
-          </Button>
-          <Button
-            variant="outline"
-            action="secondary"
-            className="w-full bg-white rounded-lg"
-            onPress={loginWithGoogle}
-          >
-            <ButtonIcon as={GoogleIcon} />
-            <ButtonText className="font-medium">
-              Login with Google
-            </ButtonText>
-          </Button>
-        </VStack>
-        <HStack className="self-center" space="sm">
-          <Text size="md">Don't have an account?</Text>
-          <Button variant="link" className="h-6" onPress={() => router.replace("/auth/signup")}>
-            <ButtonText>Sign up</ButtonText>
-          </Button>
+          <FormControlError>
+            <FormControlErrorIcon as={AlertTriangle} />
+            <FormControlErrorText>
+              {errors?.password?.message ||
+                (!validated.passwordValid && "Password was incorrect")}
+            </FormControlErrorText>
+          </FormControlError>
+        </FormControl>
+        <HStack className="w-full justify-between ">
+          <Controller
+            name="rememberme"
+            defaultValue={false}
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <Checkbox
+                size="sm"
+                value="Remember me"
+                isChecked={value}
+                onChange={onChange}
+                aria-label="Remember me"
+              >
+                <CheckboxIndicator>
+                  <CheckboxIcon as={CheckIcon} />
+                </CheckboxIndicator>
+                <CheckboxLabel>Remember me</CheckboxLabel>
+              </Checkbox>
+            )}
+          />
         </HStack>
       </VStack>
+      <VStack className="w-full my-10" space="lg">
+        <Button className="w-full rounded-lg" onPress={handleSubmit(onSubmit)}>
+          <ButtonText className="font-medium">Log in</ButtonText>
+        </Button>
+        <Button
+          variant="outline"
+          action="secondary"
+          className="w-full bg-white rounded-lg"
+          onPress={loginWithGoogle}
+        >
+          <ButtonIcon as={GoogleIcon} />
+          <ButtonText className="font-medium">
+            Login with Google
+          </ButtonText>
+        </Button>
+      </VStack>
+      <HStack className="self-center pb-5" space="sm">
+        <Text size="md">Don't have an account?</Text>
+        <Button variant="link" className="h-6" onPress={() => router.replace("/auth/signup")}>
+          <ButtonText>Sign up</ButtonText>
+        </Button>
+      </HStack>
     </VStack>
   );
 };
 
 export default function Login() {
   return (
-    <AuthLayout>
+    <AuthLayout title="Login">
       <LoginView />
     </AuthLayout>
   );

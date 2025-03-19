@@ -24,20 +24,17 @@ import {
     SelectItem,
     SelectScrollView,
 } from "@/components/ui/select"
-import { User } from "@/interfaces/User";
-import { getUser } from "@/api/userSession";
-import { updateGoalMacros, updateWeight } from "@/api/updateSession";
-import Macros from "@/interfaces/Macros";
 import { UserContext } from "@/components/navigation/UserProvider";
+import { generateGoalWeight, update } from "@/api/updateSession";
 
 export default function Goals() {
     const { user, setUser } = useContext(UserContext);
     const goalsDescription = "Set and customize weight and macro goals for your fitness journey.";
     const macros = user.goalMacros;
+    const [goalWeight, setGoalWeight] = useState(user.goalWeight);
 
 
     const WeightGoalsView = () => {
-        const [selectedWeight, setSelectedWeight] = useState(0);
 
         const WeightRow = ({ title, weight }: { title: string, weight?: number }) => {
             const weights = Array.from({ length: 200 }, (_, i) => (i + 1) * 2.5);
@@ -46,7 +43,7 @@ export default function Goals() {
             return (
                 <HStack className="justify-between w-full py-1 items-center">
                     <Text>{title}</Text>
-                    <Select onValueChange={(weight) => updateWeight(isGoalWeight ? { targetWeight: parseInt(weight) } : { currentWeight: parseInt(weight) })}>
+                    <Select onValueChange={(weight) => update(isGoalWeight ? { goalWeight: parseInt(weight) } : { currentWeight: parseInt(weight) })}>
                         <SelectTrigger variant="outline" size="md" className="border-0">
                             <SelectInput placeholder={weight + " lbs"} className="text-primary-500" />
                             <SelectIcon className="mr-1" as={ChevronDownIcon} />
@@ -68,11 +65,16 @@ export default function Goals() {
         }
 
         return (
-            <SectionView title="Weight Goals" icon={SparklesIcon} action={() => { }}>
+            <SectionView title="Weight Goals" icon={SparklesIcon} action={async () => {
+                const goalWeight = await generateGoalWeight();
+                if (goalWeight) {
+                    setGoalWeight(goalWeight);
+                }
+            }}>
                 <Center className="w-full h-fit">
                     <WeightRow title="Current Weight" weight={user.currentWeight} />
                     <Divider />
-                    <WeightRow title="Goal Weight" weight={user.goalWeight} />
+                    <WeightRow title="Goal Weight" weight={goalWeight} />
                 </Center>
 
             </SectionView>
@@ -102,7 +104,7 @@ export default function Goals() {
                 }
 
                 console.log(macros);
-                updateGoalMacros(macros);
+                update({ goalMacros: macros });
             }
 
             return (

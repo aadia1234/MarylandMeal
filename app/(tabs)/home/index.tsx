@@ -48,7 +48,7 @@ const MacroProgressView = ({ target, consumed }: { target: Macros, consumed: Mac
     //   }
     // </Grid>
     <Card variant="elevated" className="h-60 rounded-xl">
-      <HStack space="lg" className="w-fit m-auto">
+      <HStack space="lg" className="w-full m-auto justify-between">
         <Center className="w-[40%] pl-2">
           <CircularProgressBase
             {...props}

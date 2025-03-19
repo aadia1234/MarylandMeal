@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { Meal } from "@/interfaces/Meal";
+import Meal from "@/interfaces/Meal";
 import { Allergen } from "@/types/Allergen";
 
 let menu: Meal[] = [];
