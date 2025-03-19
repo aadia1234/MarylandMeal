@@ -11,8 +11,7 @@ npm-debug.*
 *.orig.*
 web-build/
 
-ios/*
-!ios/ci_scripts
+ios
 android
 
 # macOS
