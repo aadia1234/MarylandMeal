@@ -12,12 +12,14 @@
       "developmentClient": true,
       "distribution": "internal",
       "channel": "development",
+      "environment": "development",
       "env": {
         "APP_VARIANT": "development"
       }
     },
     "preview": {
       "distribution": "internal",
+      "environment": "preview",
       "ios": {
         "simulator": true
       },
@@ -25,6 +27,7 @@
     },
     "production": {
       "channel": "production",
+      "environment": "production",
       "env": {
         "APP_VARIANT": "production"
       }
