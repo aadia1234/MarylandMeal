@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "MarylandMeals",
-    "slug": "MarylandMeals",
+    "slug": "marylandmeals",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/MarylandMeal.png",
@@ -17,6 +17,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.marylandmeals.iosApp",
       "appleTeamId": "95P6AMSZ3D",
+      "ascAppId": "6743458022",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "CFBundleURLTypes": [
@@ -65,7 +66,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "554a437c-4b17-4bd8-bf8a-c4422348c036"
+        "projectId": "5f56c8d8-beb7-402b-8400-c74419b2f1c1"
       }
     },
     "runtimeVersion": {
@@ -73,6 +74,7 @@
     },
     "updates": {
       "url": "https://u.expo.dev/554a437c-4b17-4bd8-bf8a-c4422348c036"
-    }
+    },
+    "owner": "marylandmeals"
   }
 }
