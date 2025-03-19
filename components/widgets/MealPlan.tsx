@@ -11,12 +11,13 @@ import { ChevronDownIcon, ChevronUpIcon } from "lucide-react-native";
 import { Text } from "../ui/text";
 import { Heading } from "../ui/heading";
 import { View } from "../ui/view";
+import { Meal } from "@/interfaces/Meal";
+import FoodCard from "../cards/FoodCard";
 
 export interface MealPlanData {
-  breakfast: string[];
-  lunch: string[];
-  dinner: string[];
-  snacks: string[];
+  breakfast: Meal[];
+  lunch: Meal[];
+  dinner: Meal[];
 }
 
 export default function MealPlan({
@@ -29,17 +30,10 @@ export default function MealPlan({
   const mealPlan: MealPlanData =
     typeof content === "string" ? JSON.parse(content) : content;
 
-  const renderMealList = (meal: string[]) => (
-    <View style={{ marginLeft: 20 }}>
-      {" "}
-      {meal.map((item, index) => (
-        <View
-          key={index}
-          style={{ flexDirection: "row", alignItems: "center" }}
-        >
-          <Text style={{ marginRight: 8 }}>•</Text>
-          <Text>{item}</Text>
-        </View>
+  const renderMealList = (meal?: Meal[]) => (
+    <View>
+      {meal?.map((item) => (
+        <FoodCard key={item.id} item={item} />
       ))}
     </View>
   );
@@ -72,11 +66,11 @@ export default function MealPlan({
           </AccordionTrigger>
         </AccordionHeader>
         <AccordionContent>
-          <Text>Breakfast</Text>
+          <Heading className="text-primary-700 text-center">Breakfast</Heading>
           {renderMealList(mealPlan.breakfast)}
-          <Text>Lunch</Text>
+          <Heading className="text-primary-700 text-center">Lunch</Heading>
           {renderMealList(mealPlan.lunch)}
-          <Text>Dinner</Text>
+          <Heading className="text-primary-700 text-center">Dinner</Heading>
           {renderMealList(mealPlan.dinner)}
         </AccordionContent>
       </AccordionItem>

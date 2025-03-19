@@ -219,9 +219,7 @@ export default function Dashboard() {
               <MealPlan
                 title={"Meal plan"}
                 content={
-                  mealPlan
-                    ? mealPlan
-                    : { breakfast: [], lunch: [], dinner: [], snacks: [] }
+                  mealPlan ? mealPlan : { breakfast: [], lunch: [], dinner: [] }
                 }
               />
             </VStack>
