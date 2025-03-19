@@ -17,7 +17,6 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.marylandmeals.iosApp",
       "appleTeamId": "95P6AMSZ3D",
-      "ascAppId": "6743458022",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "CFBundleURLTypes": [

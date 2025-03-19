@@ -23,5 +23,12 @@
     "production": {
       "channel": "production"
     }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "ascAppId": "6743458022"
+      }
+    }
   }
 }
