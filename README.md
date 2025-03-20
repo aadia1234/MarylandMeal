@@ -32,6 +32,12 @@ Next you will need to prebuild the native application. You can do this by runnin
 
 `source 'https://github.com/CocoaPods/Specs.git'`
 
+Once everything is resolved, run:
+
+`npm run <platform>`
+
+> platform: "ios", "android"
+
 ## Submitting app to App Store Connect/Testflight
 Once the app has been tested thoroughly, it can be submitted to App Store Connect and Testflight for testing. To do this, run the following command:
 
