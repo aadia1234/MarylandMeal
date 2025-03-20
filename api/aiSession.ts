@@ -9,8 +9,18 @@ const session = axios.create({
 
 export async function getMealPlan(context: string) {
   try {
-    const res = await session.post("/meal-recommender", { context });
+    const res = await session.post(process.env.EXPO_PUBLIC_MENUPLAN_URL!, { context });
     return res.data.plan;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function suggestMacros(context: string) {
+  try {
+    const res = await session.post(process.env.EXPO_PUBLIC_SUGGESTMACROS_URL!, { context });
+    return res.data.macros;
   } catch (error) {
     console.log(error);
     return null;
